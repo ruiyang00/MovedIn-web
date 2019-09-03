@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link,withRouter } from 'react-router-dom';
+import {Button, Form, Grid, Message} from "semantic-ui-react";
+import * as ROUTES from "./../logistics/routes"
 
 export default class LogIn extends Component{
   constructor(props){
@@ -24,11 +26,17 @@ export default class LogIn extends Component{
 
   render(){
     return (
+<Grid centered columns={3}>
 
+            <Form onSubmit={this.onSubmit}>
+            <p></p>
+            <h1>Log In</h1>
 
-            <form onSubmit={this.onSubmit}>
-            <h1>Login</h1>
-            <input
+            <h4>Not Onboard yet? Go <Link to={ROUTES.SIGN_UP}>Sign Up</Link></h4>
+
+            <Form.Input
+            icon="user"
+            iconPosition="left"
             type="text"
             name='email'
             placeholder='email'
@@ -38,7 +46,9 @@ export default class LogIn extends Component{
             />
 
 
-            <input
+            <Form.Input
+            icon="lock"
+            iconPosition="left"
             type="text"
             name='password'
             placeholder='password'
@@ -46,8 +56,18 @@ export default class LogIn extends Component{
             onChange={this.handleInputChange}
             required
             />
-            <input type="submit" value="Submit"/>
-            </form>
+
+            <Button
+              color="pink"
+              fluid
+              size="large"
+              type="submit">
+              <h3><i>Unlock My Journey</i></h3>
+            </Button>
+
+            </Form>
+
+            </Grid>
 
 
 

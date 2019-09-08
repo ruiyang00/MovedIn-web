@@ -10,9 +10,10 @@ const App = ()=>  (
 
   <Router>
      <div>
+       <Route exact path={'/'} component={Welcome}/>
        <Route path={'/logIn'} component={Login} />
        <Route path={'/signup'} component={SignUp}/>
-       <Route path={'/welcome'} component={Welcome}/>
+
      </div>
   </Router>
 );

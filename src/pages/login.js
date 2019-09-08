@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link,withRouter } from 'react-router-dom';
-import {Button, Form, Grid, Message} from "semantic-ui-react";
+import {Button, Form, Grid, Message, Image} from "semantic-ui-react";
 import * as ROUTES from "./../logistics/routes"
 
 export default class LogIn extends Component{

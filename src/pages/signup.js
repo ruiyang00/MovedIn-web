@@ -7,10 +7,10 @@ export default class SignUp extends Component{
   constructor(props){
     super(props);
     this.state={
-      firstname:'',
-      lastname:'',
       email:'',
-      password:''
+      password:'',
+      confirm:''
+
     };
   }
 
@@ -19,7 +19,7 @@ export default class SignUp extends Component{
     this.setState({
       [name]:value
     });
-  }
+}
 
   onSubmit = (event)=>{
     event.preventDefault();
@@ -34,28 +34,8 @@ export default class SignUp extends Component{
             <h1><i>Come SignUp to Join Us</i></h1>
             <h4>Already Registered? <Link to={ROUTES.SIGN_IN}>Sign In</Link></h4>
             <p></p>
-            <div>
-              <label><h3> FirstName:</h3> </label>
-            <input
-            type="text"
-            name='firstname'
-            placeholder='Angela'
-            value={this.state.firstname}
-            onChange={this.handleInputChange}
-            required
-            />
-            </div>
-            <div>
-            <label><h3> LastName:</h3> </label>
-            <input
-            type="text"
-            name='lastname'
-            placeholder='yuan'
-            value={this.state.lastname}
-            onChange={this.handleInputChange}
-            required
-            />
-            </div>
+
+
 
             <div>
             <label><h3> Email: </h3> </label>
@@ -67,7 +47,8 @@ export default class SignUp extends Component{
             onChange={this.handleInputChange}
             required
             />
-            </div>
+           </div>
+
             <div>
             <label><h3> Password:</h3> </label>
             <input
@@ -80,17 +61,21 @@ export default class SignUp extends Component{
             />
             </div>
 
+
             <div>
             <label><h3> Confirm Password:</h3> </label>
             <input
             type="text"
-            name='confirm psw'
-            placeholder='password again plz'
-            value={this.state.password}
+            name='confirm'
+            placeholder='abc123'
+            value={this.state.confirm}
             onChange={this.handleInputChange}
             required
             />
             </div>
+            
+
+
 
 <p></p>
             <Button

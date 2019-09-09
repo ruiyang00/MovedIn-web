@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link,withRouter } from 'react-router-dom';
-import {Button, Form, Grid, Message, Image} from "semantic-ui-react";
+import {Button, Form, Grid, Message, Image, Icon} from "semantic-ui-react";
 import * as ROUTES from "./../logistics/routes"
 
 export default class LogIn extends Component{
@@ -67,7 +67,51 @@ export default class LogIn extends Component{
 
             </Form>
 
+            <Grid.Row></Grid.Row>
+            <Grid.Row>
+
+
+             <Grid columns={2}>
+
+
+
+              <Grid.Column>
+              <Button
+              color="green"
+              size="large"
+              fluid
+              type="submit"
+              icon
+              labelPosition="left"
+              >
+                <i>Sign  In</i>
+
+                <Icon name='google' size="large" />
+                < /Button>
+              </Grid.Column>
+
+              <Grid.Column>
+              <Button
+              color="yellow"
+              size="large"
+              fluid
+              type="submit"
+              icon
+              labelPosition="left"
+              >
+                <i>Sign  In</i>
+
+                <Icon name='facebook' size="large" />
+                < /Button>
+              </Grid.Column>
+
+          </Grid>
+            </Grid.Row>
+
             </Grid>
+
+
+
 
 
 

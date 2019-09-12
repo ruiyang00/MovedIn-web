@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { render } from 'react-dom';
 
 import PropTypes from 'prop-types'
 
@@ -17,6 +18,8 @@ import {
   Segment,
   Sidebar,
   Visibility,
+  Search,
+  Card
 } from 'semantic-ui-react'
 
 // Heads up!
@@ -27,6 +30,9 @@ const getWidth = () => {
 
   return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth
 }
+
+
+
 
 /* eslint-disable react/no-multi-comp */
 /* Heads up! HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled components for
@@ -55,8 +61,16 @@ const HomepageHeading = ({ mobile }) => (
         marginTop: mobile ? '0.5em' : '1.5em',
       }}
     />
+
+    <Grid>
+      <Grid.Column width={20}>
+        <Search
+        />
+      </Grid.Column>
+    </Grid>
+
     <Button primary size='huge'>
-      Get Started
+      Let's Go
       <Icon name='right arrow' />
     </Button>
   </Container>
@@ -104,9 +118,10 @@ class DesktopContainer extends Component {
                 <Menu.Item as='a' active>
                   Home
                 </Menu.Item>
-                <Menu.Item as='a'>Item 1</Menu.Item>
-                <Menu.Item as='a'>Item 2</Menu.Item>
-                <Menu.Item as='a'>Item 3</Menu.Item>
+                <Menu.Item as='a'>How It Works</Menu.Item>
+                <Menu.Item as='a'>Explore</Menu.Item>
+                <Menu.Item as='a'>About Us</Menu.Item>
+
                 <Menu.Item position='right'>
                   <Button as='a' inverted={!fixed}>
                     Log in
@@ -227,11 +242,30 @@ const HomepageLayout = () => (
               Let us delight your customers and empower your needs... through pure data analytics.
             </p>
             <Header as='h3' style={{ fontSize: '2em' }}>
-              We Make Bananas That Can Dance
+              We Make People Happy
             </Header>
+
+            <Card>
+              <Image src='/src/images/room-white.jpg' wrapped ui={false} />
+                <Card.Content>
+                  <Card.Header>Matthew</Card.Header>
+                  <Card.Meta>
+                    <span className='date'>Joined in 2015</span>
+                  </Card.Meta>
+                  <Card.Description>
+                    Matthew is a musician living in Nashville.
+                  </Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                  <a>
+                    <Icon name='user' />
+                    22 Friends
+                  </a>
+                </Card.Content>
+            </Card>
+
             <p style={{ fontSize: '1.33em' }}>
-              Yes that's right, you thought it was the stuff of dreams, but even bananas can be
-              bioengineered.
+              Yes that's right, you thought it was the stuff of dreams, but it is true.
             </p>
           </Grid.Column>
           <Grid.Column floated='right' width={6}>
@@ -250,7 +284,7 @@ const HomepageLayout = () => (
         <Grid.Row textAlign='center'>
           <Grid.Column style={{ paddingBottom: '5em', paddingTop: '5em' }}>
             <Header as='h3' style={{ fontSize: '2em' }}>
-              "What a Company"
+              "About Us"
             </Header>
             <p style={{ fontSize: '1.33em' }}>That is what they all say about us</p>
           </Grid.Column>
@@ -260,7 +294,7 @@ const HomepageLayout = () => (
             </Header>
             <p style={{ fontSize: '1.33em' }}>
               <Image avatar src='/images/avatar/large/nan.jpg' />
-              <b>Nan</b> Chief Fun Officer Acme Toys
+              <b>Nan</b> Lorem
             </p>
           </Grid.Column>
         </Grid.Row>
@@ -288,12 +322,11 @@ const HomepageLayout = () => (
           <a href='#'>Case Studies</a>
         </Divider>
         <Header as='h3' style={{ fontSize: '2em' }}>
-          Did We Tell You About Our Bananas?
+          Did We Tell You About Our Serves?
         </Header>
         <p style={{ fontSize: '1.33em' }}>
           Yes I know you probably disregarded the earlier boasts as non-sequitur filler content, but
-          it's really true. It took years of gene splicing and combinatory DNA research, but our
-          bananas can really dance.
+          it's really true.
         </p>
         <Button as='a' size='large'>
           I'm Still Quite Interested
@@ -316,10 +349,10 @@ const HomepageLayout = () => (
             <Grid.Column width={3}>
               <Header inverted as='h4' content='Services' />
               <List link inverted>
-                <List.Item as='a'>Banana Pre-Order</List.Item>
-                <List.Item as='a'>DNA FAQ</List.Item>
+                <List.Item as='a'>Pre-Order</List.Item>
+                <List.Item as='a'>FAQ</List.Item>
                 <List.Item as='a'>How To Access</List.Item>
-                <List.Item as='a'>Favorite X-Men</List.Item>
+                <List.Item as='a'>Favorite</List.Item>
               </List>
             </Grid.Column>
             <Grid.Column width={7}>

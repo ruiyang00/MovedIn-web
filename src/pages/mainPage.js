@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { render } from 'react-dom';
-
+import BackGroundImage from './../images/room-white.jpg';
 import PropTypes from 'prop-types'
 
 import {
@@ -30,8 +30,6 @@ const getWidth = () => {
 
   return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth
 }
-
-
 
 
 /* eslint-disable react/no-multi-comp */
@@ -118,9 +116,7 @@ class DesktopContainer extends Component {
                 <Menu.Item as='a' active>
                   Home
                 </Menu.Item>
-                <Menu.Item as='a'>How It Works</Menu.Item>
-                <Menu.Item as='a'>Explore</Menu.Item>
-                <Menu.Item as='a'>About Us</Menu.Item>
+
 
                 <Menu.Item position='right'>
                   <Button as='a' inverted={!fixed}>
@@ -174,9 +170,7 @@ class MobileContainer extends Component {
           <Menu.Item as='a' active>
             Home
           </Menu.Item>
-          <Menu.Item as='a'>Item 1</Menu.Item>
-          <Menu.Item as='a'>Item 2</Menu.Item>
-          <Menu.Item as='a'>Item 3</Menu.Item>
+
           <Menu.Item as='a'>Log in</Menu.Item>
           <Menu.Item as='a'>Sign Up</Menu.Item>
         </Sidebar>
@@ -246,7 +240,7 @@ const HomepageLayout = () => (
             </Header>
 
             <Card>
-              <Image src='/src/images/room-white.jpg' wrapped ui={false} />
+              <Image src={BackGroundImage} wrapped ui={false} />
                 <Card.Content>
                   <Card.Header>Matthew</Card.Header>
                   <Card.Meta>

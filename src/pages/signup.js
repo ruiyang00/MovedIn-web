@@ -1,35 +1,107 @@
 import React, { Component } from 'react';
 import { Link,withRouter } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import {reduxForm, Field, formValueSelector} from 'redux-form';
+import * as actions from '../actions';
 import {Button, Form, Grid, Message} from "semantic-ui-react";
 import * as ROUTES from "./../logistics/routes"
+// import SignUp from './signup';
 
-export default class SignUp extends Component{
-  constructor(props){
+
+// const loginUser = userObj => ({
+//   type: 'LOGIN_USER',
+//   payload: {}
+// })
+//
+//
+// var myEmail=" ";
+// var myPassword=" ";
+
+
+
+class SignUp extends Component{
+ constructor(props){
     super(props);
     this.state={
       email:'',
       password:'',
-      confirm:''
 
     };
-  }
+    this.onSubmit=this.onSubmit.bind(this);
+    this.handleInputChange= this.handleInputChange.bind(this);
+    //window.postfetch= this.userPostFetch;
+}
 
   handleInputChange = (event) => {
     const {value,name}=event.target;
     this.setState({
       [name]:value
     });
+    // myEmail=this.state.email;
+    // myPassword= this.state.password;
+
 }
 
-  onSubmit = (event)=>{
-    event.preventDefault();
-    alert('Authentication coming soon!');
+  //
+    onSubmit=(formData)=>{
+    // event.preventDefault();
+       console.log(this.state.email);
+       console.log(this.state.password);
+       this.props.signUp(formData);
+
+
+       //console.log(formData)
+       console.log('submitted');
+    // this.userPostFetch();
+    // console.log(myEmail);
+    // console.log(myPassword);
+
   }
 
+  // onSubmit (formData){
+  //   this.props.signUp(formData);
+  // }
+
+
+
+  userPostFetch = () =>{
+    fetch('http://localhost:5000/users/signup',{
+      method:"POST",
+      mode:'cors',
+      headers:{
+        "Access-Control-Allow-Origin":"*",
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        email: this.state.email,
+        password:this.state.password
+      })
+    })
+
+    .then(resp=> resp.json())
+    .then(function (data){
+      console.log(data);
+      console.log(data.token);
+      if(data.token){
+        localStorage.setItem("token", data.token);
+
+
+    }
+
+
+    })
+
+  }
+
+
+
   render(){
+    const {handleSubmit} = this.props;
     return (
 <Grid centered columns={5}>
-            <Form onSubmit={this.onSubmit}>
+            <Form as='form' onSubmit={handleSubmit(this.onSubmit)}>
             <p></p>
             <h1><i>Come SignUp to Join Us</i></h1>
             <h4>Already Registered? <Link to={ROUTES.SIGN_IN}>Sign In</Link></h4>
@@ -39,7 +111,9 @@ export default class SignUp extends Component{
 
             <div>
             <label><h3> Email: </h3> </label>
-            <input
+
+            <Field
+            component='input'
             type="text"
             name='email'
             placeholder='whatisup@gmail.com'
@@ -47,11 +121,15 @@ export default class SignUp extends Component{
             onChange={this.handleInputChange}
             required
             />
+
+
            </div>
 
             <div>
             <label><h3> Password:</h3> </label>
-            <input
+
+            <Field
+            component='input'
             type="text"
             name='password'
             placeholder='abc123'
@@ -59,21 +137,10 @@ export default class SignUp extends Component{
             onChange={this.handleInputChange}
             required
             />
+
             </div>
 
 
-            <div>
-            <label><h3> Confirm Password:</h3> </label>
-            <input
-            type="text"
-            name='confirm'
-            placeholder='abc123'
-            value={this.state.confirm}
-            onChange={this.handleInputChange}
-            required
-            />
-            </div>
-            
 
 
 
@@ -94,3 +161,51 @@ export default class SignUp extends Component{
     );
   }
 }
+
+
+
+const mapDispatchToProps= (dispatch)=>
+//promise function
+{
+   return dispatch({
+    type:'SIGNUP_USER',
+    payload: { email:'',
+      passoword: ''}
+
+
+             })
+
+}
+
+
+// const mapDispatchToProps= dispatch=>({
+//
+//     userPost: ()=>
+//     dispatch ({
+//     type:'SIGNUP_USER',
+//     payload: { email:myEmail,
+//       passoword: myPassword}
+//
+//              })
+//
+//
+//
+// })
+
+
+// const mapDispatchToProps = dispatch => ({
+//
+//   userPostFetch: userInfo =>dispatch(userPostFetch(userInfo))
+// }
+// )
+function mapStateToProps(state) {
+  return {
+    errorMessage: state.auth.errorMessage
+  }
+}
+
+//export default connect(null, actions)(SignUp);
+export default compose(
+  connect(null,actions),
+  reduxForm ({form:'signup'})
+)(SignUp)

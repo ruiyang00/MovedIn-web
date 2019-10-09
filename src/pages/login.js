@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
 import { Link,withRouter } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import {reduxForm, Field, formValueSelector} from 'redux-form';
+import {InputField} from 'react-semantic-redux-form';
+import * as actions from '../actions';
 import {Button, Form, Grid, Message, Image, Icon} from "semantic-ui-react";
 import * as ROUTES from "./../logistics/routes"
 
-export default class LogIn extends Component{
+ class LogIn extends Component{
   constructor(props){
     super(props);
     this.state={
       email:'',
       password:''
     };
+    this.onSubmit=this.onSubmit.bind(this);
+    this.handleInputChange= this.handleInputChange.bind(this);
   }
 
   handleInputChange = (event) => {
@@ -19,22 +26,33 @@ export default class LogIn extends Component{
     });
   }
 
-  onSubmit = (event)=>{
-    event.preventDefault();
-    alert('Authentication coming soon!');
-  }
+
+  onSubmit=(formData)=>{
+  // event.preventDefault();
+     console.log(this.state.email);
+     console.log(this.state.password);
+     this.props.signIn(formData);
+     //console.log(formData)
+     console.log('submitted');
+  // this.userPostFetch();
+  // console.log(myEmail);
+  // console.log(myPassword);
+
+}
 
   render(){
+    const {handleSubmit} = this.props;
     return (
 <Grid centered columns={3}>
 
-            <Form onSubmit={this.onSubmit}>
+            <Form as='form' onSubmit={handleSubmit(this.onSubmit)}>
             <p></p>
             <h1>Log In</h1>
 
             <h4>Not Onboard yet? Go <Link to={ROUTES.SIGN_UP}>Sign Up</Link></h4>
 
-            <Form.Input
+            <Field
+            component={InputField}
             icon="user"
             iconPosition="left"
             type="text"
@@ -46,7 +64,8 @@ export default class LogIn extends Component{
             />
 
 
-            <Form.Input
+            <Field
+            component={InputField}
             icon="lock"
             iconPosition="left"
             type="text"
@@ -118,3 +137,8 @@ export default class LogIn extends Component{
     );
   }
 }
+
+export default compose(
+  connect(null,actions),
+  reduxForm ({form:'signin'})
+)(LogIn)

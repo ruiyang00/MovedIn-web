@@ -1,20 +1,143 @@
 import React, {Component} from "react";
-import {BrowserRouter as Router, Route} from "react-router-dom";
+import {Switch,BrowserRouter as Router, Route} from "react-router-dom";
 import Login from './pages/login';
-import MainPage from './pages/mainPage';
-import searchPage from './pages/searchPage'
+import SignUp from './pages/signup';
+import Welcome from './pages/welcome';
+import mainPage from './pages/mainPage';
+import searchPage from './pages/searchPage';
 import './App.css';
+import * as actions from './actions';
+import {connect} from 'react-redux';
+import {Menu,Button} from "semantic-ui-react";
+import {Link} from 'react-router-dom';
+import * as ROUTES from "./logistics/routes"
 
-const App = ()=>  (
+class App extends Component {
 
-  <Router>
-     <div>
-       <Route path={'/logIn'} component={Login} />
-       <Route path={'/mainPage'} component={MainPage} />
-       <Route path={'/searchPage'} component={searchPage} />
+  constructor(props){
+    super(props);
+    console.log(props);
+    this.handleClick=this.handleClick.bind(this);
 
-     </div>
-  </Router>
-);
+  }
 
-export default App;
+  async componentDidMount(dispatch){
+    if(localStorage.getItem('token')){
+
+        var userInfo={email:localStorage.getItem('user'),password:localStorage.getItem('password')};
+        this.props.signIn(userInfo);
+
+
+         //
+
+ }
+
+
+}
+
+  handleClick(){
+     if(localStorage.getItem('user')){
+       localStorage.removeItem('token');
+       localStorage.removeItem('user');
+       localStorage.removeItem('password');
+     }
+     this.props.signOut();
+  }
+
+  render(){
+     const auth= this.props.isAuth;
+     const MenuWithoutAuth =()=>{
+        return(
+       <Menu>
+
+          <Menu.Item>
+          <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
+           </Menu.Item>
+
+           <Menu.Item>
+          <Link to={ROUTES.SIGN_IN}>Sign In</Link>
+          </Menu.Item>
+
+            </Menu>
+
+     );
+
+   };
+     const user= localStorage.getItem('user');
+    const MenuWithAuth=()=>{
+      return(
+        <Menu>
+           <Menu.Item>
+               <Button color="yellow" onClick={this.handleClick}>Sign Out
+               </Button>
+           </Menu.Item>
+
+           <Menu.Item>
+               Welcome!
+           </Menu.Item>
+        </Menu>
+      );
+    };
+     return (
+           <div>
+              {!this.props.isAuth ?
+              ( <MenuWithoutAuth />):( null)
+
+          }
+          {this.props.isAuth ?
+          ( <MenuWithAuth />):( null)
+
+         }
+            <Switch>
+                <Route exact path={'/'} component={mainPage}/>
+                <Route path={'/welcome'} component={Welcome}/>
+                <Route path="/signup" component={SignUp}/>
+                <Route path="/login" component={Login}/>
+                <Route path="/searchPage" component={searchPage}/>
+            </Switch>
+
+           </div>
+
+
+     );
+   }
+
+  }
+
+
+
+function mapStateToProps(state){
+  return {
+    isAuth:state.auth.isAuthenticated
+  };
+}
+
+
+
+//   <Router>
+//      <div>
+//        <Route exact path={'/'} component={Welcome}/>
+//        <Route path={'/welcome'} component={Welcome}/>
+//        <Route path={'/logIn'} component={Login} />
+//        <Route path={'/signup'} component={SignUp}/>
+//
+//      </div>
+//   </Router>
+// );
+
+export default connect(mapStateToProps,actions) (App);
+
+
+// const App = ()=>  (
+
+//   <Router>
+//      <div>
+//        <Route path={'/logIn'} component={Login} />
+//        <Route path={'/mainPage'} component={MainPage} />
+//        <Route path={'/searchPage'} component={searchPage} />
+
+//      </div>
+//   </Router>
+// );
+
+// export default App;

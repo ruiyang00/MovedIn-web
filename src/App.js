@@ -3,6 +3,7 @@ import {Switch,BrowserRouter as Router, Route} from "react-router-dom";
 import Login from './pages/login';
 import SignUp from './pages/signup';
 import Welcome from './pages/welcome';
+import UserProfile from './pages/userProfile';
 import logo from './logo.svg';
 import './App.css';
 import * as actions from './actions';
@@ -92,6 +93,7 @@ class App extends Component {
                 <Route path={'/welcome'} component={Welcome}/>
                 <Route path="/signup" component={SignUp}/>
                 <Route path="/login" component={Login}/>
+                <Route path="/userProfile" component={UserProfile}/>
             </Switch>
 
            </div>

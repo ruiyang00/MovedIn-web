@@ -5,6 +5,7 @@ import HomeLogo from './../images/home #30C5FF.png';
 import {
   Button,
   Container,
+  Dropdown,
   Divider,
   Grid,
   Header,
@@ -14,7 +15,7 @@ import {
   Menu,
   Modal,
   Segment,
-  Search·
+  Search
 } from 'semantic-ui-react'
 
 const backgroundStyle = {
@@ -26,12 +27,48 @@ const backgroundStyle = {
   overflow: 'hidden',
 };
 
+const searchOptions=[
+  {
+    key: 'I need a room',
+    text: 'I need a room',
+    value: 'I need a room',
+  },
+  {
+    key: 'I have a room',
+    text: 'I have a room',
+    value: 'I have a room',
+  },
+]
+
+const genderOptions=[
+  {
+    key: 'Male',
+    text: 'Male',
+    value: 'Male',
+    image: { avatar: true, src: '/images/avatar/small/jenny.jpg' },
+  },
+  {
+    key: 'Female',
+    text: 'Female',
+    value: 'Female',
+    image: { avatar: true, src: '/images/avatar/small/elliot.jpg' },
+  },
+]
+
 class App extends Component {
-  state = { open: false }
+ 
+ 
+  //Modal windows------------------------------------------------------------------------
+  state = { 
+    loginModalisOpen: false,
+    signupModalisOpen: false
+  }
+  showLogin = (dimmer) => () => this.setState({ dimmer, loginModalisOpen: true })
+  closeLogin = () => this.setState({ loginModalisOpen: false })
+  showSignup = (dimmer) => () => this.setState({dimmer, signupModalisOpen: true})
+  closeSignup = () => this.setState({signupModalisOpen: false})
 
-  show = (dimmer) => () => this.setState({ dimmer, open: true })
-  close = () => this.setState({ open: false })
-
+  //-------------------------------------------------------------------------------------
   render() {
     const { open, dimmer} = this.state
 
@@ -45,8 +82,8 @@ class App extends Component {
           </Menu.Item>
 
             <Menu.Item position='right'>
-              <Button onClick={this.show('blurring')}>Sign Up</Button>
-              <Button onClick={this.show('blurring')} style={{ marginLeft: '0.5em' }}>Log In</Button>
+              <Button onClick={this.showSignup('blurring')}>Sign Up</Button>
+              <Button onClick={this.showLogin('blurring')} style={{ marginLeft: '0.5em' }}>Log In</Button>
             </Menu.Item>
           </Container>
         </Menu>
@@ -72,10 +109,13 @@ class App extends Component {
               }}
             />
             <div class='col'>
-              <select class="ui dropdown" style={{ marginLeft: '6em' }}>
-                <option value="">I need a room</option>
-                <option value="1">I have a room</option>
-              </select>
+              <Dropdown
+                placeholder="I need a room"
+                fluid
+                selection
+                options={searchOptions}
+              />
+              
             </div>
 
             <div class='col'>
@@ -150,19 +190,19 @@ class App extends Component {
         </Segment>
 
         <div>
-          <Modal dimmer={dimmer} size={"tiny"} open={open} onClose={this.close}>
+          <Modal dimmer={dimmer} size={"tiny"} open={this.state.loginModalisOpen} onClose={this.closeLogin}>
             <div class="ui middle aligned center aligned grid">
               <div class="column">
                 <form action="" method="get" class="ui large form">
                   <div class="ui stacked secondary segment">
                     <div class="field">
-                      <div class="ui left icon input">
-                        <i class="user icon"></i>
+                      <div class="ui right icon input">
+                        <i class="mail icon"></i>
                         <input type="text" name="email" placeholder="E-mail address"></input>
                       </div>
                     </div>
                     <div class="field">
-                      <div class="ui left icon input">
+                      <div class="ui right icon input">
                         <i class="lock icon"></i>
                         <input type="password" name="password" placeholder="Password"></input>
                       </div>
@@ -174,6 +214,62 @@ class App extends Component {
                 </form>
                 <div class="ui message">
                   New to us? <a href="">Sign Up</a>
+                </div>
+              </div>
+            </div>
+          </Modal>
+        </div>
+
+        <div>
+          <Modal dimmer={dimmer} size={"tiny"} open={this.state.signupModalisOpen} onClose={this.closeSignup}>
+            <div class="ui middle aligned center aligned grid">
+              <div class="column">
+                <form class="ui form">
+                <div class="ui stacked secondary segment">
+                  <div class="two fields">
+                    <div class="field">
+                      <label>Name</label>
+                      <div class="two fields">
+                        <div class="field">
+                          <input type="text" name="name[first]" placeholder="First Name"></input>
+                        </div>
+                        <div class="field">
+                          <input type="text" name="name[last]" placeholder="Last Name"></input>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="field">
+                      <label>Gender</label>
+                      <Dropdown
+                        placeholder="select gender"
+                        fluid
+                        selection
+                        options={genderOptions}
+                      />
+                    </div>
+                  </div>
+                  <div class="two fields">
+                    <div class="required field">
+                      <label>Username</label>
+                      <div class="ui icon input">
+                        <input type="text" name="username" placeholder="Username"></input>
+                        <i class="user icon"></i>
+                      </div>
+                    </div>
+                    <div class="required field">
+                      <label>Password</label>
+                      <div class="ui icon input">
+                        <input type="password" name="password"></input>
+                        <i class="lock icon"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="ui submit button">Submit</div>
+                  </div>
+                </form>
+                
+                <div class="ui message">
+                  Already have an account? <a href="" onClick={(this.closeSignup)}>Log In</a>
                 </div>
               </div>
             </div>

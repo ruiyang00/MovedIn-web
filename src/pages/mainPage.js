@@ -53,6 +53,12 @@ const genderOptions=[
     value: 'Female',
     image: { avatar: true, src: '/images/avatar/small/elliot.jpg' },
   },
+  {
+    key: 'Other',
+    text: 'Other',
+    value: 'Other',
+    image: { avatar: true, src: '/images/avatar/small/elliot.jpg' },
+  },
 ]
 
 class App extends Component {
@@ -128,45 +134,45 @@ class App extends Component {
             <Icon name='right arrow' />
               </Button>
             </div>
-
           </Container>
-        </div>
 
-        <Segment inverted vertical style={{ margin: '5em 0em 0em', padding: '5em 0em' }}>
+        </div>
+        <Segment inverted vertical style={{ margin: '0em 0em 0em', padding: '5em 0em' }}>
           <Container textAlign='center'>
             <Grid divided inverted stackable>
               <Grid.Column width={3}>
-                <Header inverted as='h4' content='Group 1' />
+                <Header inverted as='h4' content='MovedIn' />
                 <List link inverted>
-                  <List.Item as='a'>Link One</List.Item>
-                  <List.Item as='a'>Link Two</List.Item>
-                  <List.Item as='a'>Link Three</List.Item>
-                  <List.Item as='a'>Link Four</List.Item>
+                  <List.Item as='a'>About</List.Item>
+                  <List.Item as='a'>News</List.Item>
+                  <List.Item as='a'>Policies</List.Item>
                 </List>
               </Grid.Column>
               <Grid.Column width={3}>
-                <Header inverted as='h4' content='Group 2' />
+                <Header inverted as='h4' content='Help & Support' />
                 <List link inverted>
-                  <List.Item as='a'>Link One</List.Item>
-                  <List.Item as='a'>Link Two</List.Item>
-                  <List.Item as='a'>Link Three</List.Item>
-                  <List.Item as='a'>Link Four</List.Item>
+                <List.Item as='a'>MovedIn guide</List.Item>
+                  <List.Item as='a'>FAQs</List.Item>
+                  <List.Item as='a'>Contact us</List.Item>
+                  <List.Item as='a'>Give us feedback</List.Item>
                 </List>
               </Grid.Column>
               <Grid.Column width={3}>
-                <Header inverted as='h4' content='Group 3' />
+                <Header inverted as='h4' content='Discover' />
                 <List link inverted>
-                  <List.Item as='a'>Link One</List.Item>
-                  <List.Item as='a'>Link Two</List.Item>
-                  <List.Item as='a'>Link Three</List.Item>
-                  <List.Item as='a'>Link Four</List.Item>
+                  <List.Item as='a'>Community</List.Item>
+                  <List.Item as='a'>Join us</List.Item>
                 </List>
               </Grid.Column>
               <Grid.Column width={7}>
-                <Header inverted as='h4' content='Footer Header' />
-                <p>
-                  Extra space
-            </p>
+                <i class="facebook f large icon"></i>
+                <i class="instagram large icon"></i>
+                <i class="twitter large icon"></i>
+                <List link inverted>
+                  <List.Item as='a'>Terms</List.Item>
+                  <List.Item as='a'>Privacy</List.Item>
+                  <List.Item as='a'>Site Map</List.Item>
+                </List>
               </Grid.Column>
             </Grid>
 
@@ -174,17 +180,8 @@ class App extends Component {
             <Image centered size='mini' src={HomeLogo} />
             <List horizontal inverted divided link size='small'>
               <List.Item as='a' href='#'>
-                Site Map
-          </List.Item>
-              <List.Item as='a' href='#'>
-                Contact Us
-          </List.Item>
-              <List.Item as='a' href='#'>
-                Terms and Conditions
-          </List.Item>
-              <List.Item as='a' href='#'>
-                Privacy Policy
-          </List.Item>
+              © 2019 MovedIn, Inc. All rights reserved
+               </List.Item>
             </List>
           </Container>
         </Segment>
@@ -250,10 +247,10 @@ class App extends Component {
                   </div>
                   <div class="two fields">
                     <div class="required field">
-                      <label>Username</label>
+                      <label>Email</label>
                       <div class="ui icon input">
-                        <input type="text" name="username" placeholder="Username"></input>
-                        <i class="user icon"></i>
+                        <input type="text" name="Email" placeholder="Email address"></input>
+                        <i class="mail icon"></i>
                       </div>
                     </div>
                     <div class="required field">

@@ -48,27 +48,6 @@ const searchOptions=[
   },
 ]
 
-const genderOptions=[
-  {
-    key: 'Male',
-    text: 'Male',
-    value: 'Male',
-    image: { avatar: true, src: '/images/avatar/small/jenny.jpg' },
-  },
-  {
-    key: 'Female',
-    text: 'Female',
-    value: 'Female',
-    image: { avatar: true, src: '/images/avatar/small/elliot.jpg' },
-  },
-  {
-    key: 'Other',
-    text: 'Other',
-    value: 'Other',
-    image: { avatar: true, src: '/images/avatar/small/elliot.jpg' },
-  },
-]
-
 class App extends Component {
   //Authtication-------------------------------------------------------------------------
   constructor(props){
@@ -243,10 +222,10 @@ class App extends Component {
 
         <div>
           <Modal dimmer={dimmer} size={"tiny"} open={this.state.loginModalisOpen} onClose={this.closeLogin}>
-            <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+            <Grid textAlign='center' style={{ height: '50vh' }} verticalAlign='middle'>
               <Grid.Column style={{ maxWidth: 450 }}>
                 <Form size='large' as='form' onSubmit={handleSubmit(this.onSubmit)}>
-                  <Segment stacked>
+
                     <Form.Input
                       fluid icon='mail'
                       iconPosition='right'
@@ -265,7 +244,7 @@ class App extends Component {
                     <Button color='blue' fluid size='large'>
                       Login
                     </Button>
-                  </Segment>
+                  
                 </Form>
                 <Message>
                   New to us? <a href='#'>Sign Up</a>
@@ -277,57 +256,43 @@ class App extends Component {
 
         <div>
           <Modal dimmer={dimmer} size={"tiny"} open={this.state.signupModalisOpen} onClose={this.closeSignup}>
-            <div class="ui middle aligned center aligned grid">
-              <div class="column">
-                <form class="ui form">
-                <div class="ui stacked secondary segment">
-                  <div class="two fields">
-                    <div class="field">
-                      <label>Name</label>
-                      <div class="two fields">
-                        <div class="field">
-                          <input type="text" name="name[first]" placeholder="First Name"></input>
-                        </div>
-                        <div class="field">
-                          <input type="text" name="name[last]" placeholder="Last Name"></input>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="field">
-                      <label>Gender</label>
-                      <Dropdown
-                        placeholder="select gender"
-                        fluid
-                        selection
-                        options={genderOptions}
-                      />
-                    </div>
-                  </div>
-                  <div class="two fields">
-                    <div class="required field">
-                      <label>Email</label>
-                      <div class="ui icon input">
-                        <input type="text" name="Email" placeholder="Email address"></input>
-                        <i class="mail icon"></i>
-                      </div>
-                    </div>
-                    <div class="required field">
-                      <label>Password</label>
-                      <div class="ui icon input">
-                        <input type="password" name="password"></input>
-                        <i class="lock icon"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ui submit button">Submit</div>
-                  </div>
-                </form>
+            <Grid textAlign='center' style={{ height: '50vh' }} verticalAlign='middle'>
+              <Grid.Column style={{ maxWidth: 450 }}>
+                <Form>
+                  <Form.Input
+                    fluid icon='user'
+                    iconPosition='right'
+                    placeholder='First Name'
+                  />
+                  <Form.Input
+                    fluid icon='user'
+                    iconPosition='right'
+                    placeholder='Last Name'
+                  />
+                  
+                  <Form.Input
+                    fluid icon='mail'
+                    iconPosition='right'
+                    placeholder='E-mail Address'
+                  />
+                  <Form.Input
+                      fluid
+                      icon='lock'
+                      iconPosition='right'
+                      placeholder='Password'
+                      type='password'
+                  />
+                  <Button color='blue' fluid size='large'>
+                      Submit
+                  </Button>             
+                </Form>
 
-                <div class="ui message">
+                <Message>
                   Already have an account? <a href="" onClick={(this.closeSignup)}>Log In</a>
-                </div>
-              </div>
-            </div>
+                </Message>
+
+              </Grid.Column>
+            </Grid>
           </Modal>
         </div>
 

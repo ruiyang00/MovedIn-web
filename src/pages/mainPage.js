@@ -1,4 +1,10 @@
 import React, { Component } from 'react'
+import { Link,withRouter } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import {reduxForm, Field, formValueSelector} from 'redux-form';
+import * as actions from '../actions';
+import * as ROUTES from "./../logistics/routes"
 import BackGroundImage from './../images/home.png';
 import HomeLogo from './../images/home #30C5FF.png';
 
@@ -7,11 +13,13 @@ import {
   Container,
   Dropdown,
   Divider,
+  Form,
   Grid,
   Header,
   Icon,
   Image,
   List,
+  Message,
   Menu,
   Modal,
   Segment,
@@ -62,8 +70,54 @@ const genderOptions=[
 ]
 
 class App extends Component {
- 
- 
+  //Authtication-------------------------------------------------------------------------
+  constructor(props){
+    super(props);
+    this.state={
+      email:'',
+      password:''};
+    this.onSubmit=this.onSubmit.bind(this);
+    this.handleInputChange= this.handleInputChange.bind(this);
+  }
+
+  handleInputChange = (event) => {
+    const {value,name}=event.target;
+    this.setState({
+      [name]:value
+    });
+  }
+
+  onSubmit=(formData)=>{
+    console.log(this.state.email);
+    console.log(this.state.password);
+    this.props.signUp(formData);
+    console.log('submitted');
+  }
+
+  userPostFetch = () =>{
+    fetch('http://localhost:5000/users/signup',{
+      method:"POST",
+      mode:'cors',
+      headers:{
+        "Access-Control-Allow-Origin":"*",
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        email: this.state.email,
+        password:this.state.password
+      })
+    })
+    .then(resp=> resp.json())
+    .then(function (data){
+      console.log(data);
+      console.log(data.token);
+      if(data.token){
+        localStorage.setItem("token", data.token);
+    }
+    })
+  }
+
   //Modal windows------------------------------------------------------------------------
   state = { 
     loginModalisOpen: false,
@@ -76,7 +130,8 @@ class App extends Component {
 
   //-------------------------------------------------------------------------------------
   render() {
-    const { open, dimmer} = this.state
+    const { open, dimmer} = this.state;
+    const {handleSubmit} = this.props;
 
     return (
       <div>
@@ -188,32 +243,35 @@ class App extends Component {
 
         <div>
           <Modal dimmer={dimmer} size={"tiny"} open={this.state.loginModalisOpen} onClose={this.closeLogin}>
-            <div class="ui middle aligned center aligned grid">
-              <div class="column">
-                <form action="" method="get" class="ui large form">
-                  <div class="ui stacked secondary segment">
-                    <div class="field">
-                      <div class="ui right icon input">
-                        <i class="mail icon"></i>
-                        <input type="text" name="email" placeholder="E-mail address"></input>
-                      </div>
-                    </div>
-                    <div class="field">
-                      <div class="ui right icon input">
-                        <i class="lock icon"></i>
-                        <input type="password" name="password" placeholder="Password"></input>
-                      </div>
-                    </div>
-
-                    <div class="ui fluid large blue submit button">Log in</div>
-
-                  </div>
-                </form>
-                <div class="ui message">
-                  New to us? <a href="">Sign Up</a>
-                </div>
-              </div>
-            </div>
+            <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+              <Grid.Column style={{ maxWidth: 450 }}>
+                <Form size='large' as='form' onSubmit={handleSubmit(this.onSubmit)}>
+                  <Segment stacked>
+                    <Form.Input 
+                      fluid icon='mail' 
+                      iconPosition='right' 
+                      placeholder='E-mail address' 
+                      value={this.state.email}
+                      onChange={this.handleInputChange}
+                      required
+                    />
+                    <Form.Input
+                      fluid
+                      icon='lock'
+                      iconPosition='right'
+                      placeholder='Password'
+                      type='password'
+                    />
+                    <Button color='blue' fluid size='large'>
+                      Login
+                    </Button>
+                  </Segment>
+                </Form>
+                <Message>
+                  New to us? <a href='#'>Sign Up</a>
+                </Message>
+              </Grid.Column>
+            </Grid>
           </Modal>
         </div>
 

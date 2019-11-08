@@ -73,30 +73,6 @@ class App extends Component {
     console.log('submitted');
   }
 
-  userPostFetch = () =>{
-    fetch('http://localhost:5000/users/signup',{
-      method:"POST",
-      mode:'cors',
-      headers:{
-        "Access-Control-Allow-Origin":"*",
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: JSON.stringify({
-        email: this.state.email,
-        password:this.state.password
-      })
-    })
-    .then(resp=> resp.json())
-    .then(function (data){
-      console.log(data);
-      console.log(data.token);
-      if(data.token){
-        localStorage.setItem("token", data.token);
-    }
-    })
-  }
-
   //Modal windows------------------------------------------------------------------------
   state = {
     loginModalisOpen: false,
@@ -258,7 +234,7 @@ class App extends Component {
           <Modal dimmer={dimmer} size={"tiny"} open={this.state.signupModalisOpen} onClose={this.closeSignup}>
             <Grid textAlign='center' style={{ height: '50vh' }} verticalAlign='middle'>
               <Grid.Column style={{ maxWidth: 450 }}>
-                <Form>
+                <Form as='form' onSubmit={handleSubmit(this.onSubmit)}>
                   <Form.Input
                     fluid icon='user'
                     iconPosition='right'
@@ -274,6 +250,9 @@ class App extends Component {
                     fluid icon='mail'
                     iconPosition='right'
                     placeholder='E-mail Address'
+                    value={this.state.email}
+                    onChange={this.handleInputChange}
+                    required
                   />
                   <Form.Input
                       fluid
@@ -281,6 +260,9 @@ class App extends Component {
                       iconPosition='right'
                       placeholder='Password'
                       type='password'
+                      value={this.state.password}
+                      onChange={this.handleInputChange}
+                      required
                   />
                   <Button color='blue' fluid size='large'>
                       Submit
@@ -306,8 +288,15 @@ function mapStateToProps(state){
     isAuth:state.auth.isAuthenticated
   };
 }
+
+function mapStateToProps(state) {
+  return {
+    errorMessage: state.auth.errorMessage
+  }
+}
+
 export default compose(
-connect(mapStateToProps,null),
-reduxForm({form:'signup'})
+connect(mapStateToProps, actions),
+reduxForm({form:'signup', form:'login'})
 ) (App)
 //export default App;

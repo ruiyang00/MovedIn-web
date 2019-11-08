@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import HomeLogo from './../images/home #30C5FF.png';
 import profile1 from './../images/profile1.png';
 import profile2 from './../images/profile2.png';
@@ -46,8 +46,11 @@ const style = {
   },
 }
 
-const ResponsiveLayout = () => (
-  <div>
+class App extends Component{
+
+  render(){
+    return(
+<div>
     <Menu fixed='top' inverted>
       <Container>
         <Menu.Item as='a' header>
@@ -345,6 +348,7 @@ const ResponsiveLayout = () => (
       </div>
     </div>
   </div>
-)
-
-export default ResponsiveLayout
+    );
+  }
+}
+export default App;

@@ -285,14 +285,9 @@ class App extends Component {
 
 function mapStateToProps(state){
   return {
-    isAuth:state.auth.isAuthenticated
-  };
-}
-
-function mapStateToProps(state) {
-  return {
+    isAuth:state.auth.isAuthenticated,
     errorMessage: state.auth.errorMessage
-  }
+  };
 }
 
 export default compose(

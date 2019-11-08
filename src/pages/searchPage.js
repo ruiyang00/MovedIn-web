@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
-import HomeLogo from './../images/home #30C5FF.png';
-import profile1 from './../images/profile1.png';
-import profile2 from './../images/profile2.png';
-import profile3 from './../images/profile3.png';
-import profile4 from './../images/profile4.png';
-import profile5 from './../images/profile5.png';
-import profile6 from './../images/profile6.png';
+// import HomeLogo from './../images/home #30C5FF.png';
+// import profile1 from './../images/profile1.png';
+// import profile2 from './../images/profile2.png';
+// import profile3 from './../images/profile3.png';
+// import profile4 from './../images/profile4.png';
+// import profile5 from './../images/profile5.png';
+// import profile6 from './../images/profile6.png';
+
+import { Link,withRouter } from 'react-router-dom';
+import { Form} from 'semantic-ui-react';
+import * as ROUTES from "./../logistics/routes";
+import axios from 'axios';
 import {
   Button,
   Card,
@@ -48,13 +53,68 @@ const style = {
 
 class App extends Component {
 
+  constructor(props){
+    super(props);
+    this.state={
+      nameToDisplay:'',
+      city:'',
+      allUsers:[],
+    };
+    this.onSubmit=this.onSubmit.bind(this);
+    this.handleInputChange= this.handleInputChange.bind(this);
+  }
+
+  componentDidMount=()=>{
+    axios.post('http://localhost:5000/users/homePage')
+    .then(function(response){
+         console.log(response.data.allusers);
+         this.setState({allUsers:response.data.allusers})
+
+  }.bind(this));
+
+  }
+
+
+  handleInputChange = (event) => {
+    const {value,name}=event.target;
+    this.setState({
+      [name]:value
+    });
+  }
+
+
+  onSubmit=()=>{
+  // event.preventDefault();
+     console.log(this.state.nameToDisplay);
+     console.log(this.state.city);
+     //this.props.signIn(formData);
+     axios.post('http://localhost:5000/users/addUserPro',{
+    nameToDisplay: this.state.nameToDisplay,
+    city: this.state.city
+  }).
+  then(function(response){
+    window.alert(response.data);
+  });
+
+
+     console.log('submitted');
+
+  }
+
+
+
+
+
   render() {
+    const {allUsers}=this.state;
+    console.log(allUsers);
     return (
+
       <div>
         <Menu fixed='top' inverted>
           <Container>
             <Menu.Item as='a' header>
-              <Image size='mini' src={HomeLogo} style={{ marginRight: '1.5em' }} />
+              <Image size='mini' style={{ marginRight: '1.5em' }} />
               MovedIn
                 </Menu.Item>
 
@@ -177,12 +237,20 @@ class App extends Component {
         <Header as='h4' content='Found 208 matches!'
           style={style.h4, { marginLeft: '12em', marginTop: '0.2em' }} textAlign='Left' />
 
-        <Grid columns={4} doubling style={{ marginLeft: '12em', marginRight: '12em' }}>
-          <Grid.Column>
+
+
+
+
+
+       <Grid columns={4} doubling style={{ marginLeft: '12em', marginRight: '12em' }}>
+          <Grid.Row>
+          {
+            allUsers.map((user)=>{
+              return(
             <Card style={{ width: '15em' }}>
-              <Image src={profile1} wrapped ui={false} />
+              <Image  wrapped ui={false} />
               <Card.Content>
-                <Card.Header>Matthew</Card.Header>
+                <Card.Header>{user.nameToDisplay}</Card.Header>
                 <Card.Meta>
                   <span className='status'>Have a $3100 Apartment in California</span>
                 </Card.Meta>
@@ -197,113 +265,15 @@ class App extends Component {
                   </a>
               </Card.Content>
             </Card>
-          </Grid.Column>
+         )
+         })
 
-          <Grid.Column>
-            <Card style={{ width: '15em' }}>
-              <Image src={profile2} wrapped ui={false} />
-              <Card.Content>
-                <Card.Header>Mary</Card.Header>
-                <Card.Meta>
-                  <span className='status'>Need a $1300 Room in California</span>
-                </Card.Meta>
-                <Card.Description>
-                  Female, 29 years old
-                  </Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <a>
-                  <Icon name='user' />
-                  2 people
-                  </a>
-              </Card.Content>
-            </Card>
-          </Grid.Column>
 
-          <Grid.Column>
-            <Card style={{ width: '15em' }}>
-              <Image src={profile3} wrapped ui={false} />
-              <Card.Content>
-                <Card.Header>Jan</Card.Header>
-                <Card.Meta>
-                  <span className='status'>Have a $2500 Apartment in California</span>
-                </Card.Meta>
-                <Card.Description>
-                  Female, 25 years old
-                  </Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <a>
-                  <Icon name='user' />
-                  1 occupant
-                  </a>
-              </Card.Content>
-            </Card>
-          </Grid.Column>
+          }
+          </Grid.Row>
 
-          <Grid.Column>
-            <Card style={{ width: '15em' }}>
-              <Image src={profile4} wrapped ui={false} />
-              <Card.Content>
-                <Card.Header>Sam</Card.Header>
-                <Card.Meta>
-                  <span className='status'>Need a $1010 Room in California</span>
-                </Card.Meta>
-                <Card.Description>
-                  Male, 20 years old
-                  </Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <a>
-                  <Icon name='user' />
-                  1 person
-                  </a>
-              </Card.Content>
-            </Card>
-          </Grid.Column>
-
-          <Grid.Column>
-            <Card style={{ width: '15em' }}>
-              <Image src={profile5} wrapped ui={false} />
-              <Card.Content>
-                <Card.Header>Justin</Card.Header>
-                <Card.Meta>
-                  <span className='status'>Need a $650 Apartment in California</span>
-                </Card.Meta>
-                <Card.Description>
-                  Male, 18 years old
-                  </Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <a>
-                  <Icon name='user' />
-                  1 person
-                  </a>
-              </Card.Content>
-            </Card>
-          </Grid.Column>
-
-          <Grid.Column>
-            <Card style={{ width: '15em' }}>
-              <Image src={profile6} wrapped ui={false} />
-              <Card.Content>
-                <Card.Header>Betty</Card.Header>
-                <Card.Meta>
-                  <span className='status'>Have a $4500 Apartment in California</span>
-                </Card.Meta>
-                <Card.Description>
-                  Female, 23 years old
-                  </Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <a>
-                  <Icon name='user' />
-                  3 occupants
-                  </a>
-              </Card.Content>
-            </Card>
-          </Grid.Column>
         </Grid>
+
 
         <div class="ui centered grid">
           <div aria-label="Pagination Navigation" role="navigation" class="ui pagination menu">
@@ -347,7 +317,7 @@ class App extends Component {
         </a>
           </div>
         </div>
-      </div>
+      </div>//--------
     );
   }
 }

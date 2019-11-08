@@ -119,7 +119,7 @@ class App extends Component {
   }
 
   //Modal windows------------------------------------------------------------------------
-  state = { 
+  state = {
     loginModalisOpen: false,
     signupModalisOpen: false
   }
@@ -176,7 +176,7 @@ class App extends Component {
                 selection
                 options={searchOptions}
               />
-              
+
             </div>
 
             <div class='col'>
@@ -247,10 +247,10 @@ class App extends Component {
               <Grid.Column style={{ maxWidth: 450 }}>
                 <Form size='large' as='form' onSubmit={handleSubmit(this.onSubmit)}>
                   <Segment stacked>
-                    <Form.Input 
-                      fluid icon='mail' 
-                      iconPosition='right' 
-                      placeholder='E-mail address' 
+                    <Form.Input
+                      fluid icon='mail'
+                      iconPosition='right'
+                      placeholder='E-mail address'
                       value={this.state.email}
                       onChange={this.handleInputChange}
                       required
@@ -322,7 +322,7 @@ class App extends Component {
                   <div class="ui submit button">Submit</div>
                   </div>
                 </form>
-                
+
                 <div class="ui message">
                   Already have an account? <a href="" onClick={(this.closeSignup)}>Log In</a>
                 </div>
@@ -335,4 +335,14 @@ class App extends Component {
     );
   }
 }
-export default App;
+
+function mapStateToProps(state){
+  return {
+    isAuth:state.auth.isAuthenticated
+  };
+}
+export default compose(
+connect(mapStateToProps,null),
+reduxForm({form:'signup'})
+) (App)
+//export default App;

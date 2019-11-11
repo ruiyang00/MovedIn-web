@@ -3,6 +3,7 @@ import { Link,withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {reduxForm, Field, formValueSelector} from 'redux-form';
+import {InputField} from 'react-semantic-redux-form';
 import * as actions from '../actions';
 import * as ROUTES from "./../logistics/routes"
 import BackGroundImage from './../images/home.png';
@@ -54,7 +55,10 @@ class App extends Component {
     super(props);
     this.state={
       email:'',
-      password:''};
+      password:'',
+      email2:'',
+      password2:''
+      };
     this.onSubmit=this.onSubmit.bind(this);
     this.handleInputChange= this.handleInputChange.bind(this);
   }
@@ -67,8 +71,8 @@ class App extends Component {
   }
 
   onSubmit=(formData)=>{
-    console.log(this.state.email);
-    console.log(this.state.password);
+    console.log(this.state.email2);
+    console.log(this.state.password2);
     this.props.signUp(formData);
     console.log('submitted');
   }
@@ -202,7 +206,10 @@ class App extends Component {
               <Grid.Column style={{ maxWidth: 450 }}>
                 <Form size='large' as='form' onSubmit={handleSubmit(this.onSubmit)}>
 
-                    <Form.Input
+                    <Field
+                      component={InputField}
+                      type='text'
+                      name='email'
                       fluid icon='mail'
                       iconPosition='right'
                       placeholder='E-mail address'
@@ -210,12 +217,16 @@ class App extends Component {
                       onChange={this.handleInputChange}
                       required
                     />
-                    <Form.Input
-                      fluid
-                      icon='lock'
+                    <Field
+                      component={InputField}
+                      type='password'
+                      name='password'
+                      fluid icon='lock'
                       iconPosition='right'
                       placeholder='Password'
-                      type='password'
+                      value={this.state.password}
+                      onChange={this.handleInputChange}
+                      required
                     />
                     <Button color='blue' fluid size='large'>
                       Login
@@ -235,32 +246,27 @@ class App extends Component {
             <Grid textAlign='center' style={{ height: '50vh' }} verticalAlign='middle'>
               <Grid.Column style={{ maxWidth: 450 }}>
                 <Form as='form' onSubmit={handleSubmit(this.onSubmit)}>
-                  <Form.Input
-                    fluid icon='user'
-                    iconPosition='right'
-                    placeholder='First Name'
-                  />
-                  <Form.Input
-                    fluid icon='user'
-                    iconPosition='right'
-                    placeholder='Last Name'
-                  />
 
-                  <Form.Input
+                  <Field
+                    component={InputField}
+                    type='text'
+                    name='email2'
                     fluid icon='mail'
-                    iconPosition='right'
+                    iconPosition='left'
                     placeholder='E-mail Address'
-                    value={this.state.email}
+                    value={this.state.email2}
                     onChange={this.handleInputChange}
                     required
                   />
-                  <Form.Input
+                  <Field
+                      component={InputField}
+                      name='password2'
                       fluid
                       icon='lock'
-                      iconPosition='right'
+                      iconPosition='left'
                       placeholder='Password'
                       type='password'
-                      value={this.state.password}
+                      value={this.state.password2}
                       onChange={this.handleInputChange}
                       required
                   />

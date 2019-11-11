@@ -220,7 +220,7 @@ class App extends Component {
                     <Button color='blue' fluid size='large'>
                       Login
                     </Button>
-                  
+
                 </Form>
                 <Message>
                   New to us? <a href='#'>Sign Up</a>
@@ -245,7 +245,7 @@ class App extends Component {
                     iconPosition='right'
                     placeholder='Last Name'
                   />
-                  
+
                   <Form.Input
                     fluid icon='mail'
                     iconPosition='right'
@@ -266,7 +266,7 @@ class App extends Component {
                   />
                   <Button color='blue' fluid size='large'>
                       Submit
-                  </Button>             
+                  </Button>
                 </Form>
 
                 <Message>

@@ -1,26 +1,34 @@
 import React, { Component } from 'react'
-// import HomeLogo from './../images/home #30C5FF.png';
+import HomeLogo from './../images/home #30C5FF.png';
 // import profile1 from './../images/profile1.png';
 // import profile2 from './../images/profile2.png';
 // import profile3 from './../images/profile3.png';
 // import profile4 from './../images/profile4.png';
 // import profile5 from './../images/profile5.png';
 // import profile6 from './../images/profile6.png';
-
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import {reduxForm, Field, formValueSelector} from 'redux-form';
+import {InputField} from 'react-semantic-redux-form';
+import * as actions from '../actions';
 import { Link,withRouter } from 'react-router-dom';
-import { Form} from 'semantic-ui-react';
 import * as ROUTES from "./../logistics/routes";
 import axios from 'axios';
 import {
   Button,
   Card,
   Container,
+  Dropdown,
+  Form,
   Grid,
   Header,
   Icon,
   Image,
   Menu,
+  Message,
+  Modal,
   Pagination,
+  Select,
 } from 'semantic-ui-react'
 
 const PaginationCompact = () => (
@@ -51,8 +59,61 @@ const style = {
   },
 }
 
-class App extends Component {
+const stateOptions = [
+  { key:'AL', value:'AL', text: 'Alabama' },
+	{ key:'AK' , value:'AK', text: 'Alaska' },
+	{ key:'AZ' , value:'AZ', text: 'Arizona' },
+	{ key:'AR' , value:'AR', text: 'Arkansas' },
+	{ key:'CA' , value:'CA', text: 'California' },
+	{ key:'CO' , value:'CO', text: 'Colorado' },
+	{ key:'CT' , value:'CT', text: 'Connecticut' },
+	{ key:'DE' , value:'DE', text: 'Delaware' },
+	{ key:'DC' , value:'DC', text: 'District Of Columbia' },
+	{ key:'FL' , value:'FL', text: 'Florida' },
+	{ key:'GA' , value:'GA', text: 'Georgia' },
+	{ key:'HI' , value:'HI', text: 'Hawaii' },
+	{ key:'ID' , value:'ID', text: 'Idaho' },
+	{ key:'IL' , value:'IL', text: 'Illinois' },
+	{ key:'IN' , value:'IN', text: 'Indiana' },
+	{ key:'IA' , value:'IA', text: 'Iowa' },
+	{ key:'KS' , value:'KS', text: 'Kansas' },
+	{ key:'KY' , value:'KY', text: 'Kentucky' },
+	{ key:'LA' , value:'LA', text: 'Louisiana' },
+	{ key:'ME' , value:'ME', text: 'Maine' },
+	{ key:'MD' , value:'MD', text: 'Maryland' },
+	{ key:'MA' , value:'MA', text: 'Massachusetts' },
+	{ key:'MI' , value:'MI', text: 'Michigan' },
+	{ key:'MN' , value:'MN', text: 'Minnesota' },
+	{ key:'MS' , value:'MS', text: 'Mississippi' },
+	{ key:'MO' , value:'MO', text: 'Missouri' },
+	{ key:'MT' , value:'MT', text: 'Montana' },
+	{ key:'NE' , value:'NE', text: 'Nebraska' },
+	{ key:'NV' , value:'NV', text: 'Nevada' },
+	{ key:'NH' , value:'NH', text: 'New Hampshire' },
+	{ key:'NJ' , value:'NJ', text: 'New Jersey' },
+	{ key:'NM' , value:'NM', text: 'New Mexico' },
+	{ key:'NY' , value:'NY', text: 'New York' },
+	{ key:'NC' , value:'NC', text: 'North Carolina' },
+	{ key:'ND' , value:'ND', text: 'North Dakota' },
+	{ key:'OH' , value:'OH', text: 'Ohio' },
+	{ key:'OK' , value:'OK', text: 'Oklahoma' },
+	{ key:'OR' , value:'OR', text: 'Oregon' },
+	{ key:'PA', value:'PA', text: 'Pennsylvania' },
+	{ key:'RI' , value:'RI', text: 'Rhode Island' },
+	{ key:'SC' , value:'SC', text: 'South Carolina' },
+	{ key:'SD' , value:'SD', text: 'South Dakota' },
+	{ key:'TN' , value:'TN', text: 'Tennessee' },
+	{ key:'TX' , value:'TX', text: 'Texas' },
+	{ key:'UT', value:'UT', text: 'Utah' },
+	{ key:'VT' , value:'VT', text: 'Vermont' },
+	{ key:'VA' , value:'VA', text: 'Virginia' },
+	{ key:'WA' , value:'WA', text: 'Washington' },
+	{ key:'WV' , value:'WV', text: 'West Virginia' },
+	{ key:'WI' , value:'WI', text: 'Wisconsin' },
+	{ key:'WY', value:'WY', text: 'Wyoming' }
+]
 
+class App extends Component {
   constructor(props){
     super(props);
     this.state={
@@ -101,30 +162,34 @@ class App extends Component {
 
   }
 
+ //Modal windows------------------------------------------------------------------------
+  state = {
+    loginModalisOpen: false,
+    signupModalisOpen: false
+  }
+  showLogin = (dimmer) => () => this.setState({ dimmer, loginModalisOpen: true })
+  closeLogin = () => this.setState({ loginModalisOpen: false })
+  showSignup = (dimmer) => () => this.setState({dimmer, signupModalisOpen: true})
+  closeSignup = () => this.setState({signupModalisOpen: false})
 
-
-
-
+  //-------------------------------------------------------------------------------------
   render() {
+    const {open, dimmer} = this.state;
     const {allUsers}=this.state;
     console.log(allUsers);
+  
     return (
-
       <div>
         <Menu fixed='top' inverted>
           <Container>
             <Menu.Item as='a' header>
-              <Image size='mini' style={{ marginRight: '1.5em' }} />
+              <Image size='mini' src={HomeLogo} style={{ marginRight: '1.5em' }} />
               MovedIn
-                </Menu.Item>
+            </Menu.Item>
 
             <Menu.Item position='right'>
-              <Button as='a' >
-                Log in
-                </Button>
-              <Button as='a' style={{ marginLeft: '0.5em' }}>
-                Sign Up
-                </Button>
+              <Button onClick={this.showSignup('blurring')}>Sign Up</Button>
+              <Button onClick={this.showLogin('blurring')} style={{ marginLeft: '0.5em' }}>Log In</Button>
             </Menu.Item>
           </Container>
         </Menu>
@@ -132,60 +197,7 @@ class App extends Component {
         <Grid columns={5} stackable>
           <Grid.Column width={2} style={{ marginTop: '2em', marginLeft: '13em' }}>
             Search location
-            <select class="ui search dropdown">
-              <option value="">State</option>
-              <option value="AL">Alabama</option>
-              <option value="AK">Alaska</option>
-              <option value="AZ">Arizona</option>
-              <option value="AR">Arkansas</option>
-              <option value="CA">California</option>
-              <option value="CO">Colorado</option>
-              <option value="CT">Connecticut</option>
-              <option value="DE">Delaware</option>
-              <option value="DC">District Of Columbia</option>
-              <option value="FL">Florida</option>
-              <option value="GA">Georgia</option>
-              <option value="HI">Hawaii</option>
-              <option value="ID">Idaho</option>
-              <option value="IL">Illinois</option>
-              <option value="IN">Indiana</option>
-              <option value="IA">Iowa</option>
-              <option value="KS">Kansas</option>
-              <option value="KY">Kentucky</option>
-              <option value="LA">Louisiana</option>
-              <option value="ME">Maine</option>
-              <option value="MD">Maryland</option>
-              <option value="MA">Massachusetts</option>
-              <option value="MI">Michigan</option>
-              <option value="MN">Minnesota</option>
-              <option value="MS">Mississippi</option>
-              <option value="MO">Missouri</option>
-              <option value="MT">Montana</option>
-              <option value="NE">Nebraska</option>
-              <option value="NV">Nevada</option>
-              <option value="NH">New Hampshire</option>
-              <option value="NJ">New Jersey</option>
-              <option value="NM">New Mexico</option>
-              <option value="NY">New York</option>
-              <option value="NC">North Carolina</option>
-              <option value="ND">North Dakota</option>
-              <option value="OH">Ohio</option>
-              <option value="OK">Oklahoma</option>
-              <option value="OR">Oregon</option>
-              <option value="PA">Pennsylvania</option>
-              <option value="RI">Rhode Island</option>
-              <option value="SC">South Carolina</option>
-              <option value="SD">South Dakota</option>
-              <option value="TN">Tennessee</option>
-              <option value="TX">Texas</option>
-              <option value="UT">Utah</option>
-              <option value="VT">Vermont</option>
-              <option value="VA">Virginia</option>
-              <option value="WA">Washington</option>
-              <option value="WV">West Virginia</option>
-              <option value="WI">Wisconsin</option>
-              <option value="WY">Wyoming</option>
-            </select>
+            <Select placeholder='State' options={stateOptions} />
           </Grid.Column>
 
           <Grid.Column width={2} style={{ marginTop: '2em', marginLeft: '0.0em' }}>
@@ -236,10 +248,6 @@ class App extends Component {
           style={style.h4, { marginLeft: '12em', marginTop: '0.2em' }} textAlign='Left' />
         <Header as='h4' content='Found 208 matches!'
           style={style.h4, { marginLeft: '12em', marginTop: '0.2em' }} textAlign='Left' />
-
-
-
-
 
 
        <Grid columns={4} doubling style={{ marginLeft: '12em', marginRight: '12em' }}>
@@ -317,6 +325,92 @@ class App extends Component {
         </a>
           </div>
         </div>
+
+        <div>
+          <Modal dimmer={dimmer} size={"tiny"} open={this.state.loginModalisOpen} onClose={this.closeLogin}>
+            <Grid textAlign='center' style={{ height: '50vh' }} verticalAlign='middle'>
+              <Grid.Column style={{ maxWidth: 450 }}>
+                <Form size='large' as='form' onSubmit={null}>
+
+                    <Field
+                      component={InputField}
+                      type='text'
+                      name='email'
+                      fluid icon='mail'
+                      iconPosition='right'
+                      placeholder='E-mail address'
+                      value={null}
+                      onChange={null}
+                      required
+                    />
+                    <Field
+                      component={InputField}
+                      type='password'
+                      name='password'
+                      fluid icon='lock'
+                      iconPosition='right'
+                      placeholder='Password'
+                      value={null}
+                      onChange={null}
+                      required
+                    />
+                    <Button color='blue' fluid size='large'>
+                      Log In
+                    </Button>
+
+                </Form>
+                <Message>
+                  New to us? <a href='#'>Sign Up</a>
+                </Message>
+              </Grid.Column>
+            </Grid>
+          </Modal>
+        </div>
+
+        <div>
+          <Modal dimmer={dimmer} size={"tiny"} open={this.state.signupModalisOpen} onClose={this.closeSignup}>
+            <Grid textAlign='center' style={{ height: '50vh' }} verticalAlign='middle'>
+              <Grid.Column style={{ maxWidth: 450 }}>
+                <Form as='form' onSubmit={null}>
+
+                  <Field
+                    component={InputField}
+                    type='text'
+                    name='email2'
+                    fluid icon='mail'
+                    iconPosition='right'
+                    placeholder='E-mail Address'
+                    value={null}
+                    onChange={null}
+                    required
+                  />
+                  <Field
+                      component={InputField}
+                      name='password2'
+                      fluid
+                      icon='lock'
+                      iconPosition='right'
+                      placeholder='Password'
+                      type='password'
+                      value={null}
+                      onChange={null}
+                      required
+                  />
+                  <Button color='blue' fluid size='large'>
+                      Sign Up
+                  </Button>
+                </Form>
+
+                <Message>
+                  Already have an account? <a href="" onClick={(this.closeSignup)}>Log In</a>
+                </Message>
+
+              </Grid.Column>
+            </Grid>
+          </Modal>
+        </div>
+
+
       </div>//--------
     );
   }

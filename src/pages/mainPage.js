@@ -229,7 +229,7 @@ class App extends Component {
                       required
                     />
                     <Button color='blue' fluid size='large'>
-                      Login
+                      Log In
                     </Button>
 
                 </Form>
@@ -271,7 +271,7 @@ class App extends Component {
                       required
                   />
                   <Button color='blue' fluid size='large'>
-                      Submit
+                      Sign Up
                   </Button>
                 </Form>
 

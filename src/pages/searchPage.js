@@ -68,7 +68,7 @@ const stateOptions = [
 	{ key:'CO' , value:'CO', text: 'Colorado' },
 	{ key:'CT' , value:'CT', text: 'Connecticut' },
 	{ key:'DE' , value:'DE', text: 'Delaware' },
-	{ key:'DC' , value:'DC', text: 'District Of Columbia' },
+	{ key:'DC' , value:'DC', text: 'D.C.' },
 	{ key:'FL' , value:'FL', text: 'Florida' },
 	{ key:'GA' , value:'GA', text: 'Georgia' },
 	{ key:'HI' , value:'HI', text: 'Hawaii' },
@@ -111,6 +111,24 @@ const stateOptions = [
 	{ key:'WV' , value:'WV', text: 'West Virginia' },
 	{ key:'WI' , value:'WI', text: 'Wisconsin' },
 	{ key:'WY', value:'WY', text: 'Wyoming' }
+]
+
+const roomOptions =[
+  {key: 'have', value: 'have', text:'Have a room'},
+  {key: 'need', value: 'need', text:'Need a room'},
+]
+
+const rentOptions =[
+  {key: '200', value: '200', text:'$200'},
+  {key: '400', value: '400', text:'$400'},
+  {key: '600', value: '600', text:'$600'},
+  {key: '800', value: '800', text:'$800'},
+  {key: '1000', value: '1000', text:'$1000'},
+  {key: '1200', value: '1200', text:'$1200'},
+  {key: '1400', value: '1400', text:'$1400'},
+  {key: '1600', value: '1600', text:'$1600'},
+  {key: '1800', value: '1800', text:'$1800'},
+  {key: '2000', value: '2000', text:'$2000+'},
 ]
 
 class App extends Component {
@@ -188,8 +206,8 @@ class App extends Component {
             </Menu.Item>
 
             <Menu.Item position='right'>
-              <Button onClick={this.showSignup('blurring')}>Sign Up</Button>
-              <Button onClick={this.showLogin('blurring')} style={{ marginLeft: '0.5em' }}>Log In</Button>
+              <Button onClick={null}>Sign Up</Button>
+              <Button onClick={null} style={{ marginLeft: '0.5em' }}>Log In</Button>
             </Menu.Item>
           </Container>
         </Menu>
@@ -197,24 +215,17 @@ class App extends Component {
         <Grid columns={5} stackable>
           <Grid.Column width={2} style={{ marginTop: '2em', marginLeft: '13em' }}>
             Search location
-            <Select placeholder='State' options={stateOptions} />
+            <Select placeholder='State' style={{minWidth:"10em"}} options={stateOptions}/>
           </Grid.Column>
 
           <Grid.Column width={2} style={{ marginTop: '2em', marginLeft: '0.0em' }}>
             Members who
-            <select class="ui search dropdown">
-              <option value="">Have a room</option>
-              <option value="1">Need a room</option>
-            </select>
+            <Select placeholder='Have a room' style={{minWidth:"10em"}} options={roomOptions} />
           </Grid.Column>
 
           <Grid.Column width={2} style={{ marginTop: '2em', marginLeft: '0.0em' }}>
-            Range of rent
-            <select class="ui dropdown">
-              <option value="">Less than $500</option>
-              <option value="1">$500-$1000</option>
-              <option value="2">$1000-$1500</option>
-            </select>
+            Max rent
+            <Select placeholder='$2000+' style={{minWidth:"10em"}} options={rentOptions} />
           </Grid.Column>
 
           <Grid.Column width={2} style={{ marginTop: '2em', marginLeft: '0.0em' }}>

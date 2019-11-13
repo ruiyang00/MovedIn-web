@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import SemanticDatepicker from 'react-semantic-ui-datepickers';
+import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
+
 import HomeLogo from './../images/home #30C5FF.png';
 // import profile1 from './../images/profile1.png';
 // import profile2 from './../images/profile2.png';
@@ -131,10 +134,16 @@ const rentOptions =[
   {key: '2000', value: '2000', text:'$2000+'},
 ]
 
+const AppWithBasic = ({ onChange }) => (
+  <SemanticDatepicker onChange={onChange} />
+);
+
+
 class App extends Component {
   constructor(props){
     super(props);
     this.state={
+      date: null,
       nameToDisplay:'',
       city:'',
       allUsers:[],
@@ -153,7 +162,6 @@ class App extends Component {
 
   }
 
-
   handleInputChange = (event) => {
     const {value,name}=event.target;
     this.setState({
@@ -161,6 +169,9 @@ class App extends Component {
     });
   }
 
+  handleDateChange = date => {
+    this.setState({ date });
+  };
 
   onSubmit=()=>{
   // event.preventDefault();
@@ -192,7 +203,7 @@ class App extends Component {
 
   //-------------------------------------------------------------------------------------
   render() {
-    const {open, dimmer} = this.state;
+    const {date, dimmer} = this.state;
     const {allUsers}=this.state;
     console.log(allUsers);
   
@@ -230,23 +241,10 @@ class App extends Component {
 
           <Grid.Column width={2} style={{ marginTop: '2em', marginLeft: '0.0em' }}>
             Moved-in Date
-            <select class="ui dropdown">
-              <option value="">January</option>
-              <option value="1">February</option>
-              <option value="2">March</option>
-              <option value="3">April</option>
-              <option value="4">May</option>
-              <option value="5">June</option>
-              <option value="6">July</option>
-              <option value="7">August</option>
-              <option value="8">September</option>
-              <option value="9">October</option>
-              <option value="10">November</option>
-              <option value="11">December</option>
-            </select>
+            <SemanticDatepicker onDateChange={this.handleDateChange} />
           </Grid.Column>
 
-          <Grid.Column width={2} style={{ marginTop: '3.5em', marginLeft: '0.0em' }}>
+          <Grid.Column width={2} style={{ marginTop: '3.5em', marginLeft: '3.0em' }}>
             <Button primary size='small'>
               Search
             <Icon name='right arrow' />

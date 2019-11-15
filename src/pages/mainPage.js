@@ -229,7 +229,7 @@ class App extends Component {
                       required
                     />
                     <Button color='blue' fluid size='large'>
-                      Login
+                      Log In
                     </Button>
 
                 </Form>
@@ -252,7 +252,7 @@ class App extends Component {
                     type='text'
                     name='email2'
                     fluid icon='mail'
-                    iconPosition='left'
+                    iconPosition='right'
                     placeholder='E-mail Address'
                     value={this.state.email2}
                     onChange={this.handleInputChange}
@@ -263,7 +263,7 @@ class App extends Component {
                       name='password2'
                       fluid
                       icon='lock'
-                      iconPosition='left'
+                      iconPosition='right'
                       placeholder='Password'
                       type='password'
                       value={this.state.password2}
@@ -271,7 +271,7 @@ class App extends Component {
                       required
                   />
                   <Button color='blue' fluid size='large'>
-                      Submit
+                      Sign Up
                   </Button>
                 </Form>
 

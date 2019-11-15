@@ -1,14 +1,6 @@
+//React
 import React, { Component } from 'react'
 import { Link,withRouter } from 'react-router-dom';
-import {connect} from 'react-redux';
-import {compose} from 'redux';
-import {reduxForm, Field, formValueSelector} from 'redux-form';
-import {InputField} from 'react-semantic-redux-form';
-import * as actions from '../actions';
-import * as ROUTES from "./../logistics/routes"
-import BackGroundImage from './../images/home.png';
-import HomeLogo from './../images/home #30C5FF.png';
-
 import {
   Button,
   Container,
@@ -18,6 +10,7 @@ import {
   Grid,
   Header,
   Icon,
+  Input,
   Image,
   List,
   Message,
@@ -27,6 +20,19 @@ import {
   Search
 } from 'semantic-ui-react'
 
+//Redux
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import {reduxForm, Field, formValueSelector} from 'redux-form';
+import {InputField} from 'react-semantic-redux-form';
+import * as actions from '../actions';
+import * as ROUTES from "./../logistics/routes"
+
+//Others
+import BackGroundImage from './../images/home.png';
+import HomeLogo from './../images/home #30C5FF.png';
+
+//const----------------------------------------------------------------------------------
 const backgroundStyle = {
   // width: "100%",
   height: "100vh",
@@ -49,15 +55,18 @@ const searchOptions=[
   },
 ]
 
+//class App------------------------------------------------------------------------------
 class App extends Component {
   //Authtication-------------------------------------------------------------------------
   constructor(props){
     super(props);
     this.state={
-      email:'',
-      password:'',
-      email2:'',
-      password2:''
+      loginEmail:'',
+      loginPassword:'',
+      signupEmail:'',
+      signupPassword:'',
+      parentModalisOpen:false,
+      childModalisOpen:false
       };
     this.onSubmit=this.onSubmit.bind(this);
     this.handleInputChange= this.handleInputChange.bind(this);
@@ -69,10 +78,17 @@ class App extends Component {
       [name]:value
     });
   }
+  
+  handleNextStep = () => {
+    this.setState({
+      childModalisOpen: true, signupModalisOpen: false
+    });
+  }
+  
 
   onSubmit=(formData)=>{
-    console.log(this.state.email2);
-    console.log(this.state.password2);
+    console.log(this.state.signupEmail);
+    console.log(this.state.signupPassword);
     this.props.signUp(formData);
     console.log('submitted');
   }
@@ -82,15 +98,29 @@ class App extends Component {
     loginModalisOpen: false,
     signupModalisOpen: false
   }
+
   showLogin = (dimmer) => () => this.setState({ dimmer, loginModalisOpen: true })
   closeLogin = () => this.setState({ loginModalisOpen: false })
   showSignup = (dimmer) => () => this.setState({dimmer, signupModalisOpen: true})
   closeSignup = () => this.setState({signupModalisOpen: false})
 
+  showParentModal = (dimmer) => () => this.setState({ dimmer, parentModalisOpen: true })
+  closeParentModal = () => this.setState({ parentModalisOpen: false })
+
+  showChildModal = (dimmer) => () => this.setState({ dimmer,childModalisOpen: true })
+  closeChildModal = () => this.setState({ childModalisOpen: false})
+
   //-------------------------------------------------------------------------------------
   render() {
-    const { open, dimmer} = this.state;
+    const {dimmer, 
+           signupEmail, 
+           signupPassword,
+           loginEmail,
+           loginPassword} = this.state;
     const {handleSubmit} = this.props;
+    const nextStepisDisabled = 
+                              signupEmail===""||
+                              signupPassword==="";
 
     return (
       <div>
@@ -199,7 +229,9 @@ class App extends Component {
             </List>
           </Container>
         </Segment>
-
+        
+       
+        
         <div>
           <Modal dimmer={dimmer} size={"tiny"} open={this.state.loginModalisOpen} onClose={this.closeLogin}>
             <Grid textAlign='center' style={{ height: '50vh' }} verticalAlign='middle'>
@@ -209,22 +241,22 @@ class App extends Component {
                     <Field
                       component={InputField}
                       type='text'
-                      name='email'
+                      name='loginEmail'
                       fluid icon='mail'
                       iconPosition='right'
                       placeholder='E-mail address'
-                      value={this.state.email}
+                      value={this.state.loginEmail}
                       onChange={this.handleInputChange}
                       required
                     />
                     <Field
                       component={InputField}
                       type='password'
-                      name='password'
+                      name='loginPassword'
                       fluid icon='lock'
                       iconPosition='right'
                       placeholder='Password'
-                      value={this.state.password}
+                      value={this.state.loginPassword}
                       onChange={this.handleInputChange}
                       required
                     />
@@ -250,39 +282,81 @@ class App extends Component {
                   <Field
                     component={InputField}
                     type='text'
-                    name='email2'
+                    name='signupEmail'
                     fluid icon='mail'
                     iconPosition='right'
                     placeholder='E-mail Address'
-                    value={this.state.email2}
+                    value={this.state.signupEmail}
                     onChange={this.handleInputChange}
                     required
                   />
                   <Field
                       component={InputField}
-                      name='password2'
+                      name='signupPassword'
                       fluid
                       icon='lock'
                       iconPosition='right'
                       placeholder='Password'
                       type='password'
-                      value={this.state.password2}
+                      value={this.state.signupPassword}
                       onChange={this.handleInputChange}
                       required
                   />
-                  <Button color='blue' fluid size='large'>
-                      Sign Up
+                  <Button color='blue' 
+                          fluid size='large'
+                          disabled={nextStepisDisabled}
+                          onClick={this.handleNextStep}
+                          >
+                    Next Step <Icon name='right chevron' />
                   </Button>
                 </Form>
 
                 <Message>
-                  Already have an account? <a href="" onClick={(this.closeSignup)}>Log In</a>
+                  Already have an account? <a href="" >Log In</a>
                 </Message>
 
               </Grid.Column>
             </Grid>
           </Modal>
         </div>
+
+        <Button onClick={this.showParentModal('blurring')}>Parent Modals</Button>
+
+        <Modal dimmer={dimmer} open={this.state.parentModalisOpen} onClose={this.closeParentModal}>
+          <Modal.Header>Parent Modal</Modal.Header>
+          <Modal.Content image>
+            <div className='image'>
+              <Icon name='right arrow' />
+            </div>
+            <Modal.Description>
+              <p>We have more to share with you. Follow us along to modal 2</p>
+            </Modal.Description>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button primary icon onFocus={this.handleNextStep}>
+              Proceed <Icon name='right chevron' />
+            </Button>
+
+            <Button primary icon onClick={this.parentModalClose}>
+              Close <Icon name='right chevron' />
+            </Button>
+          </Modal.Actions>
+        </Modal>
+
+        <Modal
+          dimmer={dimmer}
+          open={this.state.childModalisOpen}
+          onClose={this.parentModalClose}
+          size='small'
+        >
+        <Modal.Header>Modal #2</Modal.Header>
+        <Modal.Content>
+          <p>That's everything!</p>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button icon='check' content='All Done' onClick={this.closeChildModal}/>
+        </Modal.Actions>
+      </Modal>
 
       </div>
     );

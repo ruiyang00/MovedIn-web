@@ -153,7 +153,7 @@ class App extends Component {
   }
 
   componentDidMount=()=>{
-    axios.post('http://localhost:5000/users/homePage')
+    axios.post('http://localhost:5000/users/homePage',{email:localStorage.getItem('user')})
     .then(function(response){
          console.log(response.data.allusers);
          this.setState({allUsers:response.data.allusers})

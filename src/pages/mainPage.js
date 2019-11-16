@@ -1,4 +1,4 @@
-//React
+//React import
 import React, { Component } from 'react'
 import { Link,withRouter } from 'react-router-dom';
 import {
@@ -17,10 +17,13 @@ import {
   Menu,
   Modal,
   Segment,
-  Search
+  Select,
+  Search,
+  Popup,
+  ButtonContent
 } from 'semantic-ui-react'
 
-//Redux
+//Redux import
 import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {reduxForm, Field, formValueSelector} from 'redux-form';
@@ -28,7 +31,7 @@ import {InputField} from 'react-semantic-redux-form';
 import * as actions from '../actions';
 import * as ROUTES from "./../logistics/routes"
 
-//Others
+//Others import
 import BackGroundImage from './../images/home.png';
 import HomeLogo from './../images/home #30C5FF.png';
 
@@ -55,6 +58,30 @@ const searchOptions=[
   },
 ]
 
+const genderOptions=[
+  {key:'Male', text:'Male', value: 'Male'},
+  {key:'Female', text:'Female', value: 'Female'},
+  {key:'Other', text:'Other', value: 'Other'}
+]
+
+const roomOptions =[
+  {key: 'House', value: 'House', text:'House'},
+  {key: 'Apartment', value: 'Apartment', text:'Apartment'},
+]
+
+const rentOptions =[
+  {key: '200', value: '200', text:'$200'},
+  {key: '400', value: '400', text:'$400'},
+  {key: '600', value: '600', text:'$600'},
+  {key: '800', value: '800', text:'$800'},
+  {key: '1000', value: '1000', text:'$1000'},
+  {key: '1200', value: '1200', text:'$1200'},
+  {key: '1400', value: '1400', text:'$1400'},
+  {key: '1600', value: '1600', text:'$1600'},
+  {key: '1800', value: '1800', text:'$1800'},
+  {key: '2000', value: '2000', text:'$2000+'},
+]
+
 //class App------------------------------------------------------------------------------
 class App extends Component {
   //Authtication-------------------------------------------------------------------------
@@ -65,13 +92,25 @@ class App extends Component {
       loginPassword:'',
       signupEmail:'',
       signupPassword:'',
-      parentModalisOpen:false,
+      loginModalisOpen: false,
+      signupModalisOpen: false,
       childModalisOpen:false
       };
     this.onSubmit=this.onSubmit.bind(this);
     this.handleInputChange= this.handleInputChange.bind(this);
   }
 
+  //Modal windows------------------------------------------------------------------------
+  showLogin = (dimmer) => () => this.setState({ dimmer, loginModalisOpen: true })
+  closeLogin = () => this.setState({ loginModalisOpen: false })
+  
+  showSignup = (dimmer) => () => this.setState({dimmer, signupModalisOpen: true})
+  closeSignup = () => this.setState({signupModalisOpen: false})
+
+  showChildModal = (dimmer) => () => this.setState({ dimmer,childModalisOpen: true })
+  closeChildModal = () => this.setState({ childModalisOpen: false})
+
+  //Event handle-------------------------------------------------------------------------
   handleInputChange = (event) => {
     const {value,name}=event.target;
     this.setState({
@@ -81,10 +120,24 @@ class App extends Component {
   
   handleNextStep = () => {
     this.setState({
-      childModalisOpen: true, signupModalisOpen: false
+      childModalisOpen: true,
+      signupModalisOpen: false
     });
   }
   
+  handleToLogin = () => {
+    this.setState({
+      loginModalisOpen: true,
+      signupModalisOpen: false
+    });
+  }
+
+  handleToSignup= () => {
+    this.setState({
+      signupModalisOpen: true,
+      loginModalisOpen: false
+    });
+  }
 
   onSubmit=(formData)=>{
     console.log(this.state.signupEmail);
@@ -92,23 +145,6 @@ class App extends Component {
     this.props.signUp(formData);
     console.log('submitted');
   }
-
-  //Modal windows------------------------------------------------------------------------
-  state = {
-    loginModalisOpen: false,
-    signupModalisOpen: false
-  }
-
-  showLogin = (dimmer) => () => this.setState({ dimmer, loginModalisOpen: true })
-  closeLogin = () => this.setState({ loginModalisOpen: false })
-  showSignup = (dimmer) => () => this.setState({dimmer, signupModalisOpen: true})
-  closeSignup = () => this.setState({signupModalisOpen: false})
-
-  showParentModal = (dimmer) => () => this.setState({ dimmer, parentModalisOpen: true })
-  closeParentModal = () => this.setState({ parentModalisOpen: false })
-
-  showChildModal = (dimmer) => () => this.setState({ dimmer,childModalisOpen: true })
-  closeChildModal = () => this.setState({ childModalisOpen: false})
 
   //-------------------------------------------------------------------------------------
   render() {
@@ -265,9 +301,19 @@ class App extends Component {
                     </Button>
 
                 </Form>
-                <Message>
-                  New to us? <a href='#'>Sign Up</a>
-                </Message>
+
+                <Button basic 
+                        fluid
+                        animated 
+                        size="large"
+                        style={{marginTop:"0.5em"}}
+                        onClick={this.handleToSignup}>
+                  <Button.Content visible>New to us?</Button.Content>
+                  <Button.Content hidden>
+                    Sign Up
+                  </Button.Content>
+                </Button>
+
               </Grid.Column>
             </Grid>
           </Modal>
@@ -283,13 +329,15 @@ class App extends Component {
                     component={InputField}
                     type='text'
                     name='signupEmail'
-                    fluid icon='mail'
+                    fluid 
+                    icon='mail'
                     iconPosition='right'
                     placeholder='E-mail Address'
                     value={this.state.signupEmail}
                     onChange={this.handleInputChange}
                     required
                   />
+                  
                   <Field
                       component={InputField}
                       name='signupPassword'
@@ -302,8 +350,10 @@ class App extends Component {
                       onChange={this.handleInputChange}
                       required
                   />
+                  
                   <Button color='blue' 
-                          fluid size='large'
+                          fluid 
+                          size='large'
                           disabled={nextStepisDisabled}
                           onClick={this.handleNextStep}
                           >
@@ -311,51 +361,74 @@ class App extends Component {
                   </Button>
                 </Form>
 
-                <Message>
-                  Already have an account? <a href="" >Log In</a>
-                </Message>
-
+                <Button basic 
+                        fluid
+                        animated 
+                        size="large"
+                        style={{marginTop:"0.5em"}}
+                        onClick={this.handleToLogin}>
+                  <Button.Content visible>Already have an account?</Button.Content>
+                  <Button.Content hidden>
+                    Log In
+                  </Button.Content>
+                </Button>
+                
+                
               </Grid.Column>
             </Grid>
           </Modal>
         </div>
 
-        <Button onClick={this.showParentModal('blurring')}>Parent Modals</Button>
+        <Modal dimmer={dimmer} size={"tiny"} open={this.state.childModalisOpen} >
+          <Modal.Header>
+            <Button class="ui facebook button" color="facebook" size="large" fluid >
+              <i class="facebook icon"></i>
+              Sign Up with Facebook
+            </Button>
 
-        <Modal dimmer={dimmer} open={this.state.parentModalisOpen} onClose={this.closeParentModal}>
-          <Modal.Header>Parent Modal</Modal.Header>
-          <Modal.Content image>
-            <div className='image'>
-              <Icon name='right arrow' />
-            </div>
-            <Modal.Description>
-              <p>We have more to share with you. Follow us along to modal 2</p>
-            </Modal.Description>
+            <Button class="ui google button" color="google plus" size="large" fluid style={{marginTop:"0.5em"}}>
+                <i class="google icon"></i>
+                Sign Up with Google
+              </Button>
+          </Modal.Header>
+        
+          <Modal.Content>
+            <Form>
+              <Form.Input
+                width={20}
+                fluid 
+                icon='user'
+                iconPosition='right'
+                type="text"
+                name='First Name'
+                placeholder="First Name"
+                value={null}
+                onChange={null}
+                required
+              />
+              <Form.Input
+                icon='user'
+                iconPosition='right'
+                width={20}
+                fluid
+                type="text"
+                name='Last Name'
+                placeholder="Last Name"
+                value={null}
+                onChange={null}
+                required
+              />
+            <Select placeholder='Select gender' icon='' style={{minWidth:"10em"}} options={genderOptions}/>
+            <Select placeholder='Select a prefered room type' style={{marginLeft:"0.5em"}} options={roomOptions}/>
+            <Select placeholder='Maximum rent budget' style={{marginLeft:"0.5em", minWidth:"10em"}} options={rentOptions}/>
+              
+
+              
+            </Form>
           </Modal.Content>
           <Modal.Actions>
-            <Button primary icon onFocus={this.handleNextStep}>
-              Proceed <Icon name='right chevron' />
-            </Button>
-
-            <Button primary icon onClick={this.parentModalClose}>
-              Close <Icon name='right chevron' />
-            </Button>
+            <Button icon='check' content='All Done' onClick={this.closeChildModal}/>
           </Modal.Actions>
-        </Modal>
-
-        <Modal
-          dimmer={dimmer}
-          open={this.state.childModalisOpen}
-          onClose={this.parentModalClose}
-          size='small'
-        >
-        <Modal.Header>Modal #2</Modal.Header>
-        <Modal.Content>
-          <p>That's everything!</p>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button icon='check' content='All Done' onClick={this.closeChildModal}/>
-        </Modal.Actions>
       </Modal>
 
       </div>

@@ -235,7 +235,7 @@ class App extends Component {
                     </Button>
                   </Modal.Header>
 
-                  <Divider horizontal>Or</Divider>
+                  <Divider horizontal>or</Divider>
 
                   <Modal.Content>
                     <Field
@@ -282,7 +282,8 @@ class App extends Component {
             <Grid textAlign='center' style={{ height: '50vh' }} verticalAlign='middle'>
               <Grid.Column style={{ maxWidth: 450 }}>
                 <Form as='form' onSubmit={handleSubmit(this.onSubmit)}>
-
+                  Welcome! Sign up with <a>Google</a> or <a>Facebook</a>
+                  <Divider horizontal>or</Divider>
                   <Field
                     component={InputField}
                     size="large"
@@ -329,22 +330,6 @@ class App extends Component {
           </Modal>
 
           <Modal dimmer={dimmer} size={"tiny"} open={this.state.childModalisOpen} >
-            <Modal.Header>
-              <Button class="ui facebook button" 
-                      color="facebook" 
-                      size="large" 
-                      fluid 
-                      style={{marginTop:"2em"}}>
-                <i class="facebook icon"></i>
-                Sign Up with Facebook
-              </Button>
-
-              <Button class="ui google button" color="google plus" size="large" fluid style={{marginTop:"0.5em"}}>
-                  <i class="google icon"></i>
-                  Sign Up with Google
-                </Button>
-            </Modal.Header>
-
             <Modal.Content>
               <Form>
                 <Form.Input

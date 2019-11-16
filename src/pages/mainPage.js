@@ -58,29 +58,7 @@ const searchOptions=[
   },
 ]
 
-const genderOptions=[
-  {key:'Male', text:'Male', value: 'Male'},
-  {key:'Female', text:'Female', value: 'Female'},
-  {key:'Other', text:'Other', value: 'Other'}
-]
 
-const roomOptions =[
-  {key: 'House', value: 'House', text:'House'},
-  {key: 'Apartment', value: 'Apartment', text:'Apartment'},
-]
-
-const rentOptions =[
-  {key: '200', value: '200', text:'$200'},
-  {key: '400', value: '400', text:'$400'},
-  {key: '600', value: '600', text:'$600'},
-  {key: '800', value: '800', text:'$800'},
-  {key: '1000', value: '1000', text:'$1000'},
-  {key: '1200', value: '1200', text:'$1200'},
-  {key: '1400', value: '1400', text:'$1400'},
-  {key: '1600', value: '1600', text:'$1600'},
-  {key: '1800', value: '1800', text:'$1800'},
-  {key: '2000', value: '2000', text:'$2000+'},
-]
 
 //class App------------------------------------------------------------------------------
 class App extends Component {
@@ -100,16 +78,6 @@ class App extends Component {
     this.handleInputChange= this.handleInputChange.bind(this);
   }
 
-  //Modal windows------------------------------------------------------------------------
-  showLogin = (dimmer) => () => this.setState({ dimmer, loginModalisOpen: true })
-  closeLogin = () => this.setState({ loginModalisOpen: false })
-  
-  showSignup = (dimmer) => () => this.setState({dimmer, signupModalisOpen: true})
-  closeSignup = () => this.setState({signupModalisOpen: false})
-
-  showChildModal = (dimmer) => () => this.setState({ dimmer,childModalisOpen: true })
-  closeChildModal = () => this.setState({ childModalisOpen: false})
-
   //Event handle-------------------------------------------------------------------------
   handleInputChange = (event) => {
     const {value,name}=event.target;
@@ -118,27 +86,6 @@ class App extends Component {
     });
   }
   
-  handleNextStep = () => {
-    this.setState({
-      childModalisOpen: true,
-      signupModalisOpen: false
-    });
-  }
-  
-  handleToLogin = () => {
-    this.setState({
-      loginModalisOpen: true,
-      signupModalisOpen: false
-    });
-  }
-
-  handleToSignup= () => {
-    this.setState({
-      signupModalisOpen: true,
-      loginModalisOpen: false
-    });
-  }
-
   onSubmit=(formData)=>{
     console.log(this.state.signupEmail);
     console.log(this.state.signupPassword);
@@ -148,32 +95,11 @@ class App extends Component {
 
   //-------------------------------------------------------------------------------------
   render() {
-    const {dimmer, 
-           signupEmail, 
-           signupPassword,
-           loginEmail,
-           loginPassword} = this.state;
+   
     const {handleSubmit} = this.props;
-    const nextStepisDisabled = 
-                              signupEmail===""||
-                              signupPassword==="";
-
+   
     return (
       <div>
-        <Menu fixed='top' inverted>
-          <Container>
-            <Menu.Item as='a' header>
-              <Image size='mini' src={HomeLogo} style={{ marginRight: '1.5em' }} />
-              MovedIn
-          </Menu.Item>
-
-            <Menu.Item position='right'>
-              <Button onClick={this.showSignup('blurring')}>Sign Up</Button>
-              <Button onClick={this.showLogin('blurring')} style={{ marginLeft: '0.5em' }}>Log In</Button>
-            </Menu.Item>
-          </Container>
-        </Menu>
-
         <div style={backgroundStyle}>
           <Container text style={{ marginTop: '7em' }}>
             <Header as='h1' inverted style={{
@@ -268,168 +194,7 @@ class App extends Component {
         
        
         
-        <div>
-          <Modal dimmer={dimmer} size={"tiny"} open={this.state.loginModalisOpen} onClose={this.closeLogin}>
-            <Grid textAlign='center' style={{ height: '50vh' }} verticalAlign='middle'>
-              <Grid.Column style={{ maxWidth: 450 }}>
-                <Form size='large' as='form' onSubmit={handleSubmit(this.onSubmit)}>
-
-                    <Field
-                      component={InputField}
-                      type='text'
-                      name='loginEmail'
-                      fluid icon='mail'
-                      iconPosition='right'
-                      placeholder='E-mail address'
-                      value={this.state.loginEmail}
-                      onChange={this.handleInputChange}
-                      required
-                    />
-                    <Field
-                      component={InputField}
-                      type='password'
-                      name='loginPassword'
-                      fluid icon='lock'
-                      iconPosition='right'
-                      placeholder='Password'
-                      value={this.state.loginPassword}
-                      onChange={this.handleInputChange}
-                      required
-                    />
-                    <Button color='blue' fluid size='large'>
-                      Log In
-                    </Button>
-
-                </Form>
-
-                <Button basic 
-                        fluid
-                        animated 
-                        size="large"
-                        style={{marginTop:"0.5em"}}
-                        onClick={this.handleToSignup}>
-                  <Button.Content visible>New to us?</Button.Content>
-                  <Button.Content hidden>
-                    Sign Up
-                  </Button.Content>
-                </Button>
-
-              </Grid.Column>
-            </Grid>
-          </Modal>
-        </div>
-
-        <div>
-          <Modal dimmer={dimmer} size={"tiny"} open={this.state.signupModalisOpen} onClose={this.closeSignup}>
-            <Grid textAlign='center' style={{ height: '50vh' }} verticalAlign='middle'>
-              <Grid.Column style={{ maxWidth: 450 }}>
-                <Form as='form' onSubmit={handleSubmit(this.onSubmit)}>
-
-                  <Field
-                    component={InputField}
-                    type='text'
-                    name='signupEmail'
-                    fluid 
-                    icon='mail'
-                    iconPosition='right'
-                    placeholder='E-mail Address'
-                    value={this.state.signupEmail}
-                    onChange={this.handleInputChange}
-                    required
-                  />
-                  
-                  <Field
-                      component={InputField}
-                      name='signupPassword'
-                      fluid
-                      icon='lock'
-                      iconPosition='right'
-                      placeholder='Password'
-                      type='password'
-                      value={this.state.signupPassword}
-                      onChange={this.handleInputChange}
-                      required
-                  />
-                  
-                  <Button color='blue' 
-                          fluid 
-                          size='large'
-                          disabled={nextStepisDisabled}
-                          onClick={this.handleNextStep}
-                          >
-                    Next Step <Icon name='right chevron' />
-                  </Button>
-                </Form>
-
-                <Button basic 
-                        fluid
-                        animated 
-                        size="large"
-                        style={{marginTop:"0.5em"}}
-                        onClick={this.handleToLogin}>
-                  <Button.Content visible>Already have an account?</Button.Content>
-                  <Button.Content hidden>
-                    Log In
-                  </Button.Content>
-                </Button>
-                
-                
-              </Grid.Column>
-            </Grid>
-          </Modal>
-        </div>
-
-        <Modal dimmer={dimmer} size={"tiny"} open={this.state.childModalisOpen} >
-          <Modal.Header>
-            <Button class="ui facebook button" color="facebook" size="large" fluid >
-              <i class="facebook icon"></i>
-              Sign Up with Facebook
-            </Button>
-
-            <Button class="ui google button" color="google plus" size="large" fluid style={{marginTop:"0.5em"}}>
-                <i class="google icon"></i>
-                Sign Up with Google
-              </Button>
-          </Modal.Header>
         
-          <Modal.Content>
-            <Form>
-              <Form.Input
-                width={20}
-                fluid 
-                icon='user'
-                iconPosition='right'
-                type="text"
-                name='First Name'
-                placeholder="First Name"
-                value={null}
-                onChange={null}
-                required
-              />
-              <Form.Input
-                icon='user'
-                iconPosition='right'
-                width={20}
-                fluid
-                type="text"
-                name='Last Name'
-                placeholder="Last Name"
-                value={null}
-                onChange={null}
-                required
-              />
-            <Select placeholder='Select gender' icon='' style={{minWidth:"10em"}} options={genderOptions}/>
-            <Select placeholder='Select a prefered room type' style={{marginLeft:"0.5em"}} options={roomOptions}/>
-            <Select placeholder='Maximum rent budget' style={{marginLeft:"0.5em", minWidth:"10em"}} options={rentOptions}/>
-              
-
-              
-            </Form>
-          </Modal.Content>
-          <Modal.Actions>
-            <Button icon='check' content='All Done' onClick={this.closeChildModal}/>
-          </Modal.Actions>
-      </Modal>
 
       </div>
     );

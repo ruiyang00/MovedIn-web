@@ -49,8 +49,8 @@ const genderOptions=[
 ]
 
 const roomOptions =[
-  {key: 'House', value: 'House', text:'House'},
   {key: 'Apartment', value: 'Apartment', text:'Apartment'},
+  {key: 'House', value: 'House', text:'House'},
 ]
 
 const rentOptions =[
@@ -330,6 +330,9 @@ class App extends Component {
           </Modal>
 
           <Modal dimmer={dimmer} size={"tiny"} open={this.state.childModalisOpen} >
+            <Modal.Header>
+              Tell us more about youself!
+            </Modal.Header>
             <Modal.Content>
               <Form>
                 <Form.Input
@@ -339,11 +342,12 @@ class App extends Component {
                   iconPosition='right'
                   type="text"
                   name='First Name'
-                  placeholder="First Name"
+                  label='First Name'
                   value={null}
                   onChange={null}
                   required
                 />
+                
                 <Form.Input
                   icon='user'
                   iconPosition='right'
@@ -351,23 +355,32 @@ class App extends Component {
                   fluid
                   type="text"
                   name='Last Name'
-                  placeholder="Last Name"
+                  label='Last Name'
                   value={null}
                   onChange={null}
                   required
                 />
-              <Select placeholder='Select gender' icon='' style={{minWidth:"10em"}} options={genderOptions}/>
-              <Select placeholder='Select a prefered room type' style={{marginLeft:"0.5em"}} options={roomOptions}/>
-              <Select placeholder='Maximum rent budget' style={{marginLeft:"0.5em", minWidth:"10em"}} options={rentOptions}/>
-                
-
-                
-              </Form>
-            </Modal.Content>
-            <Modal.Actions>
-              <Button icon='check' content='All Done' onClick={this.closeChildModal}/>
-            </Modal.Actions>
               
+                <Form.Field control={Select}
+                            fluid
+                            label='Gender'
+                            placeholder='Select gender' 
+                            options={genderOptions}/>
+
+                <Form.Field control={Select}
+                            fluid
+                            label='What kind of place are you looking?'   
+                            placeholder='Select one' 
+                            options={roomOptions}/>
+              </Form>
+              <Button icon='check' 
+                        color='blue'
+                        fluid
+                        size="large"
+                        content='Create Account' 
+                        style={{marginTop:"1.5em"}}
+                        onClick={this.closeChildModal}/>
+              </Modal.Content>
             </Modal>
       </div>
     );

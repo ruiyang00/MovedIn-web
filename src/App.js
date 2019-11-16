@@ -222,23 +222,42 @@ class App extends Component {
             <Grid textAlign='center' style={{ height: '50vh' }} verticalAlign='middle'>
               <Grid.Column style={{ maxWidth: 450 }}>
                 <Form size='large' as='form' onSubmit={handleSubmit(this.onSubmit)}>
+                  
+                  <Modal.Header>
+                    <Button class="ui facebook button" color="facebook" size="large" fluid >
+                      <i class="facebook icon"></i>
+                        Log In with Facebook
+                    </Button>
 
+                    <Button class="ui google button" color="google plus" size="large" fluid style={{marginTop:"0.5em"}}>
+                      <i class="google icon"></i>
+                        Log In with Google
+                    </Button>
+                  </Modal.Header>
+
+                  <Divider horizontal>Or</Divider>
+
+                  <Modal.Content>
                     <Field
                       component={InputField}
                       type='text'
                       name='loginEmail'
-                      fluid icon='mail'
+                      fluid 
+                      icon='mail'
                       iconPosition='right'
+                      style={{marginTop:"0.5em"}}
                       placeholder='E-mail address'
                       value={this.state.loginEmail}
                       onChange={this.handleInputChange}
                       required
                     />
+
                     <Field
                       component={InputField}
                       type='password'
                       name='loginPassword'
-                      fluid icon='lock'
+                      fluid 
+                      icon='lock'
                       iconPosition='right'
                       placeholder='Password'
                       value={this.state.loginPassword}
@@ -248,23 +267,15 @@ class App extends Component {
                     <Button color='blue' fluid size='large'>
                       Log In
                     </Button>
-
+                  </Modal.Content>
                 </Form>
 
-                <Button basic 
-                        fluid
-                        animated 
-                        size="large"
-                        style={{marginTop:"0.5em"}}
-                        onClick={this.handleToSignup}>
-                  <Button.Content visible>New to us?</Button.Content>
-                  <Button.Content hidden>
-                    Sign Up
-                  </Button.Content>
-                </Button>
-
+                <Message>
+                  New to us? <a href='#' onClick={this.handleToSignup}>Sign Up</a>
+                </Message>   
               </Grid.Column>
             </Grid>
+            
           </Modal>
           
           <Modal dimmer={dimmer} size={"tiny"} open={this.state.signupModalisOpen} onClose={this.closeSignup}>
@@ -274,12 +285,13 @@ class App extends Component {
 
                   <Field
                     component={InputField}
+                    size="large"
                     type='text'
                     name='signupEmail'
                     fluid 
                     icon='mail'
                     iconPosition='right'
-                    placeholder='E-mail Address'
+                    placeholder='E-mail address'
                     value={this.state.signupEmail}
                     onChange={this.handleInputChange}
                     required
@@ -287,6 +299,7 @@ class App extends Component {
                   
                   <Field
                       component={InputField}
+                      size="large"
                       name='signupPassword'
                       fluid
                       icon='lock'
@@ -308,73 +321,68 @@ class App extends Component {
                   </Button>
                 </Form>
 
-                <Button basic 
-                        fluid
-                        animated 
-                        size="large"
-                        style={{marginTop:"0.5em"}}
-                        onClick={this.handleToLogin}>
-                  <Button.Content visible>Already have an account?</Button.Content>
-                  <Button.Content hidden>
-                    Log In
-                  </Button.Content>
-                </Button>
-                
-                
+                <Message>
+                  Already have an account? <a href='#' onClick={this.handleToLogin}>Log In</a>
+                </Message>
               </Grid.Column>
             </Grid>
           </Modal>
 
           <Modal dimmer={dimmer} size={"tiny"} open={this.state.childModalisOpen} >
-              <Modal.Header>
-                <Button class="ui facebook button" color="facebook" size="large" fluid >
-                  <i class="facebook icon"></i>
-                  Sign Up with Facebook
+            <Modal.Header>
+              <Button class="ui facebook button" 
+                      color="facebook" 
+                      size="large" 
+                      fluid 
+                      style={{marginTop:"2em"}}>
+                <i class="facebook icon"></i>
+                Sign Up with Facebook
+              </Button>
+
+              <Button class="ui google button" color="google plus" size="large" fluid style={{marginTop:"0.5em"}}>
+                  <i class="google icon"></i>
+                  Sign Up with Google
                 </Button>
+            </Modal.Header>
 
-                <Button class="ui google button" color="google plus" size="large" fluid style={{marginTop:"0.5em"}}>
-                    <i class="google icon"></i>
-                    Sign Up with Google
-                  </Button>
-              </Modal.Header>
-          
-              <Modal.Content>
-                <Form>
-                  <Form.Input
-                    width={20}
-                    fluid 
-                    icon='user'
-                    iconPosition='right'
-                    type="text"
-                    name='First Name'
-                    placeholder="First Name"
-                    value={null}
-                    onChange={null}
-                    required
-                  />
-                  <Form.Input
-                    icon='user'
-                    iconPosition='right'
-                    width={20}
-                    fluid
-                    type="text"
-                    name='Last Name'
-                    placeholder="Last Name"
-                    value={null}
-                    onChange={null}
-                    required
-                  />
-                <Select placeholder='Select gender' icon='' style={{minWidth:"10em"}} options={genderOptions}/>
-                <Select placeholder='Select a prefered room type' style={{marginLeft:"0.5em"}} options={roomOptions}/>
-                <Select placeholder='Maximum rent budget' style={{marginLeft:"0.5em", minWidth:"10em"}} options={rentOptions}/>
-                  
+            <Modal.Content>
+              <Form>
+                <Form.Input
+                  width={20}
+                  fluid 
+                  icon='user'
+                  iconPosition='right'
+                  type="text"
+                  name='First Name'
+                  placeholder="First Name"
+                  value={null}
+                  onChange={null}
+                  required
+                />
+                <Form.Input
+                  icon='user'
+                  iconPosition='right'
+                  width={20}
+                  fluid
+                  type="text"
+                  name='Last Name'
+                  placeholder="Last Name"
+                  value={null}
+                  onChange={null}
+                  required
+                />
+              <Select placeholder='Select gender' icon='' style={{minWidth:"10em"}} options={genderOptions}/>
+              <Select placeholder='Select a prefered room type' style={{marginLeft:"0.5em"}} options={roomOptions}/>
+              <Select placeholder='Maximum rent budget' style={{marginLeft:"0.5em", minWidth:"10em"}} options={rentOptions}/>
+                
 
-                  
-                </Form>
-              </Modal.Content>
-              <Modal.Actions>
-                <Button icon='check' content='All Done' onClick={this.closeChildModal}/>
-              </Modal.Actions>
+                
+              </Form>
+            </Modal.Content>
+            <Modal.Actions>
+              <Button icon='check' content='All Done' onClick={this.closeChildModal}/>
+            </Modal.Actions>
+              
             </Modal>
       </div>
     );

@@ -163,6 +163,17 @@ class App extends Component {
 
   }
 
+  componentDidUpdate=()=>{
+
+    axios.post('http://localhost:5000/users/homePage',{email:localStorage.getItem('user')})
+    .then(function(response){
+         console.log(response.data.allusers);
+         this.setState({allUsers:response.data.allusers})
+
+  }.bind(this));
+
+  }
+
   handleInputChange = (event) => {
     const {value,name}=event.target;
     this.setState({
@@ -197,7 +208,7 @@ class App extends Component {
     const {date, dimmer} = this.state;
     const {allUsers}=this.state;
     console.log(allUsers);
-  
+
     return (
       <div>
         <Segment secondary style={{ marginTop: "4em" }}>
@@ -317,6 +328,7 @@ class App extends Component {
         </a>
           </div>
         </div>
+
 
 
 

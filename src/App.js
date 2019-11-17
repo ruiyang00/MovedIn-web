@@ -31,13 +31,17 @@ import searchPage from './pages/searchPage';
 import userProfile from './pages/userProfile';
 import './App.css';
 import * as actions from './actions';
+import SignUpModule from './pages/modules/SignUpModule';
+import LogInModule from './pages/modules/LogInModule';
 
 //redux import
 import { connect } from 'react-redux';
+import {compose} from 'redux';
 import {InputField} from 'react-semantic-redux-form';
 import {reduxForm, Field, formValueSelector} from 'redux-form';
-import * as ROUTES from "./logistics/routes"
-import { Link } from 'react-router-dom';
+import * as ROUTES from "./logistics/routes";
+import { Link,withRouter } from 'react-router-dom';
+import {Switch,BrowserRouter as Router, Route} from "react-router-dom";
 
 //Other import
 import HomeLogo from './images/home #30C5FF.png';
@@ -82,6 +86,7 @@ const userProfileOptions = [
   { key: 'sign-out', text: 'Sign Out' },
 ]
 
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -111,7 +116,7 @@ class App extends Component {
 
     }
   }
-
+  
   //Modal windows------------------------------------------------------------------------
   showLogin = (dimmer) => () => this.setState({ dimmer, loginModalisOpen: true })
   closeLogin = () => this.setState({ loginModalisOpen: false })
@@ -130,6 +135,7 @@ class App extends Component {
       localStorage.removeItem('password');
     }
     this.props.signOut();
+    window.location.reload(true);
   }
 
   handleNextStep = () => {
@@ -167,8 +173,9 @@ class App extends Component {
     console.log('submitted');
   }
 
+
   //-------------------------------------------------------------------------------------
-  render() {
+  render() {   
     const { dimmer, 
             signupEmail, 
             signupPassword,
@@ -186,13 +193,14 @@ class App extends Component {
         <Icon name='user'/>
       </span>
     )
+   
 
     const MenuWithoutAuth = () => {
       return (
           <Menu fixed='top' inverted>
             <Container>
               <Menu.Item as='a' header>
-                <Image size='mini' src={HomeLogo} style={{ marginRight: '1.5em' }} />
+                //Image deleted
                 MovedIn
               </Menu.Item>
 
@@ -224,16 +232,76 @@ class App extends Component {
         </Menu>
       );
     };
-    return (
-      <div>
-        {!this.props.isAuth ?
-          (<MenuWithoutAuth />) : (null)
 
-        }
+    return (
+           <div>
+              {!this.props.isAuth ?
+              (
+                  <MenuWithoutAuth />
+
+
+              ):( <MenuWithAuth />)
+
+          }
+ 
         {this.props.isAuth ?
           (<MenuWithAuth />) : (null)
 
         }
+        
+        //Footer-------------------------------------------------
+          <div id="footer">
+          <Segment inverted vertical style={{ margin: '0em 0em 0em', padding: '5em 0em' }}>
+            <Container textAlign='center'>
+              <Grid divided inverted stackable>
+                <Grid.Column width={3}>
+                  <Header inverted as='h4' content='MovedIn' />
+                  <List link inverted>
+                    <List.Item as='a'>About</List.Item>
+                    <List.Item as='a'>News</List.Item>
+                    <List.Item as='a'>Policies</List.Item>
+                  </List>
+                </Grid.Column>
+                <Grid.Column width={3}>
+                  <Header inverted as='h4' content='Help & Support' />
+                  <List link inverted>
+                  <List.Item as='a'>MovedIn guide</List.Item>
+                    <List.Item as='a'>FAQs</List.Item>
+                    <List.Item as='a'>Contact us</List.Item>
+                    <List.Item as='a'>Give us feedback</List.Item>
+                  </List>
+                </Grid.Column>
+                <Grid.Column width={3}>
+                  <Header inverted as='h4' content='Discover' />
+                  <List link inverted>
+                    <List.Item as='a'>Community</List.Item>
+                    <List.Item as='a'>Join us</List.Item>
+                  </List>
+                </Grid.Column>
+                <Grid.Column width={7}>
+                  <i class="facebook f large icon"></i>
+                  <i class="instagram large icon"></i>
+                  <i class="twitter large icon"></i>
+                  <List link inverted>
+                    <List.Item as='a'>Terms</List.Item>
+                    <List.Item as='a'>Privacy</List.Item>
+                    <List.Item as='a'>Site Map</List.Item>
+                  </List>
+                </Grid.Column>
+              </Grid>
+
+              <Divider inverted section />
+              //
+              <List horizontal inverted divided link size='small'>
+                <List.Item as='a' href='#'>
+                © 2019 MovedIn, Inc. All rights reserved
+                 </List.Item>
+              </List>
+            </Container>
+          </Segment>
+        </div>
+        
+        
         <Switch>
           <Route exact path={'/'} component={mainPage} />
           <Route path={'/welcome'} component={Welcome} />
@@ -409,19 +477,10 @@ class App extends Component {
             </Modal>
       </div>
     );
+
   }
 
 }
-
-
-function mapStateToProps(state) {
-  return {
-    isAuth: state.auth.isAuthenticated,
-    errorMessage: state.auth.errorMessage
-  };
-}
-
-
 
 //   <Router>
 //      <div>
@@ -434,21 +493,11 @@ function mapStateToProps(state) {
 //   </Router>
 // );
 
-export default (connect(mapStateToProps, actions),reduxForm({form:'signup', form:'login'}))(App)
+function mapStateToProps(state){
+  return {
+    isAuth:state.auth.isAuthenticated,
+    errorMessage: state.auth.errorMessage
+  };
+}
 
-//export default connect(mapStateToProps, actions)(App);
-
-
-// const App = ()=>  (
-
-//   <Router>
-//      <div>
-//        <Route path={'/logIn'} component={Login} />
-//        <Route path={'/mainPage'} component={MainPage} />
-//        <Route path={'/searchPage'} component={searchPage} />
-
-//      </div>
-//   </Router>
-// );
-
-// export default App;
+export default connect(mapStateToProps, actions)(App)

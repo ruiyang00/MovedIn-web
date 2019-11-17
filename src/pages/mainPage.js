@@ -1,6 +1,17 @@
 //React import
 import React, { Component } from 'react'
 import { Link,withRouter } from 'react-router-dom';
+
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import {reduxForm, Field, formValueSelector} from 'redux-form';
+import {InputField} from 'react-semantic-redux-form';
+import * as actions from '../actions';
+import * as ROUTES from "./../logistics/routes"
+import BackGroundImage from './../images/home.png';
+import HomeLogo from './../images/home #30C5FF.png';
+import SignUpModule from './modules/SignUpModule';
+import LogInModule from './modules/LogInModule';
 import {
   Button,
   Container,
@@ -143,59 +154,6 @@ class App extends Component {
           </Container>
 
         </div>
-        <Segment inverted vertical style={{ margin: '0em 0em 0em', padding: '5em 0em' }}>
-          <Container textAlign='center'>
-            <Grid divided inverted stackable>
-              <Grid.Column width={3}>
-                <Header inverted as='h4' content='MovedIn' />
-                <List link inverted>
-                  <List.Item as='a'>About</List.Item>
-                  <List.Item as='a'>News</List.Item>
-                  <List.Item as='a'>Policies</List.Item>
-                </List>
-              </Grid.Column>
-              <Grid.Column width={3}>
-                <Header inverted as='h4' content='Help & Support' />
-                <List link inverted>
-                <List.Item as='a'>MovedIn guide</List.Item>
-                  <List.Item as='a'>FAQs</List.Item>
-                  <List.Item as='a'>Contact us</List.Item>
-                  <List.Item as='a'>Give us feedback</List.Item>
-                </List>
-              </Grid.Column>
-              <Grid.Column width={3}>
-                <Header inverted as='h4' content='Discover' />
-                <List link inverted>
-                  <List.Item as='a'>Community</List.Item>
-                  <List.Item as='a'>Join us</List.Item>
-                </List>
-              </Grid.Column>
-              <Grid.Column width={7}>
-                <i class="facebook f large icon"></i>
-                <i class="instagram large icon"></i>
-                <i class="twitter large icon"></i>
-                <List link inverted>
-                  <List.Item as='a'>Terms</List.Item>
-                  <List.Item as='a'>Privacy</List.Item>
-                  <List.Item as='a'>Site Map</List.Item>
-                </List>
-              </Grid.Column>
-            </Grid>
-
-            <Divider inverted section />
-            <Image centered size='mini' src={HomeLogo} />
-            <List horizontal inverted divided link size='small'>
-              <List.Item as='a' href='#'>
-              © 2019 MovedIn, Inc. All rights reserved
-               </List.Item>
-            </List>
-          </Container>
-        </Segment>
-        
-       
-        
-        
-
       </div>
     );
   }
@@ -210,6 +168,6 @@ function mapStateToProps(state){
 
 export default compose(
 connect(mapStateToProps, actions),
-reduxForm({form:'signup', form:'login'})
+reduxForm({form:'login'})
 ) (App)
 //export default App;

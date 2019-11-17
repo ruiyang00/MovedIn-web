@@ -32,6 +32,7 @@ import {
   Modal,
   Pagination,
   Select,
+  Segment,
 } from 'semantic-ui-react'
 
 const PaginationCompact = () => (
@@ -202,16 +203,6 @@ class App extends Component {
 
   }
 
- //Modal windows------------------------------------------------------------------------
-  state = {
-    loginModalisOpen: false,
-    signupModalisOpen: false
-  }
-  showLogin = (dimmer) => () => this.setState({ dimmer, loginModalisOpen: true })
-  closeLogin = () => this.setState({ loginModalisOpen: false })
-  showSignup = (dimmer) => () => this.setState({dimmer, signupModalisOpen: true})
-  closeSignup = () => this.setState({signupModalisOpen: false})
-
   //-------------------------------------------------------------------------------------
   render() {
     const {date, dimmer} = this.state;
@@ -220,37 +211,41 @@ class App extends Component {
 
     return (
       <div>
-        //Menu moved to App.js
+        <Segment secondary style={{ marginTop: "4em" }}>
+          <Form style={{marginLeft:"11.5em", marginRight:"0em"}}>
+            <Form.Group widths='equal'>
+              <Form.Field control={Select}
+                label='Search location'
+                placeholder='Select a state'
+                options={stateOptions}
+                value={null}
+                onChange={null} />
 
-        <Grid columns={5} stackable>
-          <Grid.Column width={2} style={{ marginTop: '2em', marginLeft: '13em' }}>
-            Search location
-            <Select placeholder='State' style={{minWidth:"10em"}} options={stateOptions}/>
-          </Grid.Column>
+              <Form.Field control={Select}
+                label='Are you looking for...'
+                placeholder='Select a type of place'
+                options={roomOptions}
+                value={null}
+                onChange={null} />
 
-          <Grid.Column width={2} style={{ marginTop: '2em', marginLeft: '0.0em' }}>
-            Members who
-            <Select placeholder='Have a room' style={{minWidth:"10em"}} options={roomOptions} />
-          </Grid.Column>
+              <Form.Field control={Select}
+                label='Rent budget'
+                placeholder='$2000+'
+                options={rentOptions} />
 
-          <Grid.Column width={2} style={{ marginTop: '2em', marginLeft: '0.0em' }}>
-            Max rent
-            <Select placeholder='$2000+' style={{minWidth:"10em"}} options={rentOptions} />
-          </Grid.Column>
+              <SemanticDatepicker 
+                label='Moved-in Date'
+                onDateChange={this.handleDateChange} />
 
-          <Grid.Column width={2} style={{ marginTop: '2em', marginLeft: '0.0em' }}>
-            Moved-in Date
-            <SemanticDatepicker onDateChange={this.handleDateChange} />
-          </Grid.Column>
+              <Form.Button primary size='medium' style={{marginTop:"1.6em"}}>
+                Search
+                <Icon name='right arrow' />
+              </Form.Button>
+            </Form.Group>
+          </Form>
+        </Segment>
 
-          <Grid.Column width={2} style={{ marginTop: '3.5em', marginLeft: '3.0em' }}>
-            <Button primary size='small'>
-              Search
-            <Icon name='right arrow' />
-            </Button>
-          </Grid.Column>
-        </Grid>
-
+        
         <Header as='h2' content='Search Result' style={style.h2, { marginLeft: '7.5em', marginBottom: '0em' }} textAlign='Left' />
         <Header as='h4' content='Only take one minute to Sign Up, become a memeber today and see more!'
           style={style.h4, { marginLeft: '12em', marginTop: '0.2em' }} textAlign='Left' />
@@ -334,7 +329,10 @@ class App extends Component {
           </div>
         </div>
 
-        </div>
+
+
+
+      </div>//--------
     );
   }
 }

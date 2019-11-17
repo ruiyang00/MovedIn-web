@@ -1,5 +1,7 @@
+//React import
 import React, { Component } from 'react'
 import { Link,withRouter } from 'react-router-dom';
+
 import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {reduxForm, Field, formValueSelector} from 'redux-form';
@@ -10,7 +12,6 @@ import BackGroundImage from './../images/home.png';
 import HomeLogo from './../images/home #30C5FF.png';
 import SignUpModule from './modules/SignUpModule';
 import LogInModule from './modules/LogInModule';
-
 import {
   Button,
   Container,
@@ -20,15 +21,32 @@ import {
   Grid,
   Header,
   Icon,
+  Input,
   Image,
   List,
   Message,
   Menu,
   Modal,
   Segment,
-  Search
+  Select,
+  Search,
+  Popup,
+  ButtonContent
 } from 'semantic-ui-react'
 
+//Redux import
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import {reduxForm, Field, formValueSelector} from 'redux-form';
+import {InputField} from 'react-semantic-redux-form';
+import * as actions from '../actions';
+import * as ROUTES from "./../logistics/routes"
+
+//Others import
+import BackGroundImage from './../images/home.png';
+import HomeLogo from './../images/home #30C5FF.png';
+
+//const----------------------------------------------------------------------------------
 const backgroundStyle = {
   // width: "100%",
   height: "100vh",
@@ -51,53 +69,48 @@ const searchOptions=[
   },
 ]
 
+
+
+//class App------------------------------------------------------------------------------
 class App extends Component {
   //Authtication-------------------------------------------------------------------------
   constructor(props){
     super(props);
     this.state={
-      email:'',
-      password:'',
-      email2:'',
-      password2:''
+      loginEmail:'',
+      loginPassword:'',
+      signupEmail:'',
+      signupPassword:'',
+      loginModalisOpen: false,
+      signupModalisOpen: false,
+      childModalisOpen:false
       };
     this.onSubmit=this.onSubmit.bind(this);
     this.handleInputChange= this.handleInputChange.bind(this);
   }
 
+  //Event handle-------------------------------------------------------------------------
   handleInputChange = (event) => {
     const {value,name}=event.target;
     this.setState({
       [name]:value
     });
   }
-
+  
   onSubmit=(formData)=>{
-    console.log(this.state.email2);
-    console.log(this.state.password2);
+    console.log(this.state.signupEmail);
+    console.log(this.state.signupPassword);
     this.props.signUp(formData);
     console.log('submitted');
   }
 
-  //Modal windows------------------------------------------------------------------------
-  state = {
-    loginModalisOpen: false,
-    signupModalisOpen: false
-  }
-  showLogin = (dimmer) => () => this.setState({ dimmer, loginModalisOpen: true })
-  closeLogin = () => this.setState({ loginModalisOpen: false })
-  showSignup = (dimmer) => () => this.setState({dimmer, signupModalisOpen: true})
-  closeSignup = () => this.setState({signupModalisOpen: false})
-
   //-------------------------------------------------------------------------------------
   render() {
-    const { open, dimmer} = this.state;
+   
     const {handleSubmit} = this.props;
-
+   
     return (
       <div>
-        //Moved To App.js
-
         <div style={backgroundStyle}>
           <Container text style={{ marginTop: '7em' }}>
             <Header as='h1' inverted style={{
@@ -141,8 +154,6 @@ class App extends Component {
           </Container>
 
         </div>
-             //Footer moved to App.js
-              //two modals moved to App.js
       </div>
     );
   }

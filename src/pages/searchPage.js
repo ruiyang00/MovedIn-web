@@ -162,6 +162,17 @@ class App extends Component {
 
   }
 
+  componentDidUpdate=()=>{
+
+    axios.post('http://localhost:5000/users/homePage',{email:localStorage.getItem('user')})
+    .then(function(response){
+         console.log(response.data.allusers);
+         this.setState({allUsers:response.data.allusers})
+
+  }.bind(this));
+
+  }
+
   handleInputChange = (event) => {
     const {value,name}=event.target;
     this.setState({
@@ -206,22 +217,10 @@ class App extends Component {
     const {date, dimmer} = this.state;
     const {allUsers}=this.state;
     console.log(allUsers);
-  
+
     return (
       <div>
-        <Menu fixed='top' inverted>
-          <Container>
-            <Menu.Item as='a' header>
-              <Image size='mini' src={HomeLogo} style={{ marginRight: '1.5em' }} />
-              MovedIn
-            </Menu.Item>
-
-            <Menu.Item position='right'>
-              <Button onClick={null}>Sign Up</Button>
-              <Button onClick={null} style={{ marginLeft: '0.5em' }}>Log In</Button>
-            </Menu.Item>
-          </Container>
-        </Menu>
+        //Menu moved to App.js
 
         <Grid columns={5} stackable>
           <Grid.Column width={2} style={{ marginTop: '2em', marginLeft: '13em' }}>
@@ -335,92 +334,7 @@ class App extends Component {
           </div>
         </div>
 
-        <div>
-          <Modal dimmer={dimmer} size={"tiny"} open={this.state.loginModalisOpen} onClose={this.closeLogin}>
-            <Grid textAlign='center' style={{ height: '50vh' }} verticalAlign='middle'>
-              <Grid.Column style={{ maxWidth: 450 }}>
-                <Form size='large' as='form' onSubmit={null}>
-
-                    <Field
-                      component={InputField}
-                      type='text'
-                      name='email'
-                      fluid icon='mail'
-                      iconPosition='right'
-                      placeholder='E-mail address'
-                      value={null}
-                      onChange={null}
-                      required
-                    />
-                    <Field
-                      component={InputField}
-                      type='password'
-                      name='password'
-                      fluid icon='lock'
-                      iconPosition='right'
-                      placeholder='Password'
-                      value={null}
-                      onChange={null}
-                      required
-                    />
-                    <Button color='blue' fluid size='large'>
-                      Log In
-                    </Button>
-
-                </Form>
-                <Message>
-                  New to us? <a href='#'>Sign Up</a>
-                </Message>
-              </Grid.Column>
-            </Grid>
-          </Modal>
         </div>
-
-        <div>
-          <Modal dimmer={dimmer} size={"tiny"} open={this.state.signupModalisOpen} onClose={this.closeSignup}>
-            <Grid textAlign='center' style={{ height: '50vh' }} verticalAlign='middle'>
-              <Grid.Column style={{ maxWidth: 450 }}>
-                <Form as='form' onSubmit={null}>
-
-                  <Field
-                    component={InputField}
-                    type='text'
-                    name='email2'
-                    fluid icon='mail'
-                    iconPosition='right'
-                    placeholder='E-mail Address'
-                    value={null}
-                    onChange={null}
-                    required
-                  />
-                  <Field
-                      component={InputField}
-                      name='password2'
-                      fluid
-                      icon='lock'
-                      iconPosition='right'
-                      placeholder='Password'
-                      type='password'
-                      value={null}
-                      onChange={null}
-                      required
-                  />
-                  <Button color='blue' fluid size='large'>
-                      Sign Up
-                  </Button>
-                </Form>
-
-                <Message>
-                  Already have an account? <a href="" onClick={(this.closeSignup)}>Log In</a>
-                </Message>
-
-              </Grid.Column>
-            </Grid>
-          </Modal>
-        </div>
-
-
-      </div>//--------
     );
   }
 }

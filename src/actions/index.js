@@ -14,23 +14,20 @@ import {
   return async dispatch=>{
     try{
     console.log("hello");
-    var oldToken= localStorage.getItem('token');
+    var token=null;
     await axios.post('http://localhost:5000/users/signup',data)
       .then(function(response){
-      //  console.log(response);
-         if(response.data.token){
-           console.log("token found");
-           localStorage.setItem("token", response.data.token);
-         }});
-      var newToken= localStorage.getItem('token');
-      if(oldToken.localeCompare(newToken)!=0){
+          if(response.data.token){
+         token=response.data.token;}
+        });
 
-             //automatically sign user in after successful signUp
+          if(token){
+             console.log('token found,ready to signin');
              await axios.post ('http://localhost:5000/users/signin',data)
              .then(function(response){
              //  console.log(response);
                 if(response.data.token){
-                  console.log("token found");
+                  console.log("token for signIn found");
                   localStorage.setItem("token", response.data.token);
                   localStorage.setItem('user',data.email);
                   localStorage.setItem('password',data.password);
@@ -40,13 +37,9 @@ import {
                  type: AUTH_SIGN_IN,
 
              });
-
+                      }
          /////
-      }
-     else{
-     dispatch({
-       type: AUTH_SIGN_UP
-     });}
+
   } catch (err){
     dispatch({
       type:AUTH_ERROR,

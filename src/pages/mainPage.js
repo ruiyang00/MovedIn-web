@@ -2,16 +2,9 @@
 import React, { Component } from 'react'
 import { Link,withRouter } from 'react-router-dom';
 
-import {connect} from 'react-redux';
-import {compose} from 'redux';
-import {reduxForm, Field, formValueSelector} from 'redux-form';
-import {InputField} from 'react-semantic-redux-form';
-import * as actions from '../actions';
-import * as ROUTES from "./../logistics/routes"
-import BackGroundImage from './../images/home.png';
-import HomeLogo from './../images/home #30C5FF.png';
 import SignUpModule from './modules/SignUpModule';
 import LogInModule from './modules/LogInModule';
+
 import {
   Button,
   Container,

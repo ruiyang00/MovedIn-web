@@ -29,7 +29,7 @@ import * as ROUTES from "../../logistics/routes"
     super(props);
     this.state={
       email:'',
-      password:''
+      password:'',
     };
     this.onSubmit=this.onSubmit.bind(this);
     this.handleInputChange= this.handleInputChange.bind(this);
@@ -60,41 +60,55 @@ import * as ROUTES from "../../logistics/routes"
     return (
 
       <div>
+        <Form size='large' as='form' onSubmit={handleSubmit(this.onSubmit)}>
+          <Modal.Header>
+            <Button class="ui facebook button" color="facebook" size="large" fluid >
+              <i class="facebook icon"></i>
+              Log In with Facebook
+              </Button>
 
-              <Form size='large' as='form' onSubmit={handleSubmit(this.onSubmit)}>
+            <Button class="ui google button" color="google plus" size="large" fluid style={{ marginTop: "0.5em" }}>
+              <i class="google icon"></i>
+              Log In with Google
+              </Button>
+          </Modal.Header>
 
-                  <Field
-                    component={InputField}
-                    type='text'
-                    name='email'
-                    fluid icon='mail'
-                    iconPosition='right'
-                    placeholder='E-mail address'
-                    value={this.state.email}
-                    onChange={this.handleInputChange}
-                    required
-                  />
-                  <Field
-                    component={InputField}
-                    type='password'
-                    name='password'
-                    fluid icon='lock'
-                    iconPosition='right'
-                    placeholder='Password'
-                    value={this.state.password}
-                    onChange={this.handleInputChange}
-                    required
-                  />
-                  <Button color='blue' fluid size='large'>
-                    Log In
-                  </Button>
+          <Divider horizontal>or</Divider>
 
-              </Form>
-              
+          <Modal.Content>
+            <Field
+              component={InputField}
+              type='text'
+              name='email'
+              fluid
+              icon='mail'
+              iconPosition='right'
+              style={{ marginTop: "0.5em" }}
+              placeholder='E-mail address'
+              value={this.state.email}
+              onChange={this.handleInputChange}
+              required
+            />
+
+            <Field
+              component={InputField}
+              type='password'
+              name='password'
+              fluid
+              icon='lock'
+              iconPosition='right'
+              placeholder='Password'
+              value={this.state.password}
+              onChange={this.handleInputChange}
+              required
+            />
+            <Button color='blue' fluid size='large'>
+              Log In
+              </Button>
+          </Modal.Content>
+          </Form>
+
       </div>
-
-
-
     );
   }
 }

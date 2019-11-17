@@ -28,6 +28,7 @@ import SignUp from './pages/signup';
 import Welcome from './pages/welcome';
 import mainPage from './pages/mainPage';
 import searchPage from './pages/searchPage';
+import userProfile from './pages/userProfile';
 import './App.css';
 import * as actions from './actions';
 
@@ -66,6 +67,20 @@ const rentOptions =[
   {key: '2000', value: '2000', text:'$2000+'},
 ]
 
+const userProfileOptions = [
+  {
+    key: 'user',
+    text: (
+      <span>
+        Signed in as <strong>Name</strong>
+      </span>
+    ),
+    disabled: true,
+  },
+  { key: 'profile', text: 'Your Profile' },
+  { key: 'settings', text: 'Settings' },
+  { key: 'sign-out', text: 'Sign Out' },
+]
 
 class App extends Component {
   constructor(props) {
@@ -166,6 +181,12 @@ class App extends Component {
     const auth = this.props.isAuth;
     const {handleSubmit} = this.props;
 
+    const userProfileTrigger = (
+      <span>
+        <Icon name='user'/>
+      </span>
+    )
+
     const MenuWithoutAuth = () => {
       return (
           <Menu fixed='top' inverted>
@@ -173,11 +194,14 @@ class App extends Component {
               <Menu.Item as='a' header>
                 <Image size='mini' src={HomeLogo} style={{ marginRight: '1.5em' }} />
                 MovedIn
-            </Menu.Item>
+              </Menu.Item>
 
               <Menu.Item position='right'>
                 <Button onClick={this.showSignup('blurring')}>Sign Up</Button>
-                <Button onClick={this.showLogin('blurring')} style={{ marginLeft: '0.5em' }}>Log In</Button>
+                <Button onClick={this.showLogin('blurring')} style={{ marginLeft: '0.5em', marginRight: '0.5em' }}>Log In</Button>
+              </Menu.Item>
+              <Menu.Item>
+                <Dropdown trigger={userProfileTrigger} options={userProfileOptions}/>
               </Menu.Item>
             </Container>
           </Menu>
@@ -216,6 +240,7 @@ class App extends Component {
           <Route path="/signup" component={SignUp} />
           <Route path="/login" component={Login} />
           <Route path="/searchPage" component={searchPage} />
+          <Route path="/userProfile" component={userProfile}/>
         </Switch>
 
         <Modal dimmer={dimmer} size={"tiny"} open={this.state.loginModalisOpen} onClose={this.closeLogin}>

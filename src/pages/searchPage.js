@@ -32,6 +32,7 @@ import {
   Modal,
   Pagination,
   Select,
+  Segment,
 } from 'semantic-ui-react'
 
 const PaginationCompact = () => (
@@ -191,16 +192,6 @@ class App extends Component {
 
   }
 
- //Modal windows------------------------------------------------------------------------
-  state = {
-    loginModalisOpen: false,
-    signupModalisOpen: false
-  }
-  showLogin = (dimmer) => () => this.setState({ dimmer, loginModalisOpen: true })
-  closeLogin = () => this.setState({ loginModalisOpen: false })
-  showSignup = (dimmer) => () => this.setState({dimmer, signupModalisOpen: true})
-  closeSignup = () => this.setState({signupModalisOpen: false})
-
   //-------------------------------------------------------------------------------------
   render() {
     const {date, dimmer} = this.state;
@@ -209,49 +200,41 @@ class App extends Component {
   
     return (
       <div>
-        <Menu fixed='top' inverted>
-          <Container>
-            <Menu.Item as='a' header>
-              <Image size='mini' src={HomeLogo} style={{ marginRight: '1.5em' }} />
-              MovedIn
-            </Menu.Item>
+        <Segment secondary style={{ marginTop: "4em" }}>
+          <Form style={{marginLeft:"11.5em", marginRight:"0em"}}>
+            <Form.Group widths='equal'>
+              <Form.Field control={Select}
+                label='Search location'
+                placeholder='Select a state'
+                options={stateOptions}
+                value={null}
+                onChange={null} />
 
-            <Menu.Item position='right'>
-              <Button onClick={null}>Sign Up</Button>
-              <Button onClick={null} style={{ marginLeft: '0.5em' }}>Log In</Button>
-            </Menu.Item>
-          </Container>
-        </Menu>
+              <Form.Field control={Select}
+                label='Are you looking for...'
+                placeholder='Select a type of place'
+                options={roomOptions}
+                value={null}
+                onChange={null} />
 
-        <Grid columns={5} stackable>
-          <Grid.Column width={2} style={{ marginTop: '2em', marginLeft: '13em' }}>
-            Search location
-            <Select placeholder='State' style={{minWidth:"10em"}} options={stateOptions}/>
-          </Grid.Column>
+              <Form.Field control={Select}
+                label='Rent budget'
+                placeholder='$2000+'
+                options={rentOptions} />
 
-          <Grid.Column width={2} style={{ marginTop: '2em', marginLeft: '0.0em' }}>
-            Members who
-            <Select placeholder='Have a room' style={{minWidth:"10em"}} options={roomOptions} />
-          </Grid.Column>
+              <SemanticDatepicker 
+                label='Moved-in Date'
+                onDateChange={this.handleDateChange} />
 
-          <Grid.Column width={2} style={{ marginTop: '2em', marginLeft: '0.0em' }}>
-            Max rent
-            <Select placeholder='$2000+' style={{minWidth:"10em"}} options={rentOptions} />
-          </Grid.Column>
+              <Form.Button primary size='medium' style={{marginTop:"1.6em"}}>
+                Search
+                <Icon name='right arrow' />
+              </Form.Button>
+            </Form.Group>
+          </Form>
+        </Segment>
 
-          <Grid.Column width={2} style={{ marginTop: '2em', marginLeft: '0.0em' }}>
-            Moved-in Date
-            <SemanticDatepicker onDateChange={this.handleDateChange} />
-          </Grid.Column>
-
-          <Grid.Column width={2} style={{ marginTop: '3.5em', marginLeft: '3.0em' }}>
-            <Button primary size='small'>
-              Search
-            <Icon name='right arrow' />
-            </Button>
-          </Grid.Column>
-        </Grid>
-
+        
         <Header as='h2' content='Search Result' style={style.h2, { marginLeft: '7.5em', marginBottom: '0em' }} textAlign='Left' />
         <Header as='h4' content='Only take one minute to Sign Up, become a memeber today and see more!'
           style={style.h4, { marginLeft: '12em', marginTop: '0.2em' }} textAlign='Left' />
@@ -335,89 +318,6 @@ class App extends Component {
           </div>
         </div>
 
-        <div>
-          <Modal dimmer={dimmer} size={"tiny"} open={this.state.loginModalisOpen} onClose={this.closeLogin}>
-            <Grid textAlign='center' style={{ height: '50vh' }} verticalAlign='middle'>
-              <Grid.Column style={{ maxWidth: 450 }}>
-                <Form size='large' as='form' onSubmit={null}>
-
-                    <Field
-                      component={InputField}
-                      type='text'
-                      name='email'
-                      fluid icon='mail'
-                      iconPosition='right'
-                      placeholder='E-mail address'
-                      value={null}
-                      onChange={null}
-                      required
-                    />
-                    <Field
-                      component={InputField}
-                      type='password'
-                      name='password'
-                      fluid icon='lock'
-                      iconPosition='right'
-                      placeholder='Password'
-                      value={null}
-                      onChange={null}
-                      required
-                    />
-                    <Button color='blue' fluid size='large'>
-                      Log In
-                    </Button>
-
-                </Form>
-                <Message>
-                  New to us? <a href='#'>Sign Up</a>
-                </Message>
-              </Grid.Column>
-            </Grid>
-          </Modal>
-        </div>
-
-        <div>
-          <Modal dimmer={dimmer} size={"tiny"} open={this.state.signupModalisOpen} onClose={this.closeSignup}>
-            <Grid textAlign='center' style={{ height: '50vh' }} verticalAlign='middle'>
-              <Grid.Column style={{ maxWidth: 450 }}>
-                <Form as='form' onSubmit={null}>
-
-                  <Field
-                    component={InputField}
-                    type='text'
-                    name='email2'
-                    fluid icon='mail'
-                    iconPosition='right'
-                    placeholder='E-mail Address'
-                    value={null}
-                    onChange={null}
-                    required
-                  />
-                  <Field
-                      component={InputField}
-                      name='password2'
-                      fluid
-                      icon='lock'
-                      iconPosition='right'
-                      placeholder='Password'
-                      type='password'
-                      value={null}
-                      onChange={null}
-                      required
-                  />
-                  <Button color='blue' fluid size='large'>
-                      Sign Up
-                  </Button>
-                </Form>
-
-                <Message>
-                  Already have an account? <a href="" onClick={(this.closeSignup)}>Log In</a>
-                </Message>
-
-              </Grid.Column>
-            </Grid>
-          </Modal>
-        </div>
 
 
       </div>//--------

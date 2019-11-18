@@ -11,11 +11,16 @@ class UserProfile extends Component{
      render(){
        const panes =[
           {menuItem:'General Information',render:()=> <Tab.Pane>Tab 1 Content</Tab.Pane>},
-          {menuItem:'Personal Details',render:()=> <Tab.Pane>Tab 2 Content</Tab.Pane>},
-          {menuItem:'Special Interest',render:()=> <Tab.Pane>Tab 3 Content</Tab.Pane>},
+          {menuItem:'Personal Inforamtion',render:()=> <Tab.Pane>Tab 2 Content</Tab.Pane>},
+          {menuItem:'Rental Prefereces',render:()=> <Tab.Pane>Tab 3 Content</Tab.Pane>},
             ]
         return(
-          <p>Hello World</p>
+       <Grid>
+           <Grid.Row>
+           <Tab panes={panes} />
+           </Grid.Row>
+
+        </Grid>
 
 
         );

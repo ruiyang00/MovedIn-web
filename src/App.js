@@ -160,7 +160,7 @@ class App extends Component {
 
     const userProfileTrigger = (
       <span>
-        <Icon name='user'/>
+        <Icon name='user circle outline'/>
       </span>
     )
 

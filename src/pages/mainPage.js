@@ -43,7 +43,7 @@ import HomeLogo from './../images/home #30C5FF.png';
 const backgroundStyle = {
   // width: "100%",
   height: "100vh",
-  backgroundImage: `url(${BackGroundImage})`,
+  backgroundImage: `url(https://i.ibb.co/HPDKrC0/home.png)`,
   backgroundRepeat: "null",
   backgroundSize: 'cover',
   overflow: 'hidden',
@@ -51,17 +51,24 @@ const backgroundStyle = {
 
 const searchOptions=[
   {
-    key: 'I need a room',
-    text: 'I need a room',
-    value: 'I need a room',
+    key: 'a place to live',
+    text: 'a place to live',
+    value: 'a place to live',
   },
   {
-    key: 'I have a room',
-    text: 'I have a room',
-    value: 'I have a room',
+    key: 'people to live with',
+    text: 'people to live with',
+    value: 'people to live with',
   },
 ]
 
+const cityOptions=[
+  { key: 'Los Angeles', text: 'Los Angeles', value: 'Los Angeles'},
+  { key: 'Santa Barbara', text: 'Santa Barbara', value: 'Santa Barbara'},
+  { key: 'San Deigo', text: 'San Deigo', value: 'San Deigo'},
+  { key: 'San Fransico', text: 'San Fransico', value: 'San Fransico'},
+  { key: 'San Jose', text: 'San Jose', value: 'San Jose'},
+]
 
 
 //class App------------------------------------------------------------------------------
@@ -113,7 +120,7 @@ class App extends Component {
               marginTop: '3em',
             }}>
               MovedIn
-        </Header>
+            </Header>
             <Header
               as='h2'
               content='Find your perfect match'
@@ -124,26 +131,33 @@ class App extends Component {
                 marginTop: '0.5em',
               }}
             />
-            <div class='col'>
-              <Dropdown
-                placeholder="I need a room"
-                fluid
-                selection
-                options={searchOptions}
-              />
 
-            </div>
+            <Segment secondary>
+              <Form>
+                <Form.Group>
+                  <Form.Field inline
+                    control={Select}
+                    label="I'm looking for"
+                    placeholder="Select one"
+                    options={searchOptions}
+                  />
+                  <Form.Field inline
+                    control={Select}
+                    placeholder="Select your city"
+                    label="in"      
+                    options={cityOptions}
+                  />
+                  <Button 
+                    primary 
+                    size='normal'>
+                    Let's Go <Icon name='right arrow' />
+                  </Button>
+                </Form.Group>
+              </Form>
 
-            <div class='col'>
-              <Search style={{ marginLeft: '0.5em', marginTop: '3em' }}> </Search>
-            </div>
-
-            <div class='col'>
-              <Button primary size='normal' style={{ marginLeft: '0.5em', marginTop: '0.2em' }}>
-                Let's Go
-            <Icon name='right arrow' />
-              </Button>
-            </div>
+            </Segment>
+        
+              
           </Container>
 
         </div>

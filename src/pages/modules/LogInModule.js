@@ -49,8 +49,13 @@ import * as ROUTES from "../../logistics/routes"
      console.log(this.state.email);
      console.log(this.state.password);
      await this.props.signIn(formData);
+<<<<<<< HEAD
      //console.log(formData
      window.location.reload(true);
+=======
+     window.location.reload(true);
+     //console.log(formData)
+>>>>>>> dev
      console.log('submitted');
 
 }
@@ -105,10 +110,17 @@ closeLogin = () => this.setState({ loginModalisOpen: false })
               onChange={this.handleInputChange}
               required
             />
+<<<<<<< HEAD
             <Button color='blue'
                     fluid
                     size='large'
                     onClick={this.closeLogin}>
+=======
+            <Button color='blue' 
+                    fluid 
+                    size='large'>
+                    
+>>>>>>> dev
               Log In
             </Button>
           </Modal.Content>

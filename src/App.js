@@ -22,11 +22,7 @@ import {  Button,
         } from "semantic-ui-react";
 
 //Page import
-import Login from './pages/login';
-import SignUp from './pages/signup';
-import Welcome from './pages/welcome';
 import mainPage from './pages/mainPage';
-import searchPage from './pages/searchPage';
 import userProfile from './pages/userProfile';
 import './App.css';
 import * as actions from './actions';
@@ -44,6 +40,7 @@ import {Switch,BrowserRouter as Router, Route} from "react-router-dom";
 
 //Other import
 import HomeLogo from './images/home #30C5FF.png';
+import welcomePage from "./pages/welcomePage";
 
 //const----------------------------------------------------------------------------------
 const genderOptions=[
@@ -212,6 +209,7 @@ class App extends Component {
         <Menu fixed='top' inverted>
         <Container>
           <Menu.Item as='a' header>
+          <Image src='https://i.ibb.co/jkvv96c/home-30-C5-FF.png' style={{marginRight:"0.5em"}} size='mini' />
             MovedIn
           </Menu.Item>
 
@@ -235,11 +233,9 @@ class App extends Component {
 
 
                 <Switch>
-                  <Route exact path={'/'} component={mainPage} />
-                  <Route path={'/welcome'} component={Welcome} />
-                  <Route path="/signup" component={SignUp} />
-                  <Route path="/login" component={Login} />
-                  <Route path="/searchPage" component={searchPage} />
+                  <Route exact path={'/'} component={welcomePage} />
+                  <Route path={'/welcomePage'} component={welcomePage} />
+                  <Route path="/mainPage" component={mainPage} />
                   <Route path="/userProfile" component={userProfile} />
                 </Switch>
 

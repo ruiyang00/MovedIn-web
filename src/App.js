@@ -234,28 +234,28 @@ class App extends Component {
 
           <Modal dimmer={dimmer} size={"tiny"} open={this.state.loginModalisOpen} onClose={this.closeLogin}>
             <Segment>
-
-            
-                <LogInModule/>
-                 <Message>
+              <LogInModule/>
+              <Message>
+                <Container textAlign='center'>
                   New to us? <a href='#' onClick={this.handleToSignup}>Sign Up</a>
-                </Message>
-              
+                </Container>
+              </Message>
             </Segment>
-           
           </Modal>
 
           <Modal dimmer={dimmer} size={"tiny"} open={this.state.signupModalisOpen} onClose={this.closeSignup}>
-            <Grid textAlign='center' style={{ height: '50vh' }} verticalAlign='middle'>
-              <Grid.Column style={{ maxWidth: 450 }}>
-                
-                <SignUpModule/>
-
-                <Message>
+            <Segment>
+              <Container textAlign='center'>
+                Welcome! Sign up with <a>Google</a> or <a>Facebook</a>
+              </Container>
+              <Divider horizontal>or</Divider>
+              <SignUpModule/>
+              <Message>
+                <Container textAlign='center'>
                   Already have an account? <a href='#' onClick={this.handleToLogin}>Log In</a>
-                </Message>
-              </Grid.Column>
-            </Grid>
+                </Container>
+              </Message>
+            </Segment>
           </Modal>
 
           

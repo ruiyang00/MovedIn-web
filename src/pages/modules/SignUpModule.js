@@ -63,9 +63,8 @@ handleInputChange = (event) => {
 
     return (
       <div>
-                  <Form as='form' onSubmit={handleSubmit(this.onSubmit)}>
-                  Welcome! Sign up with <a>Google</a> or <a>Facebook</a>
-                  <Divider horizontal>or</Divider>
+                <Form as='form' onSubmit={handleSubmit(this.onSubmit)}>
+                  
                   <Field
                     component={InputField}
                     size="large"

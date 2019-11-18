@@ -70,22 +70,6 @@ const rentOptions =[
   {key: '2000', value: '2000', text:'$2000+'},
 ]
 
-const userProfileOptions = [
-  {
-    key: 'user',
-    text: (
-      <span>
-        Signed in as <strong>Name</strong>
-      </span>
-    ),
-    disabled: true,
-  },
-  { key: 'profile', text: 'Your Profile' },
-  { key: 'settings', text: 'Settings' },
-  { key: 'sign-out', text: 'Sign Out' },
-]
-
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -179,6 +163,21 @@ class App extends Component {
         <Icon name='user'/>
       </span>
     )
+
+    const userProfileOptions = [
+      {
+        key: 'user',
+        text: (
+          <span>
+            Signed in as <strong>Name</strong>
+          </span>
+        ),
+        disabled: true,
+      },
+      { key: 'profile', text: 'View Profile' },
+      { key: 'settings', text: 'Settings' },
+      { key: 'sign-out', text: 'Sign Out', onClick: this.handleSignout},
+    ]
    
 
     const MenuWithoutAuth = () => {
@@ -211,9 +210,6 @@ class App extends Component {
           </Menu.Item>
 
           <Menu.Item position='right'>
-            <Button color='vk' onClick={this.handleSignout}>Sign Out</Button>
-          </Menu.Item>
-          <Menu.Item>
             <Dropdown trigger={userProfileTrigger} options={userProfileOptions}/>
           </Menu.Item>
         </Container>

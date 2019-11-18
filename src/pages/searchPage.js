@@ -163,16 +163,16 @@ class App extends Component {
 
   }
 
-  componentDidUpdate=()=>{
+  // componentDidUpdate=()=>{
+    // window.location.reload(true);
+  //   axios.post('http://localhost:5000/users/homePage',{email:localStorage.getItem('user')})
+  //   .then(function(response){
+  //        console.log(response.data.allusers);
+  //        this.setState({allUsers:response.data.allusers})
+  //
+  // }.bind(this));
 
-    axios.post('http://localhost:5000/users/homePage',{email:localStorage.getItem('user')})
-    .then(function(response){
-         console.log(response.data.allusers);
-         this.setState({allUsers:response.data.allusers})
-
-  }.bind(this));
-
-  }
+  // }
 
   handleInputChange = (event) => {
     const {value,name}=event.target;
@@ -233,7 +233,7 @@ class App extends Component {
                 placeholder='$2000+'
                 options={rentOptions} />
 
-              <SemanticDatepicker 
+              <SemanticDatepicker
                 label='Moved-in Date'
                 onDateChange={this.handleDateChange} />
 
@@ -245,7 +245,7 @@ class App extends Component {
           </Form>
         </Segment>
 
-        
+
         <Header as='h2' content='Search Result' style={style.h2, { marginLeft: '7.5em', marginBottom: '0em' }} textAlign='Left' />
         <Header as='h4' content='Only take one minute to Sign Up, become a memeber today and see more!'
           style={style.h4, { marginLeft: '12em', marginTop: '0.2em' }} textAlign='Left' />

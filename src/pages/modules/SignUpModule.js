@@ -43,11 +43,12 @@ handleInputChange = (event) => {
 }
 
   //
-    onSubmit=(formData)=>{
+async onSubmit(formData){
     // event.preventDefault();
        console.log(this.state.email);
        console.log(this.state.password);
-       this.props.signUp(formData);
+       await this.props.signUp(formData);
+       window.location.reload(true);
        console.log('submitted');
 
 
@@ -64,7 +65,7 @@ handleInputChange = (event) => {
     return (
       <div>
                 <Form as='form' onSubmit={handleSubmit(this.onSubmit)}>
-                  
+
                   <Field
                     component={InputField}
                     size="large"

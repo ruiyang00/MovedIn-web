@@ -64,24 +64,8 @@ async onSubmit(formData){
 
     return (
       <div>
-<<<<<<< HEAD
-                <Form as='form' onSubmit={handleSubmit(this.onSubmit)}>
-
-                  <Field
-                    component={InputField}
-                    size="large"
-                    type='text'
-                    name='email'
-                    fluid
-                    icon='mail'
-                    iconPosition='right'
-                    placeholder='E-mail address'
-                    value={this.state.email}
-                    onChange={this.handleInputChange}
-                    required
-                  />
-=======
         <Form as='form' onSubmit={handleSubmit(this.onSubmit)}>
+
           <Field
             component={InputField}
             size="large"
@@ -91,11 +75,10 @@ async onSubmit(formData){
             icon='mail'
             iconPosition='right'
             placeholder='E-mail address'
-            value={this.state.signupEmail}
+            value={this.state.email}
             onChange={this.handleInputChange}
             required
           />
->>>>>>> dev
 
           <Field
             component={InputField}
@@ -106,11 +89,7 @@ async onSubmit(formData){
             iconPosition='right'
             placeholder='Password'
             type='password'
-<<<<<<< HEAD
             value={this.state.password}
-=======
-            value={this.state.signupPassword}
->>>>>>> dev
             onChange={this.handleInputChange}
             required
           />

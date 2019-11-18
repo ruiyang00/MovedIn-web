@@ -1,42 +1,25 @@
 import React, { Component } from 'react';
 import { Link,withRouter } from 'react-router-dom';
-import {Dropdown, Button, Form,Grid, Card, Message,Icon,Popup} from 'semantic-ui-react';
+import {Dropdown, Button, Form,Grid, Card, Message,Icon,Popup,Tab} from 'semantic-ui-react';
 import * as ROUTES from "./../logistics/routes";
 import axios from 'axios';
 import {connect} from 'react-redux';
 
-const options = [
-    {
-      key: 'user',
-      text: (
-        <span>
-          Signed in as <strong>Bob Smith</strong>
-        </span>
-      ),
-      disabled: true,
-    },
-    { key: 'profile', text: 'Your Profile' },
-    { key: 'stars', text: 'Your Stars' },
-    { key: 'explore', text: 'Explore' },
-    { key: 'integrations', text: 'Integrations' },
-    { key: 'help', text: 'Help' },
-    { key: 'settings', text: 'Settings' },
-    { key: 'sign-out', text: 'Sign Out' },
-  ]
-
-  const trigger = (
-    <span>
-      <Icon name='user' /> Hello, Bob
-    </span>
-  )
 
 class UserProfile extends Component{
 
-    render(){
+     render(){
+       const panes =[
+          {menuItem:'General Information',render:()=> <Tab.Pane>Tab 1 Content</Tab.Pane>},
+          {menuItem:'Personal Details',render:()=> <Tab.Pane>Tab 2 Content</Tab.Pane>},
+          {menuItem:'Special Interest',render:()=> <Tab.Pane>Tab 3 Content</Tab.Pane>},
+            ]
         return(
-            <Dropdown trigger={trigger} options={options}/>
+          <p>Hello World</p>
+
+
         );
-    }
+     }
 }
 
 export default connect(null)

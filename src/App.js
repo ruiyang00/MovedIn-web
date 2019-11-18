@@ -144,9 +144,6 @@ class App extends Component {
     console.log('submitted');
   }
 
-  LoginCallbackFunction = (childData) => {
-    this.setState({loginModalisOpen: childData})
-  }
 
   //-------------------------------------------------------------------------------------
   render() {   
@@ -188,6 +185,7 @@ class App extends Component {
           <Menu fixed='top' inverted>
             <Container>
               <Menu.Item as='a' header>
+                <Image src='https://i.ibb.co/jkvv96c/home-30-C5-FF.png' style={{marginRight:"0.5em"}} size='mini' />
                 MovedIn
               </Menu.Item>
 
@@ -237,9 +235,7 @@ class App extends Component {
 
           <Modal dimmer={dimmer} size={"tiny"} open={this.state.loginModalisOpen} onClose={this.closeLogin}>
             <Segment>
-              <LogInModule
-                parentCallback = {this.state.LoginCallbackFunction}
-              />
+              <LogInModule/>
               <Message>
                 <Container textAlign='center'>
                   New to us? <a href='#' onClick={this.handleToSignup}>Sign Up</a>

@@ -43,11 +43,12 @@ handleInputChange = (event) => {
 }
 
   //
-    onSubmit=(formData)=>{
+async onSubmit(formData){
     // event.preventDefault();
        console.log(this.state.email);
        console.log(this.state.password);
-       this.props.signUp(formData);
+       await this.props.signUp(formData);
+       window.location.reload(true);
        console.log('submitted');
 
 
@@ -64,6 +65,7 @@ handleInputChange = (event) => {
     return (
       <div>
         <Form as='form' onSubmit={handleSubmit(this.onSubmit)}>
+
           <Field
             component={InputField}
             size="large"
@@ -73,7 +75,7 @@ handleInputChange = (event) => {
             icon='mail'
             iconPosition='right'
             placeholder='E-mail address'
-            value={this.state.signupEmail}
+            value={this.state.email}
             onChange={this.handleInputChange}
             required
           />
@@ -87,7 +89,7 @@ handleInputChange = (event) => {
             iconPosition='right'
             placeholder='Password'
             type='password'
-            value={this.state.signupPassword}
+            value={this.state.password}
             onChange={this.handleInputChange}
             required
           />

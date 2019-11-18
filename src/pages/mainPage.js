@@ -96,7 +96,7 @@ class App extends Component {
       [name]:value
     });
   }
-  
+
   onSubmit=(formData)=>{
     console.log(this.state.signupEmail);
     console.log(this.state.signupPassword);
@@ -106,9 +106,9 @@ class App extends Component {
 
   //-------------------------------------------------------------------------------------
   render() {
-   
+
     const {handleSubmit} = this.props;
-   
+
     return (
       <div>
         <div style={backgroundStyle}>
@@ -173,8 +173,5 @@ function mapStateToProps(state){
   };
 }
 
-export default compose(
-connect(mapStateToProps, actions),
-reduxForm({form:'login'})
-) (App)
+export default connect(mapStateToProps, actions)(App)
 //export default App;

@@ -94,11 +94,11 @@ class App extends Component {
 
     }
   }
-  
+
   //Modal windows------------------------------------------------------------------------
   showLogin = (dimmer) => () => this.setState({ dimmer, loginModalisOpen: true })
   closeLogin = () => this.setState({ loginModalisOpen: false })
-  
+
   showSignup = (dimmer) => () => this.setState({dimmer, signupModalisOpen: true})
   closeSignup = () => this.setState({signupModalisOpen: false})
 
@@ -115,7 +115,7 @@ class App extends Component {
     this.props.signOut();
     window.location.reload(true);
   }
-  
+
   handleToLogin = () => {
     this.setState({
       loginModalisOpen: true,
@@ -144,16 +144,19 @@ class App extends Component {
     console.log('submitted');
   }
 
+  LoginCallbackFunction = (childData) => {
+    this.setState({loginModalisOpen: childData})
+  }
 
   //-------------------------------------------------------------------------------------
-  render() {   
-    const { dimmer, 
-            signupEmail, 
+  render() {
+    const { dimmer,
+            signupEmail,
             signupPassword,
             loginEmail,
             loginPassword } = this.state;
 
-    
+
 
     const auth = this.props.isAuth;
     const {handleSubmit} = this.props;
@@ -178,7 +181,7 @@ class App extends Component {
       { key: 'settings', text: 'Settings' },
       { key: 'sign-out', text: 'Sign Out', onClick: this.handleSignout},
     ]
-   
+
 
     const MenuWithoutAuth = () => {
       return (
@@ -195,7 +198,7 @@ class App extends Component {
               </Menu.Item>
             </Container>
           </Menu>
-      
+
         );
 
     };
@@ -204,6 +207,8 @@ class App extends Component {
 
     const MenuWithAuth = () => {
       return (
+
+
         <Menu fixed='top' inverted>
         <Container>
           <Menu.Item as='a' header>
@@ -215,6 +220,10 @@ class App extends Component {
           </Menu.Item>
         </Container>
       </Menu>
+
+
+
+
       );
     };
 
@@ -223,19 +232,21 @@ class App extends Component {
           {!this.props.isAuth ?
             (<MenuWithoutAuth />) : (<MenuWithAuth />)
           }
-          
-          <Switch>
-            <Route exact path={'/'} component={mainPage} />
-            <Route path={'/welcome'} component={Welcome} />
-            <Route path="/signup" component={SignUp} />
-            <Route path="/login" component={Login} />
-            <Route path="/searchPage" component={searchPage} />
-            <Route path="/userProfile" component={userProfile} />
-          </Switch>
+
+
+                <Switch>
+                  <Route exact path={'/'} component={mainPage} />
+                  <Route path={'/welcome'} component={Welcome} />
+                  <Route path="/signup" component={SignUp} />
+                  <Route path="/login" component={Login} />
+                  <Route path="/searchPage" component={searchPage} />
+                  <Route path="/userProfile" component={userProfile} />
+                </Switch>
 
           <Modal dimmer={dimmer} size={"tiny"} open={this.state.loginModalisOpen} onClose={this.closeLogin}>
             <Segment>
-              <LogInModule/>
+              <LogInModule
+              />
               <Message>
                 <Container textAlign='center'>
                   New to us? <a href='#' onClick={this.handleToSignup}>Sign Up</a>
@@ -251,17 +262,18 @@ class App extends Component {
                 Welcome! Sign up with <a>Google</a> or <a>Facebook</a>
               </Container>
             </Message>
-            <Divider horizontal>or</Divider>
-            <SignUpModule 
-              signupModalisOpen={this.state.signupModalisOpen}
-            />
-            <Message>
-              <Container textAlign='center'>
-                Already have an account? <a href='#' onClick={this.handleToLogin}>Log In</a>
-              </Container>
-            </Message>
-          </Segment>
-        </Modal>
+              <Divider horizontal>or</Divider>
+              <SignUpModule/>
+              <Message>
+                <Container textAlign='center'>
+                  Already have an account? <a href='#' onClick={this.handleToLogin}>Log In</a>
+                </Container>
+              </Message>
+            </Segment>
+          </Modal>
+
+
+
 
           <div id="footer">
             <Segment inverted vertical style={{ margin: '0em 0em 0em', padding: '5em 0em' }}>
@@ -340,6 +352,3 @@ function mapStateToProps(state){
 
 //<<<dev-ziqi
 export default connect(mapStateToProps, actions)(App)
-//===
-//export default (connect(mapStateToProps, actions), reduxForm({form:'signup', form:'login'}))(App)
-//>>>dev

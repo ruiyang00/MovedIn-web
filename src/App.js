@@ -174,7 +174,7 @@ class App extends Component {
         ),
         disabled: true,
       },
-      { key: 'profile', text: 'View Profile' },
+      { key: 'profile', text: 'View Profile'},
       { key: 'settings', text: 'Settings' },
       { key: 'sign-out', text: 'Sign Out', onClick: this.handleSignout},
     ]

@@ -68,8 +68,6 @@ const cityOptions=[
   { key: 'San Deigo', text: 'San Deigo', value: 'San Deigo'},
   { key: 'San Fransico', text: 'San Fransico', value: 'San Fransico'},
   { key: 'San Jose', text: 'San Jose', value: 'San Jose'},
-  { key: 'San Jose', text: 'San Jose', value: 'San Jose'},
-  { key: 'San Jose', text: 'San Jose', value: 'San Jose'},
 ]
 
 

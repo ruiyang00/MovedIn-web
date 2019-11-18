@@ -43,11 +43,12 @@ import * as ROUTES from "../../logistics/routes"
   }
 
 
-  onSubmit=(formData)=>{
+ async onSubmit(formData){
   // event.preventDefault();
      console.log(this.state.email);
      console.log(this.state.password);
-     this.props.signIn(formData);
+     await this.props.signIn(formData);
+     window.location.reload(true);
      //console.log(formData)
      console.log('submitted');
 

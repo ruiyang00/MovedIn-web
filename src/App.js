@@ -144,6 +144,9 @@ class App extends Component {
     console.log('submitted');
   }
 
+  LoginCallbackFunction = (childData) => {
+    this.setState({loginModalisOpen: childData})
+  }
 
   //-------------------------------------------------------------------------------------
   render() {   
@@ -234,7 +237,9 @@ class App extends Component {
 
           <Modal dimmer={dimmer} size={"tiny"} open={this.state.loginModalisOpen} onClose={this.closeLogin}>
             <Segment>
-              <LogInModule/>
+              <LogInModule
+                parentCallback = {this.state.LoginCallbackFunction}
+              />
               <Message>
                 <Container textAlign='center'>
                   New to us? <a href='#' onClick={this.handleToSignup}>Sign Up</a>
@@ -243,22 +248,24 @@ class App extends Component {
             </Segment>
           </Modal>
 
-          <Modal dimmer={dimmer} size={"tiny"} open={this.state.signupModalisOpen} onClose={this.closeSignup}>
-            <Segment>
+        <Modal dimmer={dimmer} size={"tiny"} open={this.state.signupModalisOpen} onClose={this.closeSignup}>
+          <Segment>
+            <Message>
               <Container textAlign='center'>
                 Welcome! Sign up with <a>Google</a> or <a>Facebook</a>
               </Container>
-              <Divider horizontal>or</Divider>
-              <SignUpModule/>
-              <Message>
-                <Container textAlign='center'>
-                  Already have an account? <a href='#' onClick={this.handleToLogin}>Log In</a>
-                </Container>
-              </Message>
-            </Segment>
-          </Modal>
-
-          
+            </Message>
+            <Divider horizontal>or</Divider>
+            <SignUpModule 
+              signupModalisOpen={this.state.signupModalisOpen}
+            />
+            <Message>
+              <Container textAlign='center'>
+                Already have an account? <a href='#' onClick={this.handleToLogin}>Log In</a>
+              </Container>
+            </Message>
+          </Segment>
+        </Modal>
 
           <div id="footer">
             <Segment inverted vertical style={{ margin: '0em 0em 0em', padding: '5em 0em' }}>

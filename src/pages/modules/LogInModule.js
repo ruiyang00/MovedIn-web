@@ -30,6 +30,7 @@ import * as ROUTES from "../../logistics/routes"
     this.state={
       email:'',
       password:'',
+      loginModalisOpen:false
     };
     this.onSubmit=this.onSubmit.bind(this);
     this.handleInputChange= this.handleInputChange.bind(this);
@@ -53,6 +54,11 @@ import * as ROUTES from "../../logistics/routes"
 
 }
 
+sendData = () => {
+  this.props.parentCallback(this.loginModalisOpen);
+}
+
+closeLogin = () => this.setState({ loginModalisOpen: false })
 
   render(){
     const {handleSubmit} = this.props;
@@ -102,11 +108,14 @@ import * as ROUTES from "../../logistics/routes"
               onChange={this.handleInputChange}
               required
             />
-            <Button color='blue' fluid size='large'>
+            <Button color='blue' 
+                    fluid 
+                    size='large'
+                    onClick={this.closeLogin}>
               Log In
-              </Button>
+            </Button>
           </Modal.Content>
-          </Form>
+        </Form>
 
       </div>
     );

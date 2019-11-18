@@ -63,45 +63,44 @@ handleInputChange = (event) => {
 
     return (
       <div>
-                <Form as='form' onSubmit={handleSubmit(this.onSubmit)}>
-                  
-                  <Field
-                    component={InputField}
-                    size="large"
-                    type='text'
-                    name='email'
-                    fluid
-                    icon='mail'
-                    iconPosition='right'
-                    placeholder='E-mail address'
-                    value={this.state.signupEmail}
-                    onChange={this.handleInputChange}
-                    required
-                  />
+        <Form as='form' onSubmit={handleSubmit(this.onSubmit)}>
+          <Field
+            component={InputField}
+            size="large"
+            type='text'
+            name='email'
+            fluid
+            icon='mail'
+            iconPosition='right'
+            placeholder='E-mail address'
+            value={this.state.signupEmail}
+            onChange={this.handleInputChange}
+            required
+          />
 
-                  <Field
-                    component={InputField}
-                    size="large"
-                    name='password'
-                    fluid
-                    icon='lock'
-                    iconPosition='right'
-                    placeholder='Password'
-                    type='password'
-                    value={this.state.signupPassword}
-                    onChange={this.handleInputChange}
-                    required
-                  />
+          <Field
+            component={InputField}
+            size="large"
+            name='password'
+            fluid
+            icon='lock'
+            iconPosition='right'
+            placeholder='Password'
+            type='password'
+            value={this.state.signupPassword}
+            onChange={this.handleInputChange}
+            required
+          />
 
-                  <Button color='blue'
-                    fluid
-                    size='large'
-                    disabled={createAccountisDisabled}
-                    onClick={this.handleNextStep}
-                  >
-                    Create Account
-                  </Button>
-                </Form>
+          <Button color='blue'
+            fluid
+            size='large'
+            disabled={createAccountisDisabled}
+            onClick={this.handleNextStep}
+          >
+            Create Account
+          </Button>
+        </Form>
       </div>
     );
   }

@@ -94,7 +94,7 @@ class App extends Component {
       signupModalisOpen:false,
       childModalisOpen: false
       };
-    this.handleClick = this.handleClick.bind(this);
+    this.handleSignout = this.handleSignout.bind(this);
     this.onSubmit=this.onSubmit.bind(this);
     this.handleInputChange= this.handleInputChange.bind(this);
   }
@@ -122,7 +122,7 @@ class App extends Component {
   closeChildModal = () => this.setState({ childModalisOpen: false})
 
   //Event handle-------------------------------------------------------------------------
-  handleClick() {
+  handleSignout() {
     if (localStorage.getItem('user')) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
@@ -183,7 +183,6 @@ class App extends Component {
 
     const MenuWithoutAuth = () => {
       return (
-        
           <Menu fixed='top' inverted>
             <Container>
               <Menu.Item as='a' header>
@@ -205,19 +204,20 @@ class App extends Component {
 
     const MenuWithAuth = () => {
       return (
-        <Menu>
-          <Menu.Item>
-                <Dropdown trigger={userProfileTrigger} options={userProfileOptions}/>
-              </Menu.Item>
-          <Menu.Item>
-            <Button color="yellow" onClick={this.handleClick}>Sign Out
-               </Button>
+        <Menu fixed='top' inverted>
+        <Container>
+          <Menu.Item as='a' header>
+            MovedIn
           </Menu.Item>
 
+          <Menu.Item position='right'>
+            <Button color='vk' onClick={this.handleSignout}>Sign Out</Button>
+          </Menu.Item>
           <Menu.Item>
-            Welcome!
-           </Menu.Item>
-        </Menu>
+            <Dropdown trigger={userProfileTrigger} options={userProfileOptions}/>
+          </Menu.Item>
+        </Container>
+      </Menu>
       );
     };
 

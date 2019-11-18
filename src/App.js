@@ -233,15 +233,16 @@ class App extends Component {
           </Switch>
 
           <Modal dimmer={dimmer} size={"tiny"} open={this.state.loginModalisOpen} onClose={this.closeLogin}>
-            <Grid textAlign='center' style={{ height: '50vh' }} verticalAlign='middle'>
-              <Grid.Column style={{ maxWidth: 450 }}>
+            <Segment>
+
+            
                 <LogInModule/>
-                <Message>
+                 <Message>
                   New to us? <a href='#' onClick={this.handleToSignup}>Sign Up</a>
                 </Message>
-              </Grid.Column>
-            </Grid>
-
+              
+            </Segment>
+           
           </Modal>
 
           <Modal dimmer={dimmer} size={"tiny"} open={this.state.signupModalisOpen} onClose={this.closeSignup}>

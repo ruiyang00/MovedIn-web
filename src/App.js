@@ -144,6 +144,9 @@ class App extends Component {
     console.log('submitted');
   }
 
+  LoginCallbackFunction = (childData) => {
+    this.setState({loginModalisOpen: childData})
+  }
 
   //-------------------------------------------------------------------------------------
   render() {
@@ -203,7 +206,7 @@ class App extends Component {
 
     const MenuWithAuth = () => {
       return (
-      
+
 
         <Menu fixed='top' inverted>
         <Container>
@@ -241,7 +244,8 @@ class App extends Component {
 
           <Modal dimmer={dimmer} size={"tiny"} open={this.state.loginModalisOpen} onClose={this.closeLogin}>
             <Segment>
-              <LogInModule/>
+              <LogInModule
+              />
               <Message>
                 <Container textAlign='center'>
                   New to us? <a href='#' onClick={this.handleToSignup}>Sign Up</a>
@@ -250,11 +254,13 @@ class App extends Component {
             </Segment>
           </Modal>
 
-          <Modal dimmer={dimmer} size={"tiny"} open={this.state.signupModalisOpen} onClose={this.closeSignup}>
-            <Segment>
+        <Modal dimmer={dimmer} size={"tiny"} open={this.state.signupModalisOpen} onClose={this.closeSignup}>
+          <Segment>
+            <Message>
               <Container textAlign='center'>
                 Welcome! Sign up with <a>Google</a> or <a>Facebook</a>
               </Container>
+            </Message>
               <Divider horizontal>or</Divider>
               <SignUpModule/>
               <Message>
@@ -344,6 +350,3 @@ function mapStateToProps(state){
 
 //<<<dev-ziqi
 export default connect(mapStateToProps, actions)(App)
-//===
-//export default (connect(mapStateToProps, actions), reduxForm({form:'signup', form:'login'}))(App)
-//>>>dev

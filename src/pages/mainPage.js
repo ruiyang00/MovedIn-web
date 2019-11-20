@@ -28,19 +28,8 @@ import {
   Pagination,
   Select,
   Segment,
+  ButtonContent,
 } from 'semantic-ui-react'
-
-const PaginationCompact = () => (
-  <Pagination
-    boundaryRange={0}
-    defaultActivePage={1}
-    ellipsisItem={null}
-    firstItem={null}
-    lastItem={null}
-    siblingRange={1}
-    totalPages={10}
-  />
-)
 
 const style = {
   h1: {
@@ -130,6 +119,10 @@ class App extends Component {
       gender:'',
       age:'',
       allUsers:[],
+      modal1isOpon:false,
+      modal2isOpon:false,
+      modal3isOpon:false,
+      modal4isOpon:false,
     };
     this.onSubmit=this.onSubmit.bind(this);
     this.handleInputChange= this.handleInputChange.bind(this);
@@ -190,6 +183,17 @@ class App extends Component {
 
   }
 
+  showModal1 = (dimmer) => () => this.setState({ dimmer, modal1isOpon: true })
+  closeModal1 = () => this.setState({ modal1isOpon: false })
+
+  showModal2 = (dimmer) => () => this.setState({ dimmer, modal2isOpon: true })
+  closeModal2 = () => this.setState({ modal2isOpon: false })
+
+  showModal3 = (dimmer) => () => this.setState({ dimmer, modal3isOpon: true })
+  closeModal3 = () => this.setState({ modal3isOpon: false })
+
+  showModal4 = (dimmer) => () => this.setState({ dimmer, modal4isOpon: true })
+  closeModal1 = () => this.setState({ modal1isOpon: false })
   //-------------------------------------------------------------------------------------
   render() {
     const {date, dimmer} = this.state;
@@ -231,7 +235,7 @@ class App extends Component {
           </Form>
         </Segment>
         
-        <Menu size='small' borderless style={{ marginTop: "0em" }}>
+        <Menu size='small' borderless style={{ marginTop: "0em", marginBottom:'0em' }}>
           <Menu.Item>
             <Segment style={{ marginLeft: "11.5em" }}>
               Filter people by
@@ -278,27 +282,39 @@ class App extends Component {
           </Menu.Item>
         </Menu>
 
-
-        <Segment>
-         <Card.Group>
-        {
-          allUsers.map(
-            (user) => {
-            return (
+       
+        <Segment style={{marginTop:'0em'}}>
+         <Card.Group itemsPerRow={4} style={{marginLeft:"6.5em"}}>
             <Card style={{ width: '15em' , marginTop:'2em' , marginLeft:'5em'}}>
               <Image 
-                src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} 
+                src='https://image.flaticon.com/icons/svg/168/168724.svg' wrapped ui={false} 
+                as='a'
+                onClick={this.showModal1('blurring')}
+                />
+              <Card.Content>
+                <Card.Meta>
+                  <span className='status'>Need a $940 room in San Jose</span>
+                </Card.Meta>
+              </Card.Content>
+              <Card.Content extra>
+                <a>
+                  <Icon name='user' />
+                  1 occupant
+                  </a>
+              </Card.Content>
+            </Card>
+            <Card style={{ width: '15em' , marginTop:'2em' , marginLeft:'5em'}}>
+              <Image 
+                src='https://image.flaticon.com/icons/svg/168/168728.svg' wrapped ui={false} 
                 as='a'
                 href='null'
                 />
               <Card.Content>
-                <Card.Header>{user.nameToDisplay}</Card.Header>
+                <Card.Header></Card.Header>
                 <Card.Meta>
-                  <span className='status'>Need a ${user.budget} room in {user.city}</span>
+                  <span className='status'>Need a $1300 room in San Jose</span>
                 </Card.Meta>
-                <Card.Description>
-                  {user.gender}, {user.age} years old
-              </Card.Description>
+             
               </Card.Content>
               <Card.Content extra>
                 <a>
@@ -307,58 +323,73 @@ class App extends Component {
                   </a>
               </Card.Content>
             </Card>
-            )
-          }
-          )
-        } 
+            <Card style={{ width: '15em' , marginTop:'2em' , marginLeft:'5em'}}>
+              <Image 
+                src='https://image.flaticon.com/icons/svg/168/168730.svg' wrapped ui={false} 
+                as='a'
+                href='null'
+                />
+              <Card.Content>
+                <Card.Header></Card.Header>
+                <Card.Meta>
+                  <span className='status'>Need a $800 room in San Jose</span>
+                </Card.Meta>
+                
+              </Card.Content>
+              <Card.Content extra>
+                <a>
+                  <Icon name='user' />
+                  1 occupant
+                  </a>
+              </Card.Content>
+            </Card>
+            <Card style={{ width: '15em' , marginTop:'2em' , marginLeft:'5em'}}>
+              <Image 
+                src='https://image.flaticon.com/icons/svg/168/168729.svg' wrapped ui={false} 
+                as='a'
+                href='null'
+                />
+              <Card.Content>
+                <Card.Header></Card.Header>
+                <Card.Meta>
+                  <span className='status'>Need a $1000 room in San Jose</span>
+                </Card.Meta> 
+              </Card.Content>
+              <Card.Content extra>
+                <a>
+                  <Icon name='user' />
+                  1 occupant
+                  </a>
+              </Card.Content>
+            </Card>
         </Card.Group>
-        </Segment>
-       
-        <div class="ui centered grid">
-          <div aria-label="Pagination Navigation" role="navigation" class="ui pagination menu">
-            <a
-              aria-current="false"
-              aria-disabled="false"
-              tabindex="0"
-              value="1"
-              aria-label="Previous item"
-              type="prevItem"
-              class="item"
-            >
-            ⟨
-            </a>
-            <a
-              aria-current="true"
-              aria-disabled="false"
-              tabindex="0"
-              value="1"
-              type="pageItem"
-              class="active item"
-            >
-              1
-        </a>
-            <a aria-current="false" aria-disabled="false" tabindex="0" value="2" type="pageItem" class="item">
-              2
-        </a>
-            <a aria-current="false" aria-disabled="false" tabindex="0" value="3" type="pageItem" class="item">
-              3
-        </a>
-            <a
-              aria-current="false"
-              aria-disabled="false"
-              tabindex="0"
-              value="2"
-              aria-label="Next item"
-              type="nextItem"
-              class="item"
-            >
-              ⟩
-        </a>
-          </div>
-        </div>
+        
+    
+        <Pagination
+          style={{marginTop:"2em" , marginLeft:"42em"}}
+          boundaryRange={0}
+          defaultActivePage={1}
+          ellipsisItem={null}
+          firstItem={null}
+          lastItem={null}
+          siblingRange={1}
+          totalPages={5}
+        />
+      </Segment>
 
-
-
+      <Modal dimmer={dimmer} open={this.state.modal1isOpon} onClose={this.closeModal1}>
+        <Modal.Content image>
+          <Image wrapped size='medium' src='https://image.flaticon.com/icons/svg/168/168724.svg' />
+          <Modal.Description>
+            <Header>Brain</Header>
+            <p>
+              We've found the following gravatar image associated with your e-mail
+              address.
+            </p>
+            <p>Is it okay to use this photo?</p>
+          </Modal.Description>
+        </Modal.Content>
+      </Modal>
 
       </div>//--------
     );

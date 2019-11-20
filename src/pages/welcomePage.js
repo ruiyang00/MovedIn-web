@@ -125,14 +125,16 @@ class App extends Component {
             }}>
               MovedIn
             </Header>
+
             <Header
               as='h2'
-              content='Find your perfect match'
+              content='Improve your living experience with new friends'
               inverted
               style={{
                 fontSize: '1.7em',
                 fontWeight: 'normal',
                 marginTop: '0.5em',
+                marginBottom:'2em'
               }}
             />
 

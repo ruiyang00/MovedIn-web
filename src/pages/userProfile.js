@@ -6,7 +6,14 @@ import axios from 'axios';
 import * as moment from 'moment';
 import {connect} from 'react-redux';
 
-
+const backgroundStyle = {
+  //width: "100%",
+  height: "120vh",
+  backgroundImage: `url(https://i.ibb.co/72fb7sj/living-room-2569325-1920.jpg)`,
+  backgroundRepeat: "null",
+  backgroundSize: 'cover',
+  overflow: 'hidden',
+};
 
 class UserProfile extends Component{
 
@@ -580,12 +587,14 @@ handleRoomPreChangeANDSumbitAll=()=>{
 
 
         return(
+          <div style={backgroundStyle}>
+            
 
-       <Grid>
+          <Grid>
 
 
             <p></p><p></p><p></p>
-            <Grid.Row></Grid.Row>
+            <Grid.Row></Grid.Row> <Grid.Row></Grid.Row><Grid.Row></Grid.Row>
 
       <Grid.Row columns={8}>
            <Grid.Column width={4}></Grid.Column>
@@ -611,7 +620,7 @@ handleRoomPreChangeANDSumbitAll=()=>{
 
 
         </Grid>
-
+      </div>
 
         );
      }

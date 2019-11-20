@@ -48,14 +48,14 @@ const backgroundStyle = {
 
 const searchOptions=[
   {
-    key: 'a place to live',
-    text: 'a place to live',
-    value: 'a place to live',
+    key: 'new people to MovedIn',
+    text: 'new people to MovedIn',
+    value: 'new people to MovedIn',
   },
   {
-    key: 'people to live with',
-    text: 'people to live with',
-    value: 'people to live with',
+    key: 'new place to MovedIn',
+    text: 'new place to MovedIn',
+    value: 'new place to MovedIn',
   },
 ]
 
@@ -83,14 +83,14 @@ class App extends Component {
     this.handleInputChange= this.handleInputChange.bind(this);
   }
 
-  setRedirect = () => {
+  setRedirectToMainPage = () => {
     this.setState({
-      redirect: true
+      redirectToMainPage: true
     })
   }
 
-  renderRedirect = () => {
-    if (this.state.redirect) {
+  renderRedirectToMainPage = () => {
+    if (this.state.redirectToMainPage) {
       return <Redirect to='/mainPage' />
     }
   }
@@ -151,11 +151,11 @@ class App extends Component {
                     label="in"      
                     options={cityOptions}
                   />
-                  {this.renderRedirect()}
+                  {this.renderRedirectToMainPage()}
                   <Button 
                     primary 
                     size='normal'
-                    onClick={this.setRedirect}>
+                    onClick={this.setRedirectToMainPage}>
                     Let's Go <Icon name='right arrow' />
                   </Button>
                 </Form.Group>

@@ -84,11 +84,40 @@ const rentOptions =[
   {key: '2000', value: '2000', text:'$2000+'},
 ]
 
+const parkingOptions =[
+  {key: false, value: false, text:'No car'},
+  {key: true, value: true, text:'Have car'},
+]
+
+const genderOption =[
+  {key: 'Male', value: 'Male', text:'Male'},
+  {key: 'Female', value: 'Female', text:'Female'},
+  {key: 'Other', value: 'Other', text:'Other'},
+]
+
+const bathroomOpotion =[
+  {key: false, value: false, text:'Need private bathroom'},
+  {key: true, value: true, text:'Share bathroom ok'},
+]
+
+const petOpotion =[
+  {key: false, value: false, text:'No pets'},
+  {key: true, value: true, text:'Have pets'},
+]
+
+const smokingOpotion =[
+  {key: false, value: false, text:'No smoking'},
+  {key: true, value: true, text:'Smoking ok'},
+]
+
+const partyOpotion =[
+  {key: false, value: false, text:'No party'},
+  {key: true, value: true, text:'Party ok'},
+]
+
 const AppWithBasic = ({ onChange }) => (
   <SemanticDatepicker onChange={onChange} />
 );
-
-
 
 class App extends Component {
   constructor(props){
@@ -136,6 +165,7 @@ class App extends Component {
 
   handleDateChange = date => {
     this.setState({ date });
+    
   };
 
 
@@ -144,7 +174,7 @@ class App extends Component {
      console.log(this.state.nameToDisplay);
      console.log(this.state.city);
      //this.props.signIn(formData);
-    axios.post('http://localhost:5000/users/addUserPro',{
+    axios.get('http://localhost:5000/roommates/getroommates',{
     nameToDisplay: this.state.nameToDisplay,
     city: this.state.city,
     budget: this.setState.budget,
@@ -165,10 +195,11 @@ class App extends Component {
     const {date, dimmer} = this.state;
     const {allUsers}=this.state;
     console.log(allUsers);
+    
 
     return (
       <div>
-        <Segment secondary style={{ marginTop: "4em" }}>
+        <Segment secondary style={{ marginTop: "4em", marginBottom:"0em"}}>
           <Form style={{marginLeft:"11.5em", marginRight:"0em"}}>
            <Form.Group widths='equal'>
             <Form.Field control={Select}
@@ -199,13 +230,57 @@ class App extends Component {
             </Form.Group>
           </Form>
         </Segment>
-
-
-
-       <Segment>
-         <Card.Group>
-
         
+        <Menu size='small' borderless style={{ marginTop: "0em" }}>
+          <Menu.Item>
+            <Segment style={{ marginLeft: "11.5em" }}>
+              Filter people by
+            </Segment>
+          </Menu.Item>
+          <Menu.Item >
+            <Dropdown clearable
+              placeholder='Gender'
+              fluid selection
+              options={genderOption} />
+          </Menu.Item>
+          <Menu.Item>
+            <Dropdown clearable
+              placeholder='Have car?'
+              fluid selection
+              options={parkingOptions} />
+          </Menu.Item>
+          <Menu.Item>
+            <Dropdown clearable
+              placeholder='Share bathroom'
+              fluid selection
+              options={bathroomOpotion} />
+          </Menu.Item>
+          <Menu.Item>
+            <Dropdown clearable
+              placeholder='Pet'
+              fluid selection
+              options={petOpotion} />
+          </Menu.Item>
+          <Menu.Item>
+            <Dropdown clearable
+              placeholder='Smoking'
+              fluid selection
+              options={smokingOpotion} />
+          </Menu.Item>
+          <Menu.Item>
+            <Dropdown clearable
+              placeholder='Party'
+              fluid selection
+              options={partyOpotion} />
+          </Menu.Item>
+          <Menu.Item position='right' style={{marginRight:"10em"}}>
+            <Button fluid color='twitter'>Update Results</Button>
+          </Menu.Item>
+        </Menu>
+
+
+        <Segment>
+         <Card.Group>
         {
           allUsers.map(
             (user) => {

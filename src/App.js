@@ -28,6 +28,7 @@ import './App.css';
 import * as actions from './actions';
 import SignUpModule from './pages/modules/SignUpModule';
 import LogInModule from './pages/modules/LogInModule';
+import RoomProfile from './pages/roomProfile';
 
 //redux import
 import { connect } from 'react-redux';
@@ -243,6 +244,7 @@ class App extends Component {
                   <Route path={'/welcomePage'} component={welcomePage} />
                   <Route path="/mainPage" component={mainPage} />
                   <Route path="/userProfile" component={userProfile} />
+                  <Route path="/roomProfile" component={RoomProfile} />
                 </Switch>
 
           <Modal dimmer={dimmer} size={"tiny"} open={this.state.loginModalisOpen} onClose={this.closeLogin}>

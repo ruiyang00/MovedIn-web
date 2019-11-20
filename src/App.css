@@ -42,10 +42,10 @@
 }
 
 #footer{
-   position:absolute;
+   position:relavtive;
    bottom:0;
    width:100%;
-   height:10px;
+   height:2em;
    background-color: black;
 
 

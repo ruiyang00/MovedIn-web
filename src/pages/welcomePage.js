@@ -1,6 +1,6 @@
 //React import
 import React, { Component } from 'react'
-import { Link,withRouter } from 'react-router-dom';
+import { Link,withRouter, Redirect } from 'react-router-dom';
 
 import SignUpModule from './modules/SignUpModule';
 import LogInModule from './modules/LogInModule';
@@ -74,16 +74,25 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state={
-      loginEmail:'',
-      loginPassword:'',
-      signupEmail:'',
-      signupPassword:'',
+      redirect: false,
       loginModalisOpen: false,
       signupModalisOpen: false,
       childModalisOpen:false
       };
     this.onSubmit=this.onSubmit.bind(this);
     this.handleInputChange= this.handleInputChange.bind(this);
+  }
+
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/mainPage' />
+    }
   }
 
   //Event handle-------------------------------------------------------------------------
@@ -95,8 +104,6 @@ class App extends Component {
   }
 
   onSubmit=(formData)=>{
-    console.log(this.state.signupEmail);
-    console.log(this.state.signupPassword);
     this.props.signUp(formData);
     console.log('submitted');
   }
@@ -144,9 +151,11 @@ class App extends Component {
                     label="in"      
                     options={cityOptions}
                   />
+                  {this.renderRedirect()}
                   <Button 
                     primary 
-                    size='normal'>
+                    size='normal'
+                    onClick={this.setRedirect}>
                     Let's Go <Icon name='right arrow' />
                   </Button>
                 </Form.Group>

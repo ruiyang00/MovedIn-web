@@ -23,6 +23,7 @@ import {
   Search
 } from 'semantic-ui-react'
 import * as ROUTES from "../../logistics/routes"
+import Axios from 'axios';
 
  class LogInModule extends Component{
   constructor(props){
@@ -52,7 +53,6 @@ import * as ROUTES from "../../logistics/routes"
      //console.log(formData
      window.location.reload(true);
      console.log('submitted');
-
 }
 
 closeLogin = () => this.setState({ loginModalisOpen: false })

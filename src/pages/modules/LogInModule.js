@@ -5,6 +5,8 @@ import {compose} from 'redux';
 import {reduxForm, Field, formValueSelector} from 'redux-form';
 import {InputField} from 'react-semantic-redux-form';
 import * as actions from '../../actions';
+import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
 import {
   Button,
   Container,
@@ -23,6 +25,7 @@ import {
   Search
 } from 'semantic-ui-react'
 import * as ROUTES from "../../logistics/routes"
+import Axios from 'axios';
 
  class LogInModule extends Component{
   constructor(props){
@@ -30,11 +33,22 @@ import * as ROUTES from "../../logistics/routes"
     this.state={
       email:'',
       password:'',
-      loginModalisOpen:false
+      loginModalisOpen:false,
+      isAuthenticated: false, user: null, token: ''
     };
     this.onSubmit=this.onSubmit.bind(this);
     this.handleInputChange= this.handleInputChange.bind(this);
   }
+
+  logout = () => {
+    this.setState({isAuthenticated: false, token: '', user: null})
+};
+
+    facebookResponse = (e) => {};
+    googleResponse = (e) => {};
+    onFailure = (error) => {
+      alert(error);
+    }
 
   handleInputChange = (event) => {
     const {value,name}=event.target;
@@ -52,7 +66,6 @@ import * as ROUTES from "../../logistics/routes"
      //console.log(formData
      window.location.reload(true);
      console.log('submitted');
-
 }
 
 closeLogin = () => this.setState({ loginModalisOpen: false })
@@ -60,20 +73,34 @@ closeLogin = () => this.setState({ loginModalisOpen: false })
   render(){
     const {handleSubmit} = this.props;
     const { open, dimmer} = this.state;
+
+    const responseFacebook = (response) => {
+      console.log(response);
+    }
+
+    const responseGoogle = (response) => {
+      console.log(response);
+    }
+
     return (
 
       <div>
         <Form size='large' as='form' onSubmit={handleSubmit(this.onSubmit)}>
           <Modal.Header>
-            <Button class="ui facebook button" color="facebook" size="large" fluid >
-              <i class="facebook icon"></i>
-              Log In with Facebook
-              </Button>
-
-            <Button class="ui google button" color="google plus" size="large" fluid style={{ marginTop: "0.5em" }}>
-              <i class="google icon"></i>
-              Log In with Google
-              </Button>
+          <Segment size="large" fluid >
+            <FacebookLogin 
+                  size='medium'
+                  appId="430563460963841" //need to store it in another file
+                  fields="name,email,picture"
+                  callback={responseFacebook}
+                />
+            <GoogleLogin
+                clientId="343939675754-s1d2uieeguhlssp11gv4hnuskfeod5o2.apps.googleusercontent.com" ////need to store it in another file
+                buttonText="LOGIN WITH GOOGLE"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+              />
+            </Segment>
           </Modal.Header>
 
           <Divider horizontal>or</Divider>

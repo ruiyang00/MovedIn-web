@@ -3,12 +3,6 @@ import SemanticDatepicker from 'react-semantic-ui-datepickers';
 import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
 
 import HomeLogo from './../images/home #30C5FF.png';
-// import profile1 from './../images/profile1.png';
-// import profile2 from './../images/profile2.png';
-// import profile3 from './../images/profile3.png';
-// import profile4 from './../images/profile4.png';
-// import profile5 from './../images/profile5.png';
-// import profile6 from './../images/profile6.png';
 import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {reduxForm, Field, formValueSelector} from 'redux-form';
@@ -26,6 +20,7 @@ import {
   Grid,
   Header,
   Icon,
+  Input,
   Image,
   Menu,
   Message,
@@ -63,63 +58,17 @@ const style = {
   },
 }
 
-const stateOptions = [
-  { key:'AL', value:'AL', text: 'Alabama' },
-	{ key:'AK' , value:'AK', text: 'Alaska' },
-	{ key:'AZ' , value:'AZ', text: 'Arizona' },
-	{ key:'AR' , value:'AR', text: 'Arkansas' },
-	{ key:'CA' , value:'CA', text: 'California' },
-	{ key:'CO' , value:'CO', text: 'Colorado' },
-	{ key:'CT' , value:'CT', text: 'Connecticut' },
-	{ key:'DE' , value:'DE', text: 'Delaware' },
-	{ key:'DC' , value:'DC', text: 'D.C.' },
-	{ key:'FL' , value:'FL', text: 'Florida' },
-	{ key:'GA' , value:'GA', text: 'Georgia' },
-	{ key:'HI' , value:'HI', text: 'Hawaii' },
-	{ key:'ID' , value:'ID', text: 'Idaho' },
-	{ key:'IL' , value:'IL', text: 'Illinois' },
-	{ key:'IN' , value:'IN', text: 'Indiana' },
-	{ key:'IA' , value:'IA', text: 'Iowa' },
-	{ key:'KS' , value:'KS', text: 'Kansas' },
-	{ key:'KY' , value:'KY', text: 'Kentucky' },
-	{ key:'LA' , value:'LA', text: 'Louisiana' },
-	{ key:'ME' , value:'ME', text: 'Maine' },
-	{ key:'MD' , value:'MD', text: 'Maryland' },
-	{ key:'MA' , value:'MA', text: 'Massachusetts' },
-	{ key:'MI' , value:'MI', text: 'Michigan' },
-	{ key:'MN' , value:'MN', text: 'Minnesota' },
-	{ key:'MS' , value:'MS', text: 'Mississippi' },
-	{ key:'MO' , value:'MO', text: 'Missouri' },
-	{ key:'MT' , value:'MT', text: 'Montana' },
-	{ key:'NE' , value:'NE', text: 'Nebraska' },
-	{ key:'NV' , value:'NV', text: 'Nevada' },
-	{ key:'NH' , value:'NH', text: 'New Hampshire' },
-	{ key:'NJ' , value:'NJ', text: 'New Jersey' },
-	{ key:'NM' , value:'NM', text: 'New Mexico' },
-	{ key:'NY' , value:'NY', text: 'New York' },
-	{ key:'NC' , value:'NC', text: 'North Carolina' },
-	{ key:'ND' , value:'ND', text: 'North Dakota' },
-	{ key:'OH' , value:'OH', text: 'Ohio' },
-	{ key:'OK' , value:'OK', text: 'Oklahoma' },
-	{ key:'OR' , value:'OR', text: 'Oregon' },
-	{ key:'PA', value:'PA', text: 'Pennsylvania' },
-	{ key:'RI' , value:'RI', text: 'Rhode Island' },
-	{ key:'SC' , value:'SC', text: 'South Carolina' },
-	{ key:'SD' , value:'SD', text: 'South Dakota' },
-	{ key:'TN' , value:'TN', text: 'Tennessee' },
-	{ key:'TX' , value:'TX', text: 'Texas' },
-	{ key:'UT', value:'UT', text: 'Utah' },
-	{ key:'VT' , value:'VT', text: 'Vermont' },
-	{ key:'VA' , value:'VA', text: 'Virginia' },
-	{ key:'WA' , value:'WA', text: 'Washington' },
-	{ key:'WV' , value:'WV', text: 'West Virginia' },
-	{ key:'WI' , value:'WI', text: 'Wisconsin' },
-	{ key:'WY', value:'WY', text: 'Wyoming' }
+const cityOptions=[
+  { key: 'Los Angeles', text: 'Los Angeles', value: 'Los Angeles'},
+  { key: 'Santa Barbara', text: 'Santa Barbara', value: 'Santa Barbara'},
+  { key: 'San Deigo', text: 'San Deigo', value: 'San Deigo'},
+  { key: 'San Fransico', text: 'San Fransico', value: 'San Fransico'},
+  { key: 'San Jose', text: 'San Jose', value: 'San Jose'},
 ]
 
-const roomOptions =[
-  {key: 'have', value: 'have', text:'Have a room'},
-  {key: 'need', value: 'need', text:'Need a room'},
+const searchOptions =[
+  {key: 'People', value: 'People', text:'new people'},
+  {key: 'room', value: 'room', text:'new room'},
 ]
 
 const rentOptions =[
@@ -135,10 +84,40 @@ const rentOptions =[
   {key: '2000', value: '2000', text:'$2000+'},
 ]
 
+const parkingOptions =[
+  {key: false, value: false, text:'No car'},
+  {key: true, value: true, text:'Have car'},
+]
+
+const genderOption =[
+  {key: 'Male', value: 'Male', text:'Male'},
+  {key: 'Female', value: 'Female', text:'Female'},
+  {key: 'Other', value: 'Other', text:'Other'},
+]
+
+const bathroomOpotion =[
+  {key: false, value: false, text:'Need private bathroom'},
+  {key: true, value: true, text:'Share bathroom ok'},
+]
+
+const petOpotion =[
+  {key: false, value: false, text:'No pets'},
+  {key: true, value: true, text:'Have pets'},
+]
+
+const smokingOpotion =[
+  {key: false, value: false, text:'No smoking'},
+  {key: true, value: true, text:'Smoking ok'},
+]
+
+const partyOpotion =[
+  {key: false, value: false, text:'No party'},
+  {key: true, value: true, text:'Party ok'},
+]
+
 const AppWithBasic = ({ onChange }) => (
   <SemanticDatepicker onChange={onChange} />
 );
-
 
 class App extends Component {
   constructor(props){
@@ -147,6 +126,9 @@ class App extends Component {
       date: null,
       nameToDisplay:'',
       city:'',
+      budget:'',
+      gender:'',
+      age:'',
       allUsers:[],
     };
     this.onSubmit=this.onSubmit.bind(this);
@@ -183,16 +165,21 @@ class App extends Component {
 
   handleDateChange = date => {
     this.setState({ date });
+    
   };
+
 
   onSubmit=()=>{
   // event.preventDefault();
      console.log(this.state.nameToDisplay);
      console.log(this.state.city);
      //this.props.signIn(formData);
-     axios.post('http://localhost:5000/users/addUserPro',{
+    axios.get('http://localhost:5000/roommates/getroommates',{
     nameToDisplay: this.state.nameToDisplay,
-    city: this.state.city
+    city: this.state.city,
+    budget: this.setState.budget,
+    gender: this.setState.gender,
+    age: this.setState.age,
   }).
   then(function(response){
     window.alert(response.data);
@@ -208,24 +195,23 @@ class App extends Component {
     const {date, dimmer} = this.state;
     const {allUsers}=this.state;
     console.log(allUsers);
+    
 
     return (
       <div>
-        <Segment secondary style={{ marginTop: "4em" }}>
+        <Segment secondary style={{ marginTop: "4em", marginBottom:"0em"}}>
           <Form style={{marginLeft:"11.5em", marginRight:"0em"}}>
-            <Form.Group widths='equal'>
-              <Form.Field control={Select}
-                label='Search location'
-                placeholder='Select a state'
-                options={stateOptions}
-                value={null}
+           <Form.Group widths='equal'>
+            <Form.Field control={Select}
+                label='MovedIn with ...'
+                placeholder='Select one'
+                options={searchOptions}
                 onChange={null} />
 
               <Form.Field control={Select}
-                label='Are you looking for...'
-                placeholder='Select a type of place'
-                options={roomOptions}
-                value={null}
+                label='Search location'
+                placeholder='Select your city'
+                options={cityOptions}
                 onChange={null} />
 
               <Form.Field control={Select}
@@ -244,30 +230,75 @@ class App extends Component {
             </Form.Group>
           </Form>
         </Segment>
+        
+        <Menu size='small' borderless style={{ marginTop: "0em" }}>
+          <Menu.Item>
+            <Segment style={{ marginLeft: "11.5em" }}>
+              Filter people by
+            </Segment>
+          </Menu.Item>
+          <Menu.Item >
+            <Dropdown clearable
+              placeholder='Gender'
+              fluid selection
+              options={genderOption} />
+          </Menu.Item>
+          <Menu.Item>
+            <Dropdown clearable
+              placeholder='Have car?'
+              fluid selection
+              options={parkingOptions} />
+          </Menu.Item>
+          <Menu.Item>
+            <Dropdown clearable
+              placeholder='Share bathroom'
+              fluid selection
+              options={bathroomOpotion} />
+          </Menu.Item>
+          <Menu.Item>
+            <Dropdown clearable
+              placeholder='Pet'
+              fluid selection
+              options={petOpotion} />
+          </Menu.Item>
+          <Menu.Item>
+            <Dropdown clearable
+              placeholder='Smoking'
+              fluid selection
+              options={smokingOpotion} />
+          </Menu.Item>
+          <Menu.Item>
+            <Dropdown clearable
+              placeholder='Party'
+              fluid selection
+              options={partyOpotion} />
+          </Menu.Item>
+          <Menu.Item position='right' style={{marginRight:"10em"}}>
+            <Button fluid color='twitter'>Update Results</Button>
+          </Menu.Item>
+        </Menu>
 
 
-        <Header as='h2' content='Search Result' style={style.h2, { marginLeft: '7.5em', marginBottom: '0em' }} textAlign='Left' />
-        <Header as='h4' content='Only take one minute to Sign Up, become a memeber today and see more!'
-          style={style.h4, { marginLeft: '12em', marginTop: '0.2em' }} textAlign='Left' />
-        <Header as='h4' content='Found 208 matches!'
-          style={style.h4, { marginLeft: '12em', marginTop: '0.2em' }} textAlign='Left' />
-
-
-       <Grid columns={4} doubling style={{ marginLeft: '12em', marginRight: '12em' }}>
-          <Grid.Row>
-          {
-            allUsers.map((user)=>{
-              return(
-            <Card style={{ width: '15em' }}>
-              <Image  wrapped ui={false} />
+        <Segment>
+         <Card.Group>
+        {
+          allUsers.map(
+            (user) => {
+            return (
+            <Card style={{ width: '15em' , marginTop:'2em' , marginLeft:'5em'}}>
+              <Image 
+                src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} 
+                as='a'
+                href='null'
+                />
               <Card.Content>
                 <Card.Header>{user.nameToDisplay}</Card.Header>
                 <Card.Meta>
-                  <span className='status'>Have a $3100 Apartment in California</span>
+                  <span className='status'>Need a ${user.budget} room in {user.city}</span>
                 </Card.Meta>
                 <Card.Description>
-                  Male, 32 years old
-                  </Card.Description>
+                  {user.gender}, {user.age} years old
+              </Card.Description>
               </Card.Content>
               <Card.Content extra>
                 <a>
@@ -276,16 +307,13 @@ class App extends Component {
                   </a>
               </Card.Content>
             </Card>
-         )
-         })
-
-
+            )
           }
-          </Grid.Row>
-
-        </Grid>
-
-
+          )
+        } 
+        </Card.Group>
+        </Segment>
+       
         <div class="ui centered grid">
           <div aria-label="Pagination Navigation" role="navigation" class="ui pagination menu">
             <a

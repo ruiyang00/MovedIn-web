@@ -35,7 +35,7 @@ import {compose} from 'redux';
 import {InputField} from 'react-semantic-redux-form';
 import {reduxForm, Field, formValueSelector} from 'redux-form';
 import * as ROUTES from "./logistics/routes";
-import { Link,withRouter } from 'react-router-dom';
+import { Link,withRouter, Redirect } from 'react-router-dom';
 import {Switch,BrowserRouter as Router, Route} from "react-router-dom";
 
 //Other import
@@ -72,6 +72,7 @@ class App extends Component {
     super(props);
     console.log(props);
     this.state={
+      redirectToWel: false,
       signupModalisOpen:false,
       childModalisOpen: false
       };
@@ -85,9 +86,6 @@ class App extends Component {
 
       var userInfo = { email: localStorage.getItem('user'), password: localStorage.getItem('password') };
       this.props.signIn(userInfo);
-
-
-      //
 
     }
   }
@@ -141,8 +139,16 @@ class App extends Component {
     console.log('submitted');
   }
 
-  LoginCallbackFunction = (childData) => {
-    this.setState({loginModalisOpen: childData})
+  setRedirectToWel = () => {
+    this.setState({
+      redirectToWel: true
+    })
+  }
+
+  renderRedirectToWel = () => {
+    if (this.state.redirectToWel) {
+      return <Redirect to='/welcomePage' />
+    }
   }
 
   //-------------------------------------------------------------------------------------
@@ -160,7 +166,7 @@ class App extends Component {
 
     const userProfileTrigger = (
       <span>
-        <Icon name='user'/>
+        <Icon name='user circle outline'/>
       </span>
     )
 
@@ -169,7 +175,7 @@ class App extends Component {
         key: 'user',
         text: (
           <span>
-            Signed in as <strong>Name</strong>
+            Signed in as<strong>Name</strong>
           </span>
         ),
         disabled: true,
@@ -185,7 +191,11 @@ class App extends Component {
           <Menu fixed='top' inverted>
             <Container>
               <Menu.Item as='a' header>
-                <Image src='https://i.ibb.co/jkvv96c/home-30-C5-FF.png' style={{marginRight:"0.5em"}} size='mini' />
+                {this.renderRedirectToWel()}
+                <Image src='https://i.ibb.co/jkvv96c/home-30-C5-FF.png' 
+                       style={{marginRight:"0.5em"}} 
+                       size='mini' 
+                       onClick={this.setRedirectToWel}/>
                 MovedIn
               </Menu.Item>
 
@@ -218,10 +228,6 @@ class App extends Component {
           </Menu.Item>
         </Container>
       </Menu>
-
-
-
-
       );
     };
 
@@ -267,10 +273,7 @@ class App extends Component {
               </Message>
             </Segment>
           </Modal>
-
-
-
-
+          
           <div id="footer">
             <Segment inverted vertical style={{ margin: '0em 0em 0em', padding: '5em 0em' }}>
               <Container textAlign='center'>

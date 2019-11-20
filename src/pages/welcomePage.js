@@ -1,6 +1,6 @@
 //React import
 import React, { Component } from 'react'
-import { Link,withRouter } from 'react-router-dom';
+import { Link,withRouter, Redirect } from 'react-router-dom';
 
 import SignUpModule from './modules/SignUpModule';
 import LogInModule from './modules/LogInModule';
@@ -48,14 +48,14 @@ const backgroundStyle = {
 
 const searchOptions=[
   {
-    key: 'a place to live',
-    text: 'a place to live',
-    value: 'a place to live',
+    key: 'new people to MovedIn',
+    text: 'new people to MovedIn',
+    value: 'new people to MovedIn',
   },
   {
-    key: 'people to live with',
-    text: 'people to live with',
-    value: 'people to live with',
+    key: 'new place to MovedIn',
+    text: 'new place to MovedIn',
+    value: 'new place to MovedIn',
   },
 ]
 
@@ -74,16 +74,25 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state={
-      loginEmail:'',
-      loginPassword:'',
-      signupEmail:'',
-      signupPassword:'',
+      redirect: false,
       loginModalisOpen: false,
       signupModalisOpen: false,
       childModalisOpen:false
       };
     this.onSubmit=this.onSubmit.bind(this);
     this.handleInputChange= this.handleInputChange.bind(this);
+  }
+
+  setRedirectToMainPage = () => {
+    this.setState({
+      redirectToMainPage: true
+    })
+  }
+
+  renderRedirectToMainPage = () => {
+    if (this.state.redirectToMainPage) {
+      return <Redirect to='/mainPage' />
+    }
   }
 
   //Event handle-------------------------------------------------------------------------
@@ -95,8 +104,6 @@ class App extends Component {
   }
 
   onSubmit=(formData)=>{
-    console.log(this.state.signupEmail);
-    console.log(this.state.signupPassword);
     this.props.signUp(formData);
     console.log('submitted');
   }
@@ -144,9 +151,11 @@ class App extends Component {
                     label="in"      
                     options={cityOptions}
                   />
+                  {this.renderRedirectToMainPage()}
                   <Button 
                     primary 
-                    size='normal'>
+                    size='normal'
+                    onClick={this.setRedirectToMainPage}>
                     Let's Go <Icon name='right arrow' />
                   </Button>
                 </Form.Group>

@@ -3,12 +3,6 @@ import SemanticDatepicker from 'react-semantic-ui-datepickers';
 import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
 
 import HomeLogo from './../images/home #30C5FF.png';
-// import profile1 from './../images/profile1.png';
-// import profile2 from './../images/profile2.png';
-// import profile3 from './../images/profile3.png';
-// import profile4 from './../images/profile4.png';
-// import profile5 from './../images/profile5.png';
-// import profile6 from './../images/profile6.png';
 import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {reduxForm, Field, formValueSelector} from 'redux-form';
@@ -95,6 +89,7 @@ const AppWithBasic = ({ onChange }) => (
 );
 
 
+
 class App extends Component {
   constructor(props){
     super(props);
@@ -104,6 +99,7 @@ class App extends Component {
       city:'',
       budget:'',
       gender:'',
+      age:'',
       allUsers:[],
     };
     this.onSubmit=this.onSubmit.bind(this);
@@ -148,11 +144,12 @@ class App extends Component {
      console.log(this.state.nameToDisplay);
      console.log(this.state.city);
      //this.props.signIn(formData);
-     axios.post('http://localhost:5000/users/addUserPro',{
+    axios.post('http://localhost:5000/users/addUserPro',{
     nameToDisplay: this.state.nameToDisplay,
     city: this.state.city,
     budget: this.setState.budget,
     gender: this.setState.gender,
+    age: this.setState.age,
   }).
   then(function(response){
     window.alert(response.data);
@@ -203,74 +200,45 @@ class App extends Component {
           </Form>
         </Segment>
 
-        <Menu vertical size='small'>
-              <Dropdown item icon='paw' text='Pets'>
-                <Dropdown.Menu>
-                  <Dropdown.Item icon='check' text='Pets ok' />
-                  <Dropdown.Item icon='x' text='No pets' />
-                </Dropdown.Menu>
-              </Dropdown>
-              <Dropdown item icon='child' text='Kids'>
-                <Dropdown.Menu>
-                  <Dropdown.Item icon='check' text='Kids ok' />
-                  <Dropdown.Item icon='x' text='No kids' />
-                </Dropdown.Menu>
-              </Dropdown>
-              <Dropdown item text='Smoking'>
-                <Dropdown.Menu>
-                  <Dropdown.Item icon='check' text='Smoking ok' />
-                  <Dropdown.Item icon='x' text='No smoking' />
-                </Dropdown.Menu>
-              </Dropdown>
-              <Dropdown item icon='food' text='Cooking'>
-                <Dropdown.Menu>
-                  <Dropdown.Item icon='check' text='Cooking ok' />
-                  <Dropdown.Item icon='x' text='No cooking' />
-                </Dropdown.Menu>
-              </Dropdown>
-              <Dropdown item icon='beer' text='Party'>
-                <Dropdown.Menu>
-                  <Dropdown.Item icon='check' text='Party ok' />
-                  <Dropdown.Item icon='x' text='No party' />
-                </Dropdown.Menu>
-              </Dropdown>
-              <Menu.Item>
-                <Button fluid color='twitter'>Update Results</Button>
-              </Menu.Item>
-            </Menu>
 
 
-          <Card.Group>
-            {
-            allUsers.map((user) => {
-              return (
-                <Card style={{ width: '15em' , marginTop:'2em' , marginLeft:'5em'}}>
-                  <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} />
-                  <Card.Content>
-                    <Card.Header>{user.nameToDisplay}</Card.Header>
-                    <Card.Meta>
-                      <span className='status'>Need a ${user.budget} room in {user.city}</span>
-                    </Card.Meta>
-                    <Card.Description>
-                      {user.gender}, 32 years old
-                  </Card.Description>
-                  </Card.Content>
-                  <Card.Content extra>
-                    <a>
-                      <Icon name='user' />
-                      2 occupants
-                      </a>
-                  </Card.Content>
-                </Card>
-              )
-            })
+       <Segment>
+         <Card.Group>
+
+        
+        {
+          allUsers.map(
+            (user) => {
+            return (
+            <Card style={{ width: '15em' , marginTop:'2em' , marginLeft:'5em'}}>
+              <Image 
+                src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} 
+                as='a'
+                href='null'
+                />
+              <Card.Content>
+                <Card.Header>{user.nameToDisplay}</Card.Header>
+                <Card.Meta>
+                  <span className='status'>Need a ${user.budget} room in {user.city}</span>
+                </Card.Meta>
+                <Card.Description>
+                  {user.gender}, {user.age} years old
+              </Card.Description>
+              </Card.Content>
+              <Card.Content extra>
+                <a>
+                  <Icon name='user' />
+                  2 occupants
+                  </a>
+              </Card.Content>
+            </Card>
+            )
           }
-         </Card.Group>
-        
-
-        
-          
-
+          )
+        } 
+        </Card.Group>
+        </Segment>
+       
         <div class="ui centered grid">
           <div aria-label="Pagination Navigation" role="navigation" class="ui pagination menu">
             <a

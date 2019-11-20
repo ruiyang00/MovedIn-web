@@ -86,9 +86,6 @@ class App extends Component {
       var userInfo = { email: localStorage.getItem('user'), password: localStorage.getItem('password') };
       this.props.signIn(userInfo);
 
-
-      //
-
     }
   }
 
@@ -141,10 +138,6 @@ class App extends Component {
     console.log('submitted');
   }
 
-  LoginCallbackFunction = (childData) => {
-    this.setState({loginModalisOpen: childData})
-  }
-
   //-------------------------------------------------------------------------------------
   render() {
     const { dimmer,
@@ -169,7 +162,7 @@ class App extends Component {
         key: 'user',
         text: (
           <span>
-            Signed in as <strong>Name</strong>
+            Signed in as<strong>Name</strong>
           </span>
         ),
         disabled: true,
@@ -218,10 +211,6 @@ class App extends Component {
           </Menu.Item>
         </Container>
       </Menu>
-
-
-
-
       );
     };
 

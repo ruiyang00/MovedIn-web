@@ -282,86 +282,37 @@ class App extends Component {
           </Menu.Item>
         </Menu>
 
+
        
         <Segment style={{marginTop:'0em'}}>
          <Card.Group itemsPerRow={4} style={{marginLeft:"6.5em"}}>
-            <Card style={{ width: '15em' , marginTop:'2em' , marginLeft:'5em'}}>
-              <Image 
-                src='https://image.flaticon.com/icons/svg/168/168724.svg' wrapped ui={false} 
-                as='a'
-                onClick={this.showModal1('blurring')}
-                />
-              <Card.Content>
-                <Card.Meta>
-                  <span className='status'>Need a $940 room in San Jose</span>
-                </Card.Meta>
-              </Card.Content>
-              <Card.Content extra>
-                <a>
-                  <Icon name='user' />
-                  1 occupant
-                  </a>
-              </Card.Content>
-            </Card>
-            <Card style={{ width: '15em' , marginTop:'2em' , marginLeft:'5em'}}>
-              <Image 
-                src='https://image.flaticon.com/icons/svg/168/168728.svg' wrapped ui={false} 
-                as='a'
-                href='null'
-                />
-              <Card.Content>
-                <Card.Header></Card.Header>
-                <Card.Meta>
-                  <span className='status'>Need a $1300 room in San Jose</span>
-                </Card.Meta>
-             
-              </Card.Content>
-              <Card.Content extra>
-                <a>
-                  <Icon name='user' />
-                  2 occupants
-                  </a>
-              </Card.Content>
-            </Card>
-            <Card style={{ width: '15em' , marginTop:'2em' , marginLeft:'5em'}}>
-              <Image 
-                src='https://image.flaticon.com/icons/svg/168/168730.svg' wrapped ui={false} 
-                as='a'
-                href='null'
-                />
-              <Card.Content>
-                <Card.Header></Card.Header>
-                <Card.Meta>
-                  <span className='status'>Need a $800 room in San Jose</span>
-                </Card.Meta>
-                
-              </Card.Content>
-              <Card.Content extra>
-                <a>
-                  <Icon name='user' />
-                  1 occupant
-                  </a>
-              </Card.Content>
-            </Card>
-            <Card style={{ width: '15em' , marginTop:'2em' , marginLeft:'5em'}}>
-              <Image 
-                src='https://image.flaticon.com/icons/svg/168/168729.svg' wrapped ui={false} 
-                as='a'
-                href='null'
-                />
-              <Card.Content>
-                <Card.Header></Card.Header>
-                <Card.Meta>
-                  <span className='status'>Need a $1000 room in San Jose</span>
-                </Card.Meta> 
-              </Card.Content>
-              <Card.Content extra>
-                <a>
-                  <Icon name='user' />
-                  1 occupant
-                  </a>
-              </Card.Content>
-            </Card>
+          {
+            allUsers.map((user)=>{
+              return(
+                <Card style={{ width: '15em' , marginTop:'2em' , marginLeft:'5em'}}>
+                <Image 
+                  src={user.pic} wrapped ui={false} 
+                  as='a'
+                  onClick={this.showModal1('blurring')}
+                  />
+                    <Card.Content>
+                    <Card.Header>{user.nameToDisplay}</Card.Header>
+                    <Card.Meta>
+                      <span className='status'>Need a ${user.budget} room in {user.city}</span>
+                    </Card.Meta>
+                      <Card.Description>
+                        {user.gender}, {user.age} years old
+                      </Card.Description>
+                    </Card.Content>
+                    <Card.Content extra>
+                      <a>
+                        <Icon name='user' />
+                        1 occupant
+                        </a>
+                    </Card.Content>
+                  </Card>        
+                )})
+          }
         </Card.Group>
         
     
@@ -376,20 +327,6 @@ class App extends Component {
           totalPages={5}
         />
       </Segment>
-
-      <Modal dimmer={dimmer} open={this.state.modal1isOpon} onClose={this.closeModal1}>
-        <Modal.Content image>
-          <Image wrapped size='medium' src='https://image.flaticon.com/icons/svg/168/168724.svg' />
-          <Modal.Description>
-            <Header>Brain</Header>
-            <p>
-              We've found the following gravatar image associated with your e-mail
-              address.
-            </p>
-            <p>Is it okay to use this photo?</p>
-          </Modal.Description>
-        </Modal.Content>
-      </Modal>
 
       </div>//--------
     );

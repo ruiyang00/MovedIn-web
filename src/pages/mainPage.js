@@ -1,15 +1,6 @@
 import React, { Component } from 'react'
 import SemanticDatepicker from 'react-semantic-ui-datepickers';
 import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
-
-import HomeLogo from './../images/home #30C5FF.png';
-import {connect} from 'react-redux';
-import {compose} from 'redux';
-import {reduxForm, Field, formValueSelector} from 'redux-form';
-import {InputField} from 'react-semantic-redux-form';
-import * as actions from '../actions';
-import { Link,withRouter } from 'react-router-dom';
-import * as ROUTES from "../logistics/routes";
 import axios from 'axios';
 import {
   Button,
@@ -28,24 +19,7 @@ import {
   Pagination,
   Select,
   Segment,
-  ButtonContent,
 } from 'semantic-ui-react'
-
-const style = {
-  h1: {
-    marginTop: '3em',
-  },
-  h2: {
-    margin: '4em 0em 2em',
-  },
-  h3: {
-    marginTop: '2em',
-    padding: '2em 0em',
-  },
-  last: {
-    marginBottom: '300px',
-  },
-}
 
 const cityOptions=[
   { key: 'Los Angeles', text: 'Los Angeles', value: 'Los Angeles'},
@@ -119,10 +93,6 @@ class App extends Component {
       gender:'',
       age:'',
       allUsers:[],
-      modal1isOpon:false,
-      modal2isOpon:false,
-      modal3isOpon:false,
-      modal4isOpon:false,
     };
     this.onSubmit=this.onSubmit.bind(this);
     this.handleInputChange= this.handleInputChange.bind(this);
@@ -182,18 +152,6 @@ class App extends Component {
      console.log('submitted');
 
   }
-
-  showModal1 = (dimmer) => () => this.setState({ dimmer, modal1isOpon: true })
-  closeModal1 = () => this.setState({ modal1isOpon: false })
-
-  showModal2 = (dimmer) => () => this.setState({ dimmer, modal2isOpon: true })
-  closeModal2 = () => this.setState({ modal2isOpon: false })
-
-  showModal3 = (dimmer) => () => this.setState({ dimmer, modal3isOpon: true })
-  closeModal3 = () => this.setState({ modal3isOpon: false })
-
-  showModal4 = (dimmer) => () => this.setState({ dimmer, modal4isOpon: true })
-  closeModal1 = () => this.setState({ modal1isOpon: false })
   //-------------------------------------------------------------------------------------
   render() {
     const {date, dimmer} = this.state;
@@ -293,7 +251,7 @@ class App extends Component {
                 <Image 
                   src={user.pic} wrapped ui={false} 
                   as='a'
-                  onClick={this.showModal1('blurring')}
+                  onClick={null}
                   />
                     <Card.Content>
                     <Card.Header>{user.nameToDisplay}</Card.Header>

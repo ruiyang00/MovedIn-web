@@ -48,7 +48,7 @@ async onSubmit(formData){
        console.log(this.state.email);
        console.log(this.state.password);
        await this.props.signUp(formData);
-       window.location.reload(true);
+       window.location.href = 'http://localhost:3000/mainPage';
        console.log('submitted');
 
 

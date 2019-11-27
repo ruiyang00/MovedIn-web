@@ -56,7 +56,7 @@ export const signIn = data =>{
       try{
         await axios.post ('http://localhost:5000/users/signin',data)
         .then(function(response){
-        //  console.log(response);
+         console.log(response);
            if(response.data.token){
              console.log("token found");
              localStorage.setItem("token", response.data.token);

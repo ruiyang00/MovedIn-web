@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import {connect} from 'react-redux';
 
 
+var oneMonthFromNow=moment().add(1, 'months').format('MMMM-YYYY');
 
 class RoomProfile extends Component{
 
@@ -14,24 +15,24 @@ class RoomProfile extends Component{
     super(props);
     this.state={
       city:'',
-      roomType:'',
+      room_type:'Single Room',
       price:0,
-      priceRange:'',
-      movedInMonth:"",
-      leaseTerm:"",
+      price_range:'$500-700',
+      move_in_date:oneMonthFromNow,
+      min_lease_duration:"",
 
-      utility:'',
+      utility_include:'',
       cooking:'',
       parking:'',
       furniture:'',
-      sharedBath:'',
+      bathroom:'No',
       closet:'',
 
-      gender:'',
-      petsFriendly:'',
-      partyFriendly:'',
+      gender_prefered:'',
+      pet:'',
+      party:'',
       kidsFriendly:'',
-      smokingFriendly:'',
+      smoking:'',
 
       percent:0,
 
@@ -71,10 +72,10 @@ class RoomProfile extends Component{
 handleBasicInfoChange=()=>{
           this.incrementOne();
           this.setState({
-             roomType:document.getElementById('roomType').innerText,
-             priceRange:document.getElementById('priceRange').innerText,
-             movedInMonth:document.getElementById('movedInMonth').innerText,
-             leaseTerm:document.getElementById('leaseTerm').innerText
+             room_type:document.getElementById('room_type').innerText,
+             price_range:document.getElementById('price_range').innerText,
+             move_in_date:document.getElementById('move_in_date').innerText,
+             min_lease_duration:document.getElementById('min_lease_duration').innerText
       });
 
       }
@@ -92,12 +93,11 @@ handleBasicInfoChange=()=>{
 handleExtraInfoChange=()=>{
   this.incrementTwo();
   this.setState({
-     utility:document.getElementById('utility').innerText,
+     utility_include:document.getElementById('utility_include').innerText,
      cooking:document.getElementById('cooking').innerText,
      parking:document.getElementById('parking').innerText,
      furniture:document.getElementById('furniture').innerText,
-     sharedBath:document.getElementById('sharedBath').innerText,
-     closet:document.getElementById('closet').innerText,
+     bathroom:document.getElementById('bathroom').innerText,
   });
 }
 
@@ -105,14 +105,14 @@ handleRoomPreChangeANDSumbitAll=()=>{
   this.incrementThree();
 
   this.setState({
-      gender:document.getElementById('gender').innerText,
-      petsFriendly:document.getElementById('pet').innerText,
-      smokingFriendly:document.getElementById('smoking').innerText,
-      partyFriendly:document.getElementById('party').innerText,
+      gender_prefered:document.getElementById('gender_prefered').innerText,
+      pet:document.getElementById('pet').innerText,
+      smoking:document.getElementById('smoking').innerText,
+      party:document.getElementById('party').innerText,
       kidsFriendly:document.getElementById('kids').innerText
   });
 
-  //axios submit
+  //axios submit, toUpperCase()
 
 
 }
@@ -139,14 +139,13 @@ handleRoomPreChangeANDSumbitAll=()=>{
 
        var budget='';
        var oldBudget='';
-       var movedInMonth='';
-       var oldmovedInMonth='';
-       var leaseTerm= '';
-       var oldleaseTerm='';
-       var gender ='';
+       var move_in_date='';
+       var oldmove_in_date='';
+       var min_lease_duration= '';
+       var oldmin_lease_duration='';
+       var gender_prefered ='';
        var age='';
 
-       var moment= require('moment');
        var currentMonthYear=moment().format("MMMM-YYYY");
        var oneMonthFromNow=moment().add(1, 'months').format('MMMM-YYYY');
        var twoMonthFromNow=moment().add(2, 'months').format('MMMM-YYYY');
@@ -207,7 +206,6 @@ handleRoomPreChangeANDSumbitAll=()=>{
        const booleanOptions=[
          {key:'Yes',text:'Yes',value:'Yes'},
          {key:'No',text:'No',value:'No'},
-         {key:"Doesn't Matter",text:"Doesn't Matter",value:"Doesn't Matter"}
 
        ]
 
@@ -245,13 +243,13 @@ handleRoomPreChangeANDSumbitAll=()=>{
                    <p></p>
                   <Form.Select
                   onClose={()=>{this.forceUpdate();}}
-                  id="roomType"
+                  id="room_type"
                   search
                   selection
                   width={10}
-                  defaultValue={this.state.roomType}
+                  defaultValue={this.state.room_type}
                   options={roomTypeOptions}
-                  name="roomType"
+                  name="room_type"
                   required
                   >
                    </Form.Select>
@@ -261,13 +259,13 @@ handleRoomPreChangeANDSumbitAll=()=>{
                     <p></p>
                    <Form.Select
                    onClose={()=>{this.forceUpdate();}}
-                   id="priceRange"
+                   id="price_range"
                    search
                    selection
                    width={10}
-                   defaultValue={this.state.priceRange}
+                   defaultValue={this.state.price_range}
                    options={priceRangeOptions}
-                   name="priceRange"
+                   name="price_range"
                    required
                    >
                     </Form.Select>
@@ -304,13 +302,13 @@ handleRoomPreChangeANDSumbitAll=()=>{
                       trigger={
                    <Form.Select
                    onClose={()=>{this.forceUpdate();}}
-                   id='movedInMonth'
+                   id='move_in_date'
                    selection
                    search
-                   defaultValue={this.state.movedInMonth}
+                   defaultValue={this.state.move_in_date}
                    options={whenToMovedInOptions}
                    width={10}
-                   name="movedInMonth"
+                   name="move_in_date"
                    required
                    >
                     </Form.Select>
@@ -324,14 +322,15 @@ handleRoomPreChangeANDSumbitAll=()=>{
                     <p></p>
 
                     <Form.Select
+                    clearable
                     onClose={()=>{this.forceUpdate();}}
-                    id="leaseTerm"
+                    id="min_lease_duration"
                     selection
                     search
-                    defaultValue={this.state.leaseTerm}
+                    defaultValue={this.state.min_lease_duration}
                     options={leaseTermOptions}
                     width={10}
-                    name="leaseTerm"
+                    name="min_lease_duration"
                     required
                     >
                      </Form.Select>
@@ -361,10 +360,11 @@ handleRoomPreChangeANDSumbitAll=()=>{
               <Icon name="plug" size="large"/><font size="+0.5"><i>Utility Included</i></font>
                <p></p>
               <Form.Select
+              clearable
               selection
-              id="utility"
+              id="utility_include"
               onClose={()=>{this.forceUpdate()}}
-              defaultValue={this.state.utility}
+              defaultValue={this.state.utility_include}
               options={booleanOptions}
               width={10}
               name="firstName"
@@ -377,6 +377,7 @@ handleRoomPreChangeANDSumbitAll=()=>{
                  <p></p>
 
                 <Form.Select
+                clearable
                 onClose={()=>{this.forceUpdate()}}
                 id='cooking'
                 selection
@@ -385,13 +386,14 @@ handleRoomPreChangeANDSumbitAll=()=>{
                 width={10}
                 name="cooking"
                 required
-                >
-                 </Form.Select>
+                />
+
 
                  <Icon name="car" size="large"/><font size="+0.5"><i>Parking Available</i></font>
                   <p></p>
 
                  <Form.Select
+                 clearable
                  onClose={()=>{this.forceUpdate()}}
                  id='parking'
                  selection
@@ -408,6 +410,7 @@ handleRoomPreChangeANDSumbitAll=()=>{
                    <p></p>
 
                   <Form.Select
+                  clearable
                   onClose={()=>{this.forceUpdate()}}
                   id='furniture'
                   selection
@@ -423,38 +426,18 @@ handleRoomPreChangeANDSumbitAll=()=>{
                     <p></p>
 
                    <Form.Select
+                   clearable
                    onClose={()=>{this.forceUpdate()}}
-                   id='sharedBath'
+                   id='bathroom'
                    selection
-                   defaultValue={this.state.sharedBath}
+                   defaultValue={this.state.bathroom}
                    options={booleanOptions}
                    width={10}
-                   name="sharedBath"
+                   name="bathroom"
                    required
                    >
                     </Form.Select>
 
-
-                    <Icon name="question circle" size="large"/><font size="+0.5"><i>Walk-In Closet Available</i></font>
-                     <p></p>
-
-                    <Form.Select
-                    onClose={()=>{this.forceUpdate()}}
-                    id='closet'
-                    selection
-                    defaultValue={this.state.closet}
-                    options={booleanOptions}
-                    width={10}
-                    name="closet"
-                    required
-                    >
-                     </Form.Select>
-
-
-
-
-
- <p></p>
 
  <Button size="large" color="olive" disabled={partOneNotComplete} fluid animated onClick={this.handleExtraInfoChange}>
    <Button.Content visible>SAVE</Button.Content>
@@ -484,12 +467,13 @@ handleRoomPreChangeANDSumbitAll=()=>{
                 <Icon name="transgender" size="large"/><font size="+0.5"><i>Gender Preferrred</i></font>
                  <p></p>
                 <Form.Select
+                clearable
                 onClose={()=>{this.forceUpdate()}}
-                id="gender"
+                id="gender_prefered"
                 selection
                 search
                 width={10}
-                name="gender"
+                name="gender_prefered"
                 defaultValue={this.state.gender}
                 options={booleanOptions}
                 required
@@ -501,11 +485,12 @@ handleRoomPreChangeANDSumbitAll=()=>{
                   <p></p>
 
                   <Form.Select
+                  clearable
                   onClose={()=>{this.forceUpdate()}}
                   id="pet"
                   selection
                   search
-                  defaultValue={this.state.petsFriendly}
+                  defaultValue={this.state.pet}
                   options={booleanOptions}
                   width={10}
                   name="pet"
@@ -517,12 +502,13 @@ handleRoomPreChangeANDSumbitAll=()=>{
                     <p></p>
 
                     <Form.Select
+                    clearable
                     onClose={()=>{this.forceUpdate()}}
                     id="party"
                     selection
                     search
                     options={booleanOptions}
-                    defaultValue={this.state.partyFriendly}
+                    defaultValue={this.state.party}
                     width={10}
                     name="party"
                     required
@@ -532,6 +518,7 @@ handleRoomPreChangeANDSumbitAll=()=>{
                      <Icon name="flag" size="large"/><font size="+0.5"><i>Kids Friendly</i></font>
                       <p></p>
                      <Form.Select
+                     clearable
                      onClose={()=>{this.forceUpdate()}}
                      id="kids"
                      selection
@@ -550,12 +537,13 @@ handleRoomPreChangeANDSumbitAll=()=>{
                       <p></p>
 
                       <Form.Select
+                      clearable
                       onClose={()=>{this.forceUpdate()}}
                       id="smoking"
                       selection
                       search
                       options={booleanOptions}
-                      defaultValue={this.state.smokingFriendly}
+                      defaultValue={this.state.smoking}
                       width={10}
                       name="smoking"
                       required
@@ -621,7 +609,7 @@ handleRoomPreChangeANDSumbitAll=()=>{
 
             <Icon name="edit outline" size="big" color="yellow" />
            <font size="+2.5"><b><i>We Want to Help Your Room Stand Out</i></b></font>
-           <p>* <b>Location & Price</b>  are required to continue, and we encourage you to fill
+           <p>* <b>Location & Price</b>  are REQUIRED to continue, and we encourage you to fill
            out as much Info as possible to Optimize our Room Recommendation decisions</p>
           <p>* Please Make sure to SAVE before proceed,otherwise you will lose your data entered*</p>
 

@@ -74,6 +74,8 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state={
+      targetGroup:'new place to MovedIn',
+      targetCity:'San Jose',
       redirect: false,
       loginModalisOpen: false,
       signupModalisOpen: false,
@@ -81,19 +83,68 @@ class App extends Component {
       };
     this.onSubmit=this.onSubmit.bind(this);
     this.handleInputChange= this.handleInputChange.bind(this);
+    this.handleDropdownChange=this.handleDropdownChange.bind(this);
   }
 
-  setRedirectToMainPage = () => {
+
+handleDropdownChange(){
+   this.setState({
+       targetGroup:document.getElementById('targetGroup').innerText,
+       targetCity:document.getElementById('targetCity').innerText,
+    });
+
+
+}
+
+
+
+async onSubmit(){
+    await this.handleDropdownChange();
+    const {targetGroup,targetCity} =this.state;
+    console.log(targetCity);
+    console.log(targetGroup);
+    this.props.history.push({
+      pathname:'./mainPage',
+      state:{
+        targetGroup,
+        targetCity,
+      }
+    });
     this.setState({
-      redirectToMainPage: true
-    })
+      redirectToMainPage: true,
+    });
   }
+
+
+
+  // async setRedirectToMainPage(){
+  //   await this.handleDropdownChange();
+  //   const {targetGroup,targetCity} =this.state;
+  //   console.log(targetCity);
+  //   console.log(targetGroup);
+  //   this.props.history.push({
+  //     pathname:'./mainPage',
+  //     state:{
+  //       targetGroup,
+  //       targetCity,
+  //     }
+  //   });
+
+    // this.setState({
+    //   redirectToMainPage: true,
+    // });
+
+  //}
 
   renderRedirectToMainPage = () => {
-    if (this.state.redirectToMainPage) {
+    if (this.state.redirectToMainPage && this.props.isAuth) {
       return <Redirect to='/mainPage' />
+
     }
+   if(this.state.redirectToMainPage && !this.props.isAuth) {
+     return <Redirect to='/mainPage' />
   }
+}
 
   //Event handle-------------------------------------------------------------------------
   handleInputChange = (event) => {
@@ -103,10 +154,7 @@ class App extends Component {
     });
   }
 
-  onSubmit=(formData)=>{
-    this.props.signUp(formData);
-    console.log('submitted');
-  }
+
 
   //-------------------------------------------------------------------------------------
   render() {
@@ -139,33 +187,40 @@ class App extends Component {
             />
 
             <Segment secondary>
+
               <Form>
                 <Form.Group>
                   <Form.Field inline
+                    id="targetGroup"
                     control={Select}
+                    defaultValue="new place to MovedIn"
                     label="I'm looking for"
                     placeholder="Select one"
                     options={searchOptions}
+                    onChange={this.handleDropdownChange}
                   />
                   <Form.Field inline
+                    id="targetCity"
                     control={Select}
+                    defaultValue="San Jose"
                     placeholder="Select your city"
-                    label="in"      
+                    label="in"
                     options={cityOptions}
+                    onChange={this.handleDropdownChange}
                   />
                   {this.renderRedirectToMainPage()}
-                  <Button 
-                    primary 
+                  <Button
+                    primary
                     size='normal'
-                    onClick={this.setRedirectToMainPage}>
+                    onClick={this.onSubmit}>
                     Let's Go <Icon name='right arrow' />
                   </Button>
                 </Form.Group>
               </Form>
 
             </Segment>
-        
-              
+
+
           </Container>
 
         </div>

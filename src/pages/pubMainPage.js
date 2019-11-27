@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import SemanticDatepicker from 'react-semantic-ui-datepickers';
-import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
 
 import HomeLogo from './../images/home #30C5FF.png';
 import {connect} from 'react-redux';
@@ -105,11 +103,9 @@ const partyOpotion =[
   {key: true, value: true, text:'Party ok'},
 ]
 
-const AppWithBasic = ({ onChange }) => (
-  <SemanticDatepicker onChange={onChange} />
-);
 
-class App extends Component {
+
+class pubMainPage extends Component {
   constructor(props){
     super(props);
     this.state={
@@ -135,23 +131,58 @@ class App extends Component {
       smoking:'',
       party:'',
 
+      roommatestoDisplay:[],
+      roomstoDisplay:[],
+
       showRooms:false,
-      showRoommates:true
+      showRoommates:true,
 
     };
     this.onSubmit=this.onSubmit.bind(this);
     this.handleInputChange= this.handleInputChange.bind(this);
-    this.doPrimaryFilter=this.doPrimaryFilter.bind(this);
-    this.printstuff=this.printstuff.bind(this);
   }
 
-  componentDidMount=()=>{
-    axios.post('http://localhost:5000/users/homePage',{email:localStorage.getItem('user')})
+componentDidMount(){
+  if(this.props.location.state){
+     if(this.props.location.state.targetGroup==="new place to MovedIn")
+    this.setState({
+       showRoommates:false,
+
+    });
+    axios.post('http://localhost:5000/roommates/getroommates',{city:this.props.location.state.targetCity})
+      .then(function(response){
+           console.log(response);
+           this.setState({roommatestoDisplay:response.data.allRoommatesWithinLocation})
+
+    }.bind(this));
+    axios.post('http://localhost:5000/rooms/getrooms',{city:this.props.location.state.targetCity})
     .then(function(response){
-         console.log(response.data.allusers);
-         this.setState({allUsers:response.data.allusers})
+         console.log(response);
+         this.setState({roomstoDisplay:response.data.allRoomsWithinLocation})
 
   }.bind(this));
+
+  this.props.history.push({
+    pathname:'./mainPage',
+    state:undefined
+  });
+  }
+
+  else{
+  axios.post('http://localhost:5000/roommates/getroommates',{city:""})
+    .then(function(response){
+         console.log(response);
+         this.setState({roommatestoDisplay:response.data.allRoommatesWithinLocation})
+
+  }.bind(this));
+
+  axios.post('http://localhost:5000/rooms/getrooms',{city:''})
+  .then(function(response){
+       console.log(response);
+       this.setState({roomstoDisplay:response.data.allRoomsWithinLocation})
+
+}.bind(this));
+}
 
   }
 
@@ -178,47 +209,47 @@ class App extends Component {
 
   };
 
-  doPrimaryFilter=()=>{
-    this.forceUpdate();
-     this.setState({
-       target:document.getElementById('target').innerText,
-       city:document.getElementById('city').innerText,
-       budgetRange:document.getElementById('budgetRange').innerText,
-       movedInMonth:document.getElementById('movedInMonth').innerText,
+  // doPrimaryFilter=()=>{
+  //   this.forceUpdate();
+  //    this.setState({
+  //      target:document.getElementById('target').innerText,
+  //      city:document.getElementById('city').innerText,
+  //      budgetRange:document.getElementById('budgetRange').innerText,
+  //      movedInMonth:document.getElementById('movedInMonth').innerText,
+  //
+  //    });
+  //
+  //    //axios post
+  // }
 
-     });
+  // doSecondaryFilter=()=>{
+  //   this.setState({
+  //     gender:document.getElementById('gender').innerText,
+  //     parking: document.getElementById('parking').innerText,
+  //     sharedBath:document.getElementById('sharedBath').innerText,
+  //     pet:document.getElementById('pet').innerText,
+  //     smoking:document.getElementById('smoking').innerText,
+  //     party:document.getElementById('party').innerText,
+  //
+  //   });
+  //   this.printstuff();
+  //
+  //   //axios post
+  // }
 
-     //axios post
-  }
-
-  doSecondaryFilter=()=>{
-    this.setState({
-      gender:document.getElementById('gender').innerText,
-      parking: document.getElementById('parking').innerText,
-      sharedBath:document.getElementById('sharedBath').innerText,
-      pet:document.getElementById('pet').innerText,
-      smoking:document.getElementById('smoking').innerText,
-      party:document.getElementById('party').innerText,
-
-    });
-    this.printstuff();
-
-    //axios post
-  }
-
-  printstuff(){
-    console.log(this.state.target);
-    console.log(this.state.city);
-    console.log(this.state.budgetRange);
-    console.log(this.state.movedInMonth);
-    console.log(this.state.gender);
-    console.log(this.state.parking);
-    console.log(this.state.sharedBath);
-    console.log(this.state.pet);
-    console.log(this.state.smoking);
-    console.log(this.state.party);
-
-  }
+  // printstuff(){
+  //   console.log(this.state.target);
+  //   console.log(this.state.city);
+  //   console.log(this.state.budgetRange);
+  //   console.log(this.state.movedInMonth);
+  //   console.log(this.state.gender);
+  //   console.log(this.state.parking);
+  //   console.log(this.state.sharedBath);
+  //   console.log(this.state.pet);
+  //   console.log(this.state.smoking);
+  //   console.log(this.state.party);
+  //
+  // }
 
 
   onSubmit=()=>{
@@ -255,9 +286,9 @@ class App extends Component {
   closeModal1 = () => this.setState({ modal1isOpon: false })
   //-------------------------------------------------------------------------------------
   render() {
+
+
     const {date, dimmer} = this.state;
-    const {allUsers}=this.state;
-    console.log(allUsers);
     var moment= require('moment');
     var currentMonthYear=moment().format("MMMM-YYYY");
     var oneMonthFromNow=moment().add(1, 'months').format('MMMM-YYYY');
@@ -310,15 +341,15 @@ class App extends Component {
       <div>
         <Segment secondary style={{ marginTop: "4em", marginBottom:"0em"}}>
           <Form style={{marginLeft:"11.5em", marginRight:"0em"}}>
+          <h3>Looking for...</h3>
+          <Button.Group>
+          <Button onClick={()=>{this.state.showRoommates=true;this.forceUpdate()}} color="olive" size="small">Roommates</Button>
+          <Button.Or />
+          <Button onClick={()=>{this.state.showRoommates=false;this.forceUpdate()}} color="twitter"size="small">Rooms</Button>
+          </Button.Group>
+          <p></p>
            <Form.Group widths='equal'>
-            <Form.Select
-                selection
-                id="target"
-                defaultValue="new people"
-                label='MovedIn with ...'
-                options={searchOptions}
-                required
-                />
+
 
                 <Form.Select
                     selection
@@ -348,7 +379,7 @@ class App extends Component {
                     />
 
 
-              <Form.Button primary size='medium' style={{marginTop:"1.6em"}} onClick={this.doPrimaryFilter}>
+              <Form.Button primary disabled={!this.props.isAuth} size='medium' style={{marginTop:"1.6em"}} onClick={this.doPrimaryFilter}>
                 Search
                 <Icon name='right arrow' />
               </Form.Button>
@@ -415,91 +446,73 @@ class App extends Component {
                 options={booleanOptions} />
           </Menu.Item>
           <Menu.Item position='right' style={{marginRight:"10em"}}>
-            <Button onClick ={this.doSecondaryFilter} fluid color='twitter'>Update Now</Button>
+            <Button disabled={!this.props.isAuth} onClick={this.doSecondaryFilter} fluid color='twitter'>Update Results</Button>
           </Menu.Item>
         </Menu>
 
 
+
+
         <Segment style={{marginTop:'0em'}}>
-         <Card.Group itemsPerRow={4} style={{marginLeft:"6.5em"}}>
-            <Card style={{ width: '15em' , marginTop:'2em' , marginLeft:'5em'}}>
-              <Image
-                src='https://image.flaticon.com/icons/svg/168/168724.svg' wrapped ui={false}
-                as='a'
-                onClick={this.showModal1('blurring')}
-                />
-              <Card.Content>
-                <Card.Meta>
-                  <span className='status'>Need a $940 room in San Jose</span>
-                </Card.Meta>
-              </Card.Content>
-              <Card.Content extra>
-                <a>
-                  <Icon name='user' />
-                  1 occupant
-                  </a>
-              </Card.Content>
-            </Card>
-            <Card style={{ width: '15em' , marginTop:'2em' , marginLeft:'5em'}}>
-              <Image
-                src='https://image.flaticon.com/icons/svg/168/168728.svg' wrapped ui={false}
-                as='a'
-                href='null'
-                />
-              <Card.Content>
-                <Card.Header></Card.Header>
-                <Card.Meta>
-                  <span className='status'>Need a $1300 room in San Jose</span>
-                </Card.Meta>
+           <Card.Group itemsPerRow={4} style={{marginLeft:"6.5em"}}>
+             { this.state.showRoommates ?
 
-              </Card.Content>
-              <Card.Content extra>
-                <a>
-                  <Icon name='user' />
-                  2 occupants
-                  </a>
-              </Card.Content>
-            </Card>
-            <Card style={{ width: '15em' , marginTop:'2em' , marginLeft:'5em'}}>
-              <Image
-                src='https://image.flaticon.com/icons/svg/168/168730.svg' wrapped ui={false}
-                as='a'
-                href='null'
-                />
-              <Card.Content>
-                <Card.Header></Card.Header>
-                <Card.Meta>
-                  <span className='status'>Need a $800 room in San Jose</span>
-                </Card.Meta>
+          this.state.roommatestoDisplay.map((roommate)=>{
+            return(
 
-              </Card.Content>
-              <Card.Content extra>
-                <a>
-                  <Icon name='user' />
-                  1 occupant
-                  </a>
-              </Card.Content>
-            </Card>
             <Card style={{ width: '15em' , marginTop:'2em' , marginLeft:'5em'}}>
-              <Image
-                src='https://image.flaticon.com/icons/svg/168/168729.svg' wrapped ui={false}
-                as='a'
-                href='null'
-                />
+            <Image
+              src='https://image.flaticon.com/icons/svg/168/168724.svg' wrapped ui={false}
+              as='a'
+              onClick={this.showModal1('blurring')}
+              />
               <Card.Content>
-                <Card.Header></Card.Header>
                 <Card.Meta>
-                  <span className='status'>Need a $1000 room in San Jose</span>
+                  <span className='status'>{roommate.first_name} {roommate.last_name}</span>
                 </Card.Meta>
               </Card.Content>
               <Card.Content extra>
                 <a>
                   <Icon name='user' />
-                  1 occupant
+                  {roommate.city}/Budget: ${roommate.budget || "N/A"}
                   </a>
               </Card.Content>
             </Card>
-        </Card.Group>
+
+          )
+})
+        :
+
+        this.state.roomstoDisplay.map((room)=>{
+          return(
+
+          <Card style={{ width: '15em' , marginTop:'2em' , marginLeft:'5em'}}>
+          <Image
+            src={HomeLogo} wrapped ui={false}
+            as='a'
+            onClick={this.showModal1('blurring')}
+            />
+            <Card.Content>
+              <Card.Meta>
+                <span className='status'>{room.room_type}</span>
+              </Card.Meta>
+            </Card.Content>
+            <Card.Content extra>
+              <a>
+                <Icon name='home' />
+                {room.city}/Budget: ${room.price}
+                </a>
+            </Card.Content>
+          </Card>
+
+        )
+})
+
+
+
+        }
+
+</Card.Group>
 
 
         <Pagination
@@ -513,6 +526,8 @@ class App extends Component {
           totalPages={5}
         />
       </Segment>
+
+
 
       <Modal dimmer={dimmer} open={this.state.modal1isOpon} onClose={this.closeModal1}>
         <Modal.Content image>
@@ -532,4 +547,11 @@ class App extends Component {
     );
   }
 }
-export default App;
+function mapStateToProps(state){
+  return {
+    isAuth:state.auth.isAuthenticated,
+    errorMessage: state.auth.errorMessage
+  };
+}
+
+export default connect(mapStateToProps, null)(pubMainPage)

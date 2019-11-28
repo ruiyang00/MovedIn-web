@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-
-
 import HomeLogo from './../images/home #30C5FF.png';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -24,28 +22,20 @@ import {
   Image,
   Menu,
   Message,
-  Modal,
   Pagination,
   Select,
   Segment,
   ButtonContent,
 } from 'semantic-ui-react'
 
-const style = {
-  h1: {
-    marginTop: '3em',
-  },
-  h2: {
-    margin: '4em 0em 2em',
-  },
-  h3: {
-    marginTop: '2em',
-    padding: '2em 0em',
-  },
-  last: {
-    marginBottom: '300px',
-  },
-}
+const backgroundStyle = {
+  //width: "100%",
+  //height: "100vh",
+  backgroundImage: `url(https://i.ibb.co/dQykXsR/2560x1080-F5-F5-F5.png)`,
+  backgroundRepeat: "null",
+  backgroundSize: 'cover',
+  overflow: 'hidden',
+};
 
 const cityOptions = [
   { key: 'Los Angeles', text: 'Los Angeles', value: 'Los Angeles' },
@@ -55,56 +45,12 @@ const cityOptions = [
   { key: 'San Jose', text: 'San Jose', value: 'San Jose' },
 ]
 
-const searchOptions = [
-  { key: 'new people', value: 'new people', text: 'new people' },
-  { key: 'new room', value: 'new room', text: 'new room' },
-]
-
-const rentOptions = [
-  { key: '200', value: '200', text: '$200' },
-  { key: '400', value: '400', text: '$400' },
-  { key: '600', value: '600', text: '$600' },
-  { key: '800', value: '800', text: '$800' },
-  { key: '1000', value: '1000', text: '$1000' },
-  { key: '1200', value: '1200', text: '$1200' },
-  { key: '1400', value: '1400', text: '$1400' },
-  { key: '1600', value: '1600', text: '$1600' },
-  { key: '1800', value: '1800', text: '$1800' },
-  { key: '2000', value: '2000', text: '$2000+' },
-]
-
-const parkingOptions = [
-  { key: false, value: false, text: 'Parking Needed' },
-  { key: true, value: true, text: 'No Parking okay' },
-]
 
 const genderOption = [
   { key: 'Male', value: 'Male', text: 'Male' },
   { key: 'Female', value: 'Female', text: 'Female' },
   { key: 'Other', value: 'Other', text: 'Other' },
 ]
-
-const bathroomOpotion = [
-  { key: false, value: false, text: 'Need private bathroom' },
-  { key: true, value: true, text: 'Share bathroom ok' },
-]
-
-const petOpotion = [
-  { key: false, value: false, text: 'No pets' },
-  { key: true, value: true, text: 'Have pets' },
-]
-
-const smokingOpotion = [
-  { key: false, value: false, text: 'No smoking' },
-  { key: true, value: true, text: 'Smoking ok' },
-]
-
-const partyOpotion = [
-  { key: false, value: false, text: 'No party' },
-  { key: true, value: true, text: 'Party ok' },
-]
-
-
 
 class pubMainPage extends Component {
   constructor(props) {
@@ -116,10 +62,6 @@ class pubMainPage extends Component {
       budget: '',
       age: '',
       allUsers: [],
-      modal1isOpon: false,
-      modal2isOpon: false,
-      modal3isOpon: false,
-      modal4isOpon: false,
 
       target: '',
       city: '',
@@ -225,11 +167,6 @@ class pubMainPage extends Component {
     });
   }
 
-  handleDateChange = date => {
-    this.setState({ date });
-
-  };
-
   // doPrimaryFilter=()=>{
   //   this.forceUpdate();
   //    this.setState({
@@ -294,22 +231,8 @@ class pubMainPage extends Component {
 
   }
 
-  showModal1 = (dimmer) => () => this.setState({ dimmer, modal1isOpon: true })
-  closeModal1 = () => this.setState({ modal1isOpon: false })
-
-  showModal2 = (dimmer) => () => this.setState({ dimmer, modal2isOpon: true })
-  closeModal2 = () => this.setState({ modal2isOpon: false })
-
-  showModal3 = (dimmer) => () => this.setState({ dimmer, modal3isOpon: true })
-  closeModal3 = () => this.setState({ modal3isOpon: false })
-
-  showModal4 = (dimmer) => () => this.setState({ dimmer, modal4isOpon: true })
-  closeModal1 = () => this.setState({ modal1isOpon: false })
   //-------------------------------------------------------------------------------------
   render() {
-
-
-    const { date, dimmer } = this.state;
     var moment = require('moment');
     var currentMonthYear = moment().format("MMMM-YYYY");
     var oneMonthFromNow = moment().add(1, 'months').format('MMMM-YYYY');
@@ -360,8 +283,10 @@ class pubMainPage extends Component {
 
     return (
       <div>
-        <Segment secondary style={{ marginTop: "4em", marginBottom: "0em" }}>
-          <Form style={{ marginLeft: "11.5em", marginRight: "0em" }}>
+
+      <div style={backgroundStyle}>
+        <Segment style={{ marginTop: "3em", marginBottom: "0em", marginLeft:"12em", marginRight:"12em"}}>
+          <Form>
             <h3>Looking for...</h3>
             <Button.Group>
               <Button onClick={() => { this.state.showRoommates = true; this.forceUpdate() }} color="olive" size="small">Roommates</Button>
@@ -408,74 +333,72 @@ class pubMainPage extends Component {
           </Form>
         </Segment>
 
-        <Menu size='small' borderless style={{ marginTop: "0em", marginBottom: '0em' }}>
-          <Menu.Item>
-            <Segment style={{ marginLeft: "11.5em" }}>
-              Filter by
-            </Segment>
-          </Menu.Item>
+        <Menu size='small' borderless style={{ marginTop: "0em", marginBottom: '0em', marginLeft:"13em", marginRight:"13em"}}>
           <Menu.Item >
-            <label>Gender Preferred</label>
             <Form.Select
-              id="gender"
               clearable
+              label='Gender'
+              placeholder='Select one'
+              id="gender"
               fluid selection
               options={genderOption}
               onChange={null} />
           </Menu.Item>
           <Menu.Item>
-            <label>Parking Required</label>
             <Form.Select
               clearable
+              label='Parking Required'
+              placeholder='Select one'
               id="parking"
-              fluid selection
+              fluid 
+              selection
               options={booleanOptions} />
           </Menu.Item>
           <Menu.Item>
-            <label>Shared Bath</label>
             <Form.Select
               clearable
+              label='Shared Bath'
+              placeholder='Select one'
               id="sharedBath"
-              fluid selection
+              fluid 
+              selection
               options={booleanOptions} />
           </Menu.Item>
           <Menu.Item>
-
-            <label>Pets</label>
             <Form.Select
               clearable
+              label='Pets'
+              placeholder='Select one'
               id="pet"
               fluid selection
               options={booleanOptions} />
           </Menu.Item>
           <Menu.Item>
-
-            <label>Smoking</label>
             <Form.Select
               clearable
+              label='Smoking'
+              placeholder='Select one'
               id="smoking"
               fluid selection
               options={booleanOptions} />
           </Menu.Item>
           <Menu.Item>
-
-            <label>Party</label>
             <Form.Select
               clearable
+              label='Party'
+              placeholder='Select one'
               id="party"
-              fluid selection
+              fluid 
+              selection
               options={booleanOptions} />
           </Menu.Item>
-          <Menu.Item position='right' style={{ marginRight: "10em" }}>
+          <Menu.Item position='right' >
             <Button disabled={!this.props.isAuth} onClick={this.doSecondaryFilter} fluid color='twitter'>Update Results</Button>
           </Menu.Item>
         </Menu>
 
-
-
-
-        <Segment style={{ marginTop: '0em' }}>
-          <Card.Group itemsPerRow={4} style={{ marginLeft: "6.5em" }}>
+       
+          <Card.Group itemsPerRow={4} style={{ marginLeft: "7.25em" }}>
             {this.state.showRoommates ?
 
               this.state.roommatestoDisplay.map((roommate) => {
@@ -483,9 +406,9 @@ class pubMainPage extends Component {
 
                   <Card style={{ width: '15em', marginTop: '2em', marginLeft: '5em' }}>
                     <Image
-                      src='https://image.flaticon.com/icons/svg/168/168724.svg' wrapped ui={false}
+                      src='https://image.flaticon.com/icons/svg/168/168720.svg' wrapped ui={false}
                       as='a'
-                      onClick={this.showModal1('blurring')}
+                      onClick={null} //should get user id, token. redirect to userDetail page
                     />
                     <Card.Content>
                       <Card.Meta>
@@ -509,9 +432,9 @@ class pubMainPage extends Component {
 
                   <Card style={{ width: '15em', marginTop: '2em', marginLeft: '5em' }}>
                     <Image
-                      src={HomeLogo} wrapped ui={false}
+                      src={'https://image.flaticon.com/icons/svg/1684/1684133.svg'} wrapped ui={false}
                       as='a'
-                      onClick={this.showModal1('blurring')}
+                      onClick={null} //redirect
                     />
                     <Card.Content>
                       <Card.Meta>
@@ -537,7 +460,7 @@ class pubMainPage extends Component {
 
 
           <Pagination
-            style={{ marginTop: "2em", marginLeft: "42em" }}
+            style={{ marginTop: "2em", marginBottom:"2em" , marginLeft: "43em"}}
             boundaryRange={0}
             defaultActivePage={1}
             ellipsisItem={null}
@@ -546,24 +469,8 @@ class pubMainPage extends Component {
             siblingRange={1}
             totalPages={5}
           />
-        </Segment>
-
-
-
-        <Modal dimmer={dimmer} open={this.state.modal1isOpon} onClose={this.closeModal1}>
-          <Modal.Content image>
-            <Image wrapped size='medium' src='https://image.flaticon.com/icons/svg/168/168724.svg' />
-            <Modal.Description>
-              <Header>Brain</Header>
-              <p>
-                We've found the following gravatar image associated with your e-mail
-                address.
-            </p>
-              <p>Is it okay to use this photo?</p>
-            </Modal.Description>
-          </Modal.Content>
-        </Modal>
-
+        
+        </div>
       </div>//--------
     );
   }

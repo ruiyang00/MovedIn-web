@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import HomeLogo from './../images/home #30C5FF.png';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -26,6 +26,7 @@ import {
   Select,
   Segment,
   ButtonContent,
+  Responsive,
 } from 'semantic-ui-react'
 
 const backgroundStyle = {
@@ -282,21 +283,17 @@ class pubMainPage extends Component {
 
 
     return (
-      <div>
-
-      <div style={backgroundStyle}>
-        <Segment style={{ marginTop: "3em", marginBottom: "0em", marginLeft:"12em", marginRight:"12em"}}>
-          <Form>
-            <h3>Looking for...</h3>
+      <div><div style={backgroundStyle}>
+  
+        <Menu stackable style={{ marginTop: "3em", marginBottom: "0em"}}>
+          <Form style={{marginTop:'1em',marginLeft:"12em", marginRight:"12em"}}>
             <Button.Group>
-              <Button onClick={() => { this.state.showRoommates = true; this.forceUpdate() }} color="olive" size="small">Roommates</Button>
-              <Button.Or />
-              <Button onClick={() => { this.state.showRoommates = false; this.forceUpdate() }} color="twitter" size="small">Rooms</Button>
+              <Button onClick={() => { this.state.showRoommates = true; this.forceUpdate() }} color="olive" size="small">Search Roommates</Button>
+              <Button.Or/>
+              <Button onClick={() => { this.state.showRoommates = false; this.forceUpdate() }} color="twitter" size="small">Search Rooms</Button>
             </Button.Group>
-            <p></p>
-            <Form.Group widths='equal'>
-
-
+            
+            <Form.Group widths='equal' style={{marginTop:'1em'}}>
               <Form.Select
                 selection
                 defaultValue="San Jose"
@@ -323,78 +320,77 @@ class pubMainPage extends Component {
                 options={whenToMovedInOptions}
                 required
               />
-
-
-              <Form.Button primary disabled={!this.props.isAuth} size='medium' style={{ marginTop: "1.6em" }} onClick={this.doPrimaryFilter}>
+              <Form.Button primary disabled={!this.props.isAuth} size='medium' style={{ marginTop: "1.6em"}} onClick={this.doPrimaryFilter}>
                 Search
-                <Icon name='right arrow' />
               </Form.Button>
             </Form.Group>
-          </Form>
-        </Segment>
+          </Form>   
+          </Menu> 
 
-        <Menu size='small' borderless style={{ marginTop: "0em", marginBottom: '0em', marginLeft:"13em", marginRight:"13em"}}>
-          <Menu.Item >
-            <Form.Select
-              clearable
-              label='Gender'
-              placeholder='Select one'
-              id="gender"
-              fluid selection
-              options={genderOption}
-              onChange={null} />
-          </Menu.Item>
-          <Menu.Item>
-            <Form.Select
-              clearable
-              label='Parking Required'
-              placeholder='Select one'
-              id="parking"
-              fluid 
-              selection
-              options={booleanOptions} />
-          </Menu.Item>
-          <Menu.Item>
-            <Form.Select
-              clearable
-              label='Shared Bath'
-              placeholder='Select one'
-              id="sharedBath"
-              fluid 
-              selection
-              options={booleanOptions} />
-          </Menu.Item>
-          <Menu.Item>
-            <Form.Select
-              clearable
-              label='Pets'
-              placeholder='Select one'
-              id="pet"
-              fluid selection
-              options={booleanOptions} />
-          </Menu.Item>
-          <Menu.Item>
-            <Form.Select
-              clearable
-              label='Smoking'
-              placeholder='Select one'
-              id="smoking"
-              fluid selection
-              options={booleanOptions} />
-          </Menu.Item>
-          <Menu.Item>
-            <Form.Select
-              clearable
-              label='Party'
-              placeholder='Select one'
-              id="party"
-              fluid 
-              selection
-              options={booleanOptions} />
-          </Menu.Item>
-          <Menu.Item position='right' >
-            <Button disabled={!this.props.isAuth} onClick={this.doSecondaryFilter} fluid color='twitter'>Update Results</Button>
-          </Menu.Item>
+        <Menu stackable secondary>
+          <Form style={{marginTop:'1em',marginLeft:"12.5em", marginRight:"12.5em"}}>
+            <Form.Group widths='equal'> 
+              <Form.Select
+                clearable
+                label='Gender'
+                placeholder='Select'
+                id="gender"
+                fluid selection
+                options={genderOption}
+                onChange={null} />
+
+
+              <Form.Select
+                clearable
+                label='Parking'
+                placeholder='Select'
+                id="parking"
+                fluid
+                selection
+                options={booleanOptions} />
+
+
+              <Form.Select
+                clearable
+                label='Shared Bath'
+                placeholder='Select'
+                id="sharedBath"
+                fluid
+                selection
+                options={booleanOptions} />
+
+              <Form.Select
+                clearable
+                label='Pets'
+                placeholder='Select'
+                id="pet"
+                fluid selection
+                options={booleanOptions} />
+
+
+              <Form.Select
+                clearable
+                label='Smoking'
+                placeholder='Select'
+                id="smoking"
+                fluid selection
+                options={booleanOptions} />
+
+
+              <Form.Select
+                clearable
+                label='Party'
+                placeholder='Select'
+                id="party"
+                fluid
+                selection
+                options={booleanOptions} />
+              </Form.Group>
+              <Button disabled={!this.props.isAuth} 
+                      onClick={this.doSecondaryFilter} 
+                      color='twitter' 
+                      content='Update Results' />
+          </Form>
         </Menu>
 
        
@@ -470,8 +466,7 @@ class pubMainPage extends Component {
             totalPages={5}
           />
         
-        </div>
-      </div>//--------
+        </div></div>//--------
     );
   }
 }

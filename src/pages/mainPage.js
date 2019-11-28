@@ -1,15 +1,6 @@
 import React, { Component } from 'react'
 import SemanticDatepicker from 'react-semantic-ui-datepickers';
 import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
-
-import HomeLogo from './../images/home #30C5FF.png';
-import {connect} from 'react-redux';
-import {compose} from 'redux';
-import {reduxForm, Field, formValueSelector} from 'redux-form';
-import {InputField} from 'react-semantic-redux-form';
-import * as actions from '../actions';
-import { Link,withRouter } from 'react-router-dom';
-import * as ROUTES from "../logistics/routes";
 import axios from 'axios';
 import * as moment from 'moment';
 import {
@@ -29,24 +20,7 @@ import {
   Pagination,
   Select,
   Segment,
-  ButtonContent,
 } from 'semantic-ui-react'
-
-const style = {
-  h1: {
-    marginTop: '3em',
-  },
-  h2: {
-    margin: '4em 0em 2em',
-  },
-  h3: {
-    marginTop: '2em',
-    padding: '2em 0em',
-  },
-  last: {
-    marginBottom: '300px',
-  },
-}
 
 const cityOptions=[
   { key: 'Los Angeles', text: 'Los Angeles', value: 'Los Angeles'},
@@ -119,24 +93,6 @@ class App extends Component {
       budget:'',
       age:'',
       allUsers:[],
-      modal1isOpon:false,
-      modal2isOpon:false,
-      modal3isOpon:false,
-      modal4isOpon:false,
-
-      target:'',
-      city:'',
-      budgetRange:'',
-      movedInMonth:'',
-      gender:'',
-      parking:'',
-      sharedBath:'',
-      pet:'',
-      smoking:'',
-      party:'',
-
-      showRooms:false,
-      showRoommates:true
 
     };
     this.onSubmit=this.onSubmit.bind(this);
@@ -241,18 +197,6 @@ class App extends Component {
      console.log('submitted');
 
   }
-
-  showModal1 = (dimmer) => () => this.setState({ dimmer, modal1isOpon: true })
-  closeModal1 = () => this.setState({ modal1isOpon: false })
-
-  showModal2 = (dimmer) => () => this.setState({ dimmer, modal2isOpon: true })
-  closeModal2 = () => this.setState({ modal2isOpon: false })
-
-  showModal3 = (dimmer) => () => this.setState({ dimmer, modal3isOpon: true })
-  closeModal3 = () => this.setState({ modal3isOpon: false })
-
-  showModal4 = (dimmer) => () => this.setState({ dimmer, modal4isOpon: true })
-  closeModal1 = () => this.setState({ modal1isOpon: false })
   //-------------------------------------------------------------------------------------
   render() {
     const {date, dimmer} = this.state;
@@ -420,6 +364,7 @@ class App extends Component {
         </Menu>
 
 
+
         <Segment style={{marginTop:'0em'}}>
          <Card.Group itemsPerRow={4} style={{marginLeft:"6.5em"}}>
             <Card style={{ width: '15em' , marginTop:'2em' , marginLeft:'5em'}}>
@@ -499,6 +444,7 @@ class App extends Component {
                   </a>
               </Card.Content>
             </Card>
+
         </Card.Group>
 
 
@@ -513,20 +459,6 @@ class App extends Component {
           totalPages={5}
         />
       </Segment>
-
-      <Modal dimmer={dimmer} open={this.state.modal1isOpon} onClose={this.closeModal1}>
-        <Modal.Content image>
-          <Image wrapped size='medium' src='https://image.flaticon.com/icons/svg/168/168724.svg' />
-          <Modal.Description>
-            <Header>Brain</Header>
-            <p>
-              We've found the following gravatar image associated with your e-mail
-              address.
-            </p>
-            <p>Is it okay to use this photo?</p>
-          </Modal.Description>
-        </Modal.Content>
-      </Modal>
 
       </div>//--------
     );

@@ -29,6 +29,8 @@ import * as actions from './actions';
 import SignUpModule from './pages/modules/SignUpModule';
 import LogInModule from './pages/modules/LogInModule';
 import RoomProfile from './pages/roomProfile';
+import UserDetail from './pages/userDetail';
+import welcomePage from "./pages/welcomePage";
 
 //redux import
 import { connect } from 'react-redux';
@@ -39,9 +41,6 @@ import * as ROUTES from "./logistics/routes";
 import { Link,withRouter, Redirect } from 'react-router-dom';
 import {Switch,BrowserRouter as Router, Route} from "react-router-dom";
 
-//Other import
-import HomeLogo from './images/home #30C5FF.png';
-import welcomePage from "./pages/welcomePage";
 
 //const----------------------------------------------------------------------------------
 const genderOptions=[
@@ -172,15 +171,7 @@ class App extends Component {
     )
 
     const userProfileOptions = [
-      {
-        key: 'user',
-        text: (
-          <span>
-            Signed in as<strong>Name</strong>
-          </span>
-        ),
-        disabled: true,
-      },
+      
       { key: 'profile', text: 'View Profile'},
       { key: 'settings', text: 'Settings' },
       { key: 'sign-out', text: 'Sign Out', onClick: this.handleSignout},
@@ -245,6 +236,7 @@ class App extends Component {
                   <Route path="/mainPage" component={mainPage} />
                   <Route path="/userProfile" component={userProfile} />
                   <Route path="/roomProfile" component={RoomProfile} />
+                  <Route path="/userDetail" component={UserDetail} />
                 </Switch>
 
           <Modal dimmer={dimmer} size={"tiny"} open={this.state.loginModalisOpen} onClose={this.closeLogin}>

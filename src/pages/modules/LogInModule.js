@@ -64,7 +64,7 @@ import Axios from 'axios';
      console.log(this.state.password);
      await this.props.signIn(formData);
      //console.log(formData
-     window.location.reload(true);
+     window.location.href = 'http://localhost:3000/mainPage';
      console.log('submitted');
 }
 
@@ -88,7 +88,7 @@ closeLogin = () => this.setState({ loginModalisOpen: false })
         <Form size='large' as='form' onSubmit={handleSubmit(this.onSubmit)}>
           <Modal.Header>
           <Segment size="large" fluid >
-            <FacebookLogin 
+            <FacebookLogin
                   size='medium'
                   appId="430563460963841" //need to store it in another file
                   fields="name,email,picture"

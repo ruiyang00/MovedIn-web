@@ -29,8 +29,10 @@ import * as actions from './actions';
 import SignUpModule from './pages/modules/SignUpModule';
 import LogInModule from './pages/modules/LogInModule';
 import RoomProfile from './pages/roomProfile';
+import pubMainPage from './pages/pubMainPage';
 import UserDetail from './pages/userDetail';
 import welcomePage from "./pages/welcomePage";
+
 
 //redux import
 import { connect } from 'react-redux';
@@ -108,7 +110,8 @@ class App extends Component {
       localStorage.removeItem('password');
     }
     this.props.signOut();
-    window.location.reload(true);
+    window.location.href = 'http://localhost:3000/';
+
   }
 
   handleToLogin = () => {
@@ -184,9 +187,9 @@ class App extends Component {
             <Container>
               <Menu.Item as='a' header>
                 {this.renderRedirectToWel()}
-                <Image src='https://i.ibb.co/jkvv96c/home-30-C5-FF.png' 
-                       style={{marginRight:"0.5em"}} 
-                       size='mini' 
+                <Image src='https://i.ibb.co/jkvv96c/home-30-C5-FF.png'
+                       style={{marginRight:"0.5em"}}
+                       size='mini'
                        onClick={this.setRedirectToWel}/>
                 MovedIn
               </Menu.Item>
@@ -226,18 +229,26 @@ class App extends Component {
     return (
       <div>
           {!this.props.isAuth ?
-            (<MenuWithoutAuth />) : (<MenuWithAuth />)
+        <div><div>  (<MenuWithoutAuth />)</div>
+
+        <Switch>
+          <Route exact path={'/'} component={welcomePage} />
+          <Route path={'/welcomePage'} component={welcomePage} />
+          <Route path="/mainPage" component={pubMainPage} />
+
+        </Switch></div>
+          :
+            <div><div>(<MenuWithAuth />)</div>
+            <Switch>
+              <Route exact path={'/'} component={welcomePage} />
+              <Route path={'/welcomePage'} component={welcomePage} />
+              <Route path="/mainPage" component={pubMainPage} />
+              <Route path="/userProfile" component={userProfile} />
+              <Route path="/roomProfile" component={RoomProfile} /> 
+               <Route path="/userDetail" component={UserDetail} />
+            </Switch></div>
+
           }
-
-
-                <Switch>
-                  <Route exact path={'/'} component={welcomePage} />
-                  <Route path={'/welcomePage'} component={welcomePage} />
-                  <Route path="/mainPage" component={mainPage} />
-                  <Route path="/userProfile" component={userProfile} />
-                  <Route path="/roomProfile" component={RoomProfile} />
-                  <Route path="/userDetail" component={UserDetail} />
-                </Switch>
 
           <Modal dimmer={dimmer} size={"tiny"} open={this.state.loginModalisOpen} onClose={this.closeLogin}>
             <Segment>
@@ -267,7 +278,7 @@ class App extends Component {
               </Message>
             </Segment>
           </Modal>
-          
+
           <div id="footer">
             <Segment inverted vertical style={{ margin: '0em 0em 0em', padding: '5em 0em' }}>
               <Container textAlign='center'>

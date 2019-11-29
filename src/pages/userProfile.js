@@ -26,7 +26,7 @@ class UserProfile extends Component{
       city:'',
       budget:'$500-700',
       moved_in_date:oneMonthFromNow,
-      lease_duration:' <12months',
+      lease_duration:'<12months',
       first_name:'',
       last_name:'',
       occupation:'',
@@ -119,14 +119,6 @@ handleRoomPreChangeANDSumbitAll=()=>{
       room_type_required:document.getElementById('room_type_required').innerText,
   });
   var token=localStorage.getItem('token');
-let headerContent={
-  'Content-Type':'application/json',
-  'Authorization':"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJNb3ZlZEluIiwic3ViIjoiNWRkZGY5ZDI1YTc0NDAyZGYyOTFkZmIwIiwiaWF0IjoxNTc0ODk2NzA3MDM5LCJleHAiOjE1NzQ5ODMxMDcwMzl9.9OTUTVBZd4xc2HVnT0Ls6qZNIQ9_JNge7NLd8RuQcg8",
-};
-let headers={
-  headers:headerContent
-  };
-
 
 
 var postData={
@@ -142,7 +134,7 @@ var postData={
   budget:this.state.budget,
   room_type_required:this.state.room_type_required,
   parking_needed:this.state.parking_needed,
-  move_in_date:this.state.move_in_date,
+  moved_in_date:this.state.moved_in_date,
   lease_duration:this.state.lease_duration,
   ok_with_shaing_bathroom:this.state.ok_with_shaing_bathroom,
   pet_friendly:this.state.pet_friendly,
@@ -151,22 +143,9 @@ var postData={
   token:localStorage.getItem('token'),
 
 };
+console.log(token);
 
-// let h= new Headers();
-// h.append('Authorization','Bearer '+token);
-// let req= new Request('http://localhost:5000/roommates/creatroommate',{
-//   method:"POST",
-//   mode:'cors',
-//   body:postData,
-//   headers:h,
-//   credentials:'include'
-//
-// });
-// console.log(req.headers.authorization);
-// fetch(req)
-// .then(res=>{console.log(res)})
-// .catch(error=>{console.log(error)})
-axios.post('http://localhost:5000/roommates/creatroommate',postData,{headers:{'Authorization':token }})
+axios.post('http://localhost:5000/roommates/creatroommate',postData,{headers:{'Authorization':localStorage.getItem('token')}})
 .then(function(response){
      console.log(response);
 
@@ -174,9 +153,7 @@ axios.post('http://localhost:5000/roommates/creatroommate',postData,{headers:{'A
 catch(function(error){
   console.log(error);
 });
-
-
-}
+ }
 
 
 

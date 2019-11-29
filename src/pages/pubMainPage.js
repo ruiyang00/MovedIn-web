@@ -163,7 +163,11 @@ componentDidMount(){
        showRoommates:false,
 
     });
-    axios.post('http://localhost:5000/roommates/getroommates',{city:this.props.location.state.targetCity})
+    axios.get('http://localhost:5000/roommates/getroommates',
+    {
+          headers: {
+            'Authorization': this.props.location.state.targetCity
+          }})
       .then(function(response){
            console.log(response);
            this.setState({
@@ -171,7 +175,11 @@ componentDidMount(){
          })
 
     }.bind(this));
-    axios.post('http://localhost:5000/roommates/getroommates',{city:''})
+    axios.get('http://localhost:5000/roommates/getroommates',
+    {
+          headers: {
+            'Authorization': ""
+          }})
       .then(function(response){
            console.log(response);
            this.setState({
@@ -182,7 +190,13 @@ componentDidMount(){
     }.bind(this));
 
 
-    axios.post('http://localhost:5000/rooms/getrooms',{city:this.props.location.state.targetCity})
+    axios.get('http://localhost:5000/rooms/getrooms',
+
+    {
+            headers: {
+              'Authorization': this.props.location.state.targetCity
+            }
+          })
     .then(function(response){
          console.log(response);
          this.setState({
@@ -190,7 +204,12 @@ componentDidMount(){
                        })
 
   }.bind(this));
-  axios.post('http://localhost:5000/rooms/getrooms',{city:''})
+  axios.get('http://localhost:5000/rooms/getrooms',
+  {
+            headers: {
+              'Authorization': ""
+            }
+          })
   .then(function(response){
        console.log(response);
        this.setState({roomstoDisplay:response.data.allRoomsWithinLocation,
@@ -206,7 +225,12 @@ componentDidMount(){
   }
 
   else{
-  axios.post('http://localhost:5000/roommates/getroommates',{city:""})
+  axios.get('http://localhost:5000/roommates/getroommates',
+  {
+            headers: {
+              "Authorization": ""
+            }
+          })
     .then(function(response){
          console.log(response);
          this.setState({roommatestoDisplay:response.data.allRoommatesWithinLocation,
@@ -216,7 +240,12 @@ componentDidMount(){
 
   }.bind(this));
 
-  axios.post('http://localhost:5000/rooms/getrooms',{city:''})
+  axios.get('http://localhost:5000/rooms/getrooms',
+  {
+            headers: {
+              "Authorization": ""
+            }
+          })
   .then(function(response){
        console.log(response);
        this.setState({roomstoDisplay:response.data.allRoomsWithinLocation,
@@ -321,31 +350,36 @@ doSecondaryFilter=async()=>{
 
     await this.handleSecFilterChange();
     this.setState({
-      filteredRooms:this.state.copyOfRooms,
-      filteredRoommates:this.state.copyOfRoommates
+      filteredRooms:[],
+      filteredRoommates:[]
     })
     var i;
-    for(i=0;i<this.state.filteredRoommates.length;i++){
-        var roommate=this.state.filteredRoommates[i];
-    if(roommate.gender !== this.state.gender || roommate.age!==this.state.age
-         || roommate.room_type_required!== this.state.room_type_required || roommate.pet_friendly!==this.state.pet
-         || roommate.ok_with_shaing_bathroom !== this.state.sharedBath || roommate.smoking_friendly !== this.state.smoking
-         || roommate.party_friendly !== this.state.party
-       ){
-            this.state.filteredRoommates.splice(i,1);
+    for(i=0;i<this.state.copyOfRoommates.length;i++){
+        var roommate=this.state.copyOfRoommates[i];
+    if(roommate.gender === this.state.gender || roommate.age===this.state.age
+         || roommate.room_type_required === this.state.room_type_required || roommate.pet_friendly ===this.state.pet
+         || roommate.ok_with_shaing_bathroom === this.state.sharedBath || roommate.smoking_friendly === this.state.smoking
+         || roommate.party_friendly === this.state.party || this.state.gender ==="" || this.state.age === ""
+         || this.state.room_type_required === "" || this.state.pet === "" ||  this.state.sharedBath === "" ||
+         this.state.smoking === "" || this.state.party === ""
+        ){
+            this.state.filteredRoommates.push(roommate);
          }
     }
 
-    for(i=0;i<this.state.filteredRooms.length;i++){
-        var room=this.state.filteredRooms[i];
-        if(room.gender_prefered !== this.state.gender || room.parking!==this.state.parking
-             || room.room_type!== this.state.room_type_required || room.pet!==this.state.pet
-             || room.bathroom !== this.state.sharedBath || room.smoking!== this.state.smoking
-             || room.party !== this.state.party
+    for(i=0;i<this.state.copyOfRooms.length;i++){
+        var room=this.state.copyOfRooms[i];
+        if(room.gender_prefered === this.state.gender || room.parking ===this.state.parking
+             || room.room_type=== this.state.room_type_required || room.pet ===this.state.pet
+             || room.bathroom === this.state.sharedBath || room.smoking === this.state.smoking
+             || room.party === this.state.party || this.state.gender === "" || this.state.parking === "" ||
+             this.state.room_type_required === "" || this.state.pet === "" || this.state.sharedBath === "" ||
+             this.state.smoking === "" || this.state.party === ""
            ) {
-            this.state.filteredRooms.splice(i,1);
+            this.state.filteredRooms.push(room);
          }
     }
+    this.forceUpdate();
 
   }
 

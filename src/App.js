@@ -22,7 +22,6 @@ import {  Button,
         } from "semantic-ui-react";
 
 //Page import
-import mainPage from './pages/mainPage';
 import userProfile from './pages/userProfile';
 import './App.css';
 import * as actions from './actions';
@@ -32,7 +31,7 @@ import RoomProfile from './pages/roomProfile';
 import pubMainPage from './pages/pubMainPage';
 import UserDetail from './pages/userDetail';
 import welcomePage from "./pages/welcomePage";
-import userPosts from './pages/userPosts';
+
 
 
 //redux import
@@ -143,25 +142,35 @@ class App extends Component {
     console.log('submitted');
   }
 
+  //Redirect-----------------------------------------------------------------------------
   setRedirectToWel = () => {
     this.setState({
       redirectToWel: true
     })
   }
 
+  setRedirectToUserPro = () => {
+    this.setState({
+      redirectToUserPro: true
+    })
+  }
+
   renderRedirectToWel = () => {
     if (this.state.redirectToWel) {
-      return <Redirect to='/welcomePage' />
+      return <Redirect to='/' />
+    }
+  }
+
+  renderRedirectToUserPro= () => {
+    if (this.state.redirectToUserPro && this.props.isAuth) {
+      this.state.redirectToUserPro = false;
+      return <Redirect to='/userProfile' />
     }
   }
 
   //-------------------------------------------------------------------------------------
   render() {
-    const { dimmer,
-            signupEmail,
-            signupPassword,
-            loginEmail,
-            loginPassword } = this.state;
+    const { dimmer } = this.state;
 
 
 
@@ -175,9 +184,7 @@ class App extends Component {
     )
 
     const userProfileOptions = [
-
-      { key: 'profile', text: 'View Profile'},
-      { key: 'settings', text: 'Settings' },
+      { key: 'profile', text: 'View Profile', onClick: this.setRedirectToUserPro},
       { key: 'sign-out', text: 'Sign Out', onClick: this.handleSignout},
     ]
 
@@ -186,8 +193,8 @@ class App extends Component {
       return (
           <Menu fixed='top' inverted>
             <Container>
-              <Menu.Item as='a' header>
-                {this.renderRedirectToWel()}
+              <Menu.Item as='a' header onClick={this.setRedirectToWel}>
+                 {this.renderRedirectToWel()}
                 <Image src='https://i.ibb.co/jkvv96c/home-30-C5-FF.png'
                        style={{marginRight:"0.5em"}}
                        size='mini'
@@ -210,16 +217,19 @@ class App extends Component {
 
     const MenuWithAuth = () => {
       return (
-
-
         <Menu fixed='top' inverted>
         <Container>
-          <Menu.Item as='a' header>
-          <Image src='https://i.ibb.co/jkvv96c/home-30-C5-FF.png' style={{marginRight:"0.5em"}} size='mini' />
-            MovedIn
+          <Menu.Item as='a' header onClick={this.setRedirectToWel}>
+            {this.renderRedirectToWel()}
+          <Image src='https://i.ibb.co/jkvv96c/home-30-C5-FF.png'
+                       style={{marginRight:"0.5em"}}
+                       size='mini'
+                       onClick={this.setRedirectToWel}/>
+                MovedIn
           </Menu.Item>
-
+          
           <Menu.Item position='right'>
+            {this.renderRedirectToUserPro()}
             <Dropdown trigger={userProfileTrigger} options={userProfileOptions}/>
           </Menu.Item>
         </Container>
@@ -247,7 +257,7 @@ class App extends Component {
               <Route path="/userProfile" component={userProfile} />
               <Route path="/roomProfile" component={RoomProfile} />
                <Route path="/userDetail" component={UserDetail} />
-               <Route path="/myPosts" component={userPosts} />
+
             </Switch></div>
 
           }

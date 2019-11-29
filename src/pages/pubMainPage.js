@@ -57,12 +57,7 @@ class pubMainPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: null,
-      nameToDisplay: '',
-      city: '',
       budget: '',
-      age: '',
-      allUsers: [],
 
       target: '',
       city: '',
@@ -213,11 +208,11 @@ class pubMainPage extends Component {
 
   onSubmit = () => {
     // event.preventDefault();
-    console.log(this.state.nameToDisplay);
+   
     console.log(this.state.city);
     //this.props.signIn(formData);
     axios.get('http://localhost:5000/roommates/getroommates', {
-      nameToDisplay: this.state.nameToDisplay,
+      
       city: this.state.city,
       budget: this.setState.budget,
       gender: this.setState.gender,
@@ -268,16 +263,11 @@ class pubMainPage extends Component {
       { key: '$1900-2100', text: '$1900-2100', value: '$1900-2100' },
       { key: '$2100-2300', text: '$2100-2300', value: '$2100-2300' },
       { key: '$2300-2500', text: '$2300-2500', value: '$2300-2500' },
-
-
-
-
     ]
 
     const booleanOptions = [
       { key: 'Yes', text: 'Yes', value: 'Yes' },
       { key: 'No', text: 'No', value: 'No' },
-
     ]
 
 
@@ -327,9 +317,9 @@ class pubMainPage extends Component {
           </Form>   
           </Menu> 
 
-        <Menu stackable secondary>
-          <Form style={{marginTop:'1em',marginLeft:"12.5em", marginRight:"12.5em"}}>
-            <Form.Group widths='equal'> 
+        <Menu stackable secondary> 
+          <Form style={{ marginTop: '1em', marginLeft: "12.5em", marginRight: "12.5em" }}>
+            <Form.Group widths='equal'>
               <Form.Select
                 clearable
                 label='Gender'
@@ -339,7 +329,6 @@ class pubMainPage extends Component {
                 options={genderOption}
                 onChange={null} />
 
-
               <Form.Select
                 clearable
                 label='Parking'
@@ -348,7 +337,6 @@ class pubMainPage extends Component {
                 fluid
                 selection
                 options={booleanOptions} />
-
 
               <Form.Select
                 clearable
@@ -367,7 +355,6 @@ class pubMainPage extends Component {
                 fluid selection
                 options={booleanOptions} />
 
-
               <Form.Select
                 clearable
                 label='Smoking'
@@ -375,7 +362,6 @@ class pubMainPage extends Component {
                 id="smoking"
                 fluid selection
                 options={booleanOptions} />
-
 
               <Form.Select
                 clearable
@@ -385,31 +371,36 @@ class pubMainPage extends Component {
                 fluid
                 selection
                 options={booleanOptions} />
-              </Form.Group>
-              <Button disabled={!this.props.isAuth} 
-                      onClick={this.doSecondaryFilter} 
-                      color='twitter' 
-                      content='Update Results' />
+            </Form.Group>
+
+            <Button disabled={!this.props.isAuth}
+              onClick={this.doSecondaryFilter}
+              color='twitter'
+              content='Update Results' />
           </Form>
         </Menu>
 
-       
+        <Grid>
+          
+        </Grid>
           <Card.Group itemsPerRow={4} style={{ marginLeft: "7.25em" }}>
             {this.state.showRoommates ?
 
               this.state.roommatestoDisplay.map((roommate) => {
                 return (
-
                   <Card style={{ width: '15em', marginTop: '2em', marginLeft: '5em' }}>
+                    
                     <Image
                       src='https://image.flaticon.com/icons/svg/168/168720.svg' wrapped ui={false}
                       as='a'
-                      onClick={null} //should get user id, token. redirect to userDetail page
+                      onClick={
+                        null
+                      } //should get user id, token. redirect to userDetail page
                     />
                     <Card.Content>
-                      <Card.Meta>
-                        <span className='status'>{roommate.first_name} {roommate.last_name}</span>
-                      </Card.Meta>
+                      <Card.Header>
+                        {roommate.first_name} {roommate.last_name}
+                      </Card.Header>
                     </Card.Content>
                     <Card.Content extra>
                       <a>
@@ -417,8 +408,8 @@ class pubMainPage extends Component {
                         {roommate.city}/Budget: ${roommate.budget || "N/A"}
                       </a>
                     </Card.Content>
-                  </Card>
 
+                  </Card>
                 )
               })
               :

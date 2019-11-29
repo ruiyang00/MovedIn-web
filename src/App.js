@@ -33,6 +33,7 @@ import UserDetail from './pages/userDetail';
 import welcomePage from "./pages/welcomePage";
 
 
+
 //redux import
 import { connect } from 'react-redux';
 import {compose} from 'redux';
@@ -254,8 +255,9 @@ class App extends Component {
               <Route path={'/welcomePage'} component={welcomePage} />
               <Route path="/mainPage" component={pubMainPage} />
               <Route path="/userProfile" component={userProfile} />
-              <Route path="/roomProfile" component={RoomProfile} /> 
+              <Route path="/roomProfile" component={RoomProfile} />
                <Route path="/userDetail" component={UserDetail} />
+
             </Switch></div>
 
           }

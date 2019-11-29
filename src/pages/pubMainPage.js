@@ -53,108 +53,158 @@ const genderOption = [
   { key: 'Other', value: 'Other', text: 'Other' },
 ]
 
+const lease_durationOptions=[
+  {key:'>=12 months', text:'>=12 months', value: '>=12 months'},
+  {key:'<12months', text:'<12months', value: '<12months'},
+  {key:'< OR >= 12 months', text:'< OR >= 12 months', value: '< OR >= 12 months'}
+]
+
 class pubMainPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      budget: '',
+    this.state={
+      date: null,
+      nameToDisplay:'',
+      city:'',
+      budget:'',
+      age:'',
+      allUsers:[],
+      modal1isOpon:false,
+      modal2isOpon:false,
+      modal3isOpon:false,
+      modal4isOpon:false,
 
-      target: '',
-      city: '',
-      budgetRange: '',
-      movedInMonth: '',
-      gender: '',
-      parking: '',
-      sharedBath: '',
-      pet: '',
-      smoking: '',
-      party: '',
+      target:'',
+      city:'',
+      budgetRange:'',
+      movedInMonth:'',
+      lease_duration:'',
+      gender:'',
+      parking:'',
+      sharedBath:'',
+      pet:'',
+      smoking:'',
+      party:'',
+      room_type_required:'',
+      utility_include:'',
 
-      roommatestoDisplay: [],
-      roomstoDisplay: [],
+      roommatestoDisplay:[],
+      filteredRoommates:[],
+      copyOfRoommates:[],
+      roomstoDisplay:[],
+      filteredRooms:[],
+      copyOfRooms:[],
 
-      showRooms: false,
-      showRoommates: true,
+      showRooms:false,
+      showRoommates:true,
 
     };
-    this.onSubmit = this.onSubmit.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
+    this.onSubmit=this.onSubmit.bind(this);
+    this.handleInputChange= this.handleInputChange.bind(this);
+    this.handleBasicFilterChange=this.handleBasicFilterChange.bind(this);
   }
 
-  componentDidMount() {
-    const querystring = require('querystring');
-    if (this.props.location.state) {
-      if (this.props.location.state.targetGroup === "new place to MovedIn")
-        this.setState({
-          showRoommates: false,
+componentDidMount(){
+  if(this.props.location.state){
+     if(this.props.location.state.targetGroup==="new place to MovedIn")
+    this.setState({
+       showRoommates:false,
 
-        });
-      // axios.get(, querystring.stringify({ foo: 'bar' })
-      // )
-      axios.get('http://localhost:5000/roommates/getroommates', {
-        headers: {
-          'Authorization': 'San Jose'
-        }
-      })
-        .then(function (response) {
-          console.log(response);
-          this.setState({ roommatestoDisplay: response.data.allRoommatesWithinLocation })
-
-        }.bind(this));
-      axios.get('http://localhost:5000/rooms/getrooms',
-        {
+    });
+    axios.get('http://localhost:5000/roommates/getroommates',
+    {
           headers: {
-            'Authorization': 'San Jose'
-          }
-        })
-        .then(function (response) {
-          console.log(response);
-          this.setState({ roomstoDisplay: response.data.allRoomsWithinLocation })
+            'Authorization': this.props.location.state.targetCity
+          }})
+      .then(function(response){
+           console.log(response);
+           this.setState({
+           filteredRoommates:response.data.allRoommatesWithinLocation,
+         })
+
+    }.bind(this));
+    axios.get('http://localhost:5000/roommates/getroommates',
+    {
+          headers: {
+            'Authorization': ""
+          }})
+      .then(function(response){
+           console.log(response);
+           this.setState({
+             roommatestoDisplay:response.data.allRoommatesWithinLocation,
+           copyOfRoommates:response.data.allRoommatesWithinLocation,
+         })
+
+    }.bind(this));
+
+
+    axios.get('http://localhost:5000/rooms/getrooms',
+
+    {
+            headers: {
+              'Authorization': this.props.location.state.targetCity
+            }
+          })
+    .then(function(response){
+         console.log(response);
+         this.setState({
+                        filteredRooms:response.data.allRoomsWithinLocation,
+                       })
+
+  }.bind(this));
+  axios.get('http://localhost:5000/rooms/getrooms',
+  {
+            headers: {
+              'Authorization': ""
+            }
+          })
+  .then(function(response){
+       console.log(response);
+       this.setState({roomstoDisplay:response.data.allRoomsWithinLocation,
+                      copyOfRooms:response.data.allRoomsWithinLocation
+                     })
+
+}.bind(this));
+
+  this.props.history.push({
+    pathname:'./mainPage',
+    state:undefined
+  });
+  }
+
+  else{
+  axios.get('http://localhost:5000/roommates/getroommates',
+  {
+            headers: {
+              "Authorization": ""
+            }
+          })
+    .then(function(response){
+         console.log(response);
+         this.setState({roommatestoDisplay:response.data.allRoommatesWithinLocation,
+           filteredRoommates:response.data.allRoommatesWithinLocation,
+           copyOfRoommates:response.data.allRoommatesWithinLocation,
+         })
 
         }.bind(this));
 
-      this.props.history.push({
-        pathname: './mainPage',
-        state: undefined
-      });
-    }
 
-    else {
-      axios.get('http://localhost:5000/roommates/getroommates', {
-        headers: {
-          'Authorization': 'San Jose'
-        }
-      })
-        .then(function (response) {
-          console.log(response);
-          this.setState({ roommatestoDisplay: response.data.allRoommatesWithinLocation })
-
-        }.bind(this));
-
-      axios.get('http://localhost:5000/rooms/getrooms', {
-        headers: {
-          'Authorization': 'San Jose'
-        }
-      })
-        .then(function (response) {
-          console.log(response);
-          this.setState({ roomstoDisplay: response.data.allRoomsWithinLocation })
-
+  axios.get('http://localhost:5000/rooms/getrooms',
+  {
+            headers: {
+              "Authorization": ""
+            }
+          })
+  .then(function(response){
+       console.log(response);
+       this.setState({roomstoDisplay:response.data.allRoomsWithinLocation,
+          filteredRooms:response.data.allRoomsWithinLocation,
+          copyOfRooms:response.data.allRoomsWithinLocation
+       })
         }.bind(this));
     }
 
   }
-
-  // componentDidUpdate=()=>{
-  // window.location.reload(true);
-  //   axios.post('http://localhost:5000/users/homePage',{email:localStorage.getItem('user')})
-  //   .then(function(response){
-  //        console.log(response.data.allusers);
-  //        this.setState({allUsers:response.data.allusers})
-  //
-  // }.bind(this));
-
-  // }
 
   handleInputChange = (event) => {
     const { value, name } = event.target;
@@ -163,48 +213,122 @@ class pubMainPage extends Component {
     });
   }
 
-  // doPrimaryFilter=()=>{
-  //   this.forceUpdate();
-  //    this.setState({
-  //      target:document.getElementById('target').innerText,
-  //      city:document.getElementById('city').innerText,
-  //      budgetRange:document.getElementById('budgetRange').innerText,
-  //      movedInMonth:document.getElementById('movedInMonth').innerText,
-  //
-  //    });
-  //
-  //    //axios post
-  // }
+  handleDateChange = date => {
+    this.setState({ date });
 
-  // doSecondaryFilter=()=>{
-  //   this.setState({
-  //     gender:document.getElementById('gender').innerText,
-  //     parking: document.getElementById('parking').innerText,
-  //     sharedBath:document.getElementById('sharedBath').innerText,
-  //     pet:document.getElementById('pet').innerText,
-  //     smoking:document.getElementById('smoking').innerText,
-  //     party:document.getElementById('party').innerText,
-  //
-  //   });
-  //   this.printstuff();
-  //
-  //   //axios post
-  // }
+  };
 
-  // printstuff(){
-  //   console.log(this.state.target);
-  //   console.log(this.state.city);
-  //   console.log(this.state.budgetRange);
-  //   console.log(this.state.movedInMonth);
-  //   console.log(this.state.gender);
-  //   console.log(this.state.parking);
-  //   console.log(this.state.sharedBath);
-  //   console.log(this.state.pet);
-  //   console.log(this.state.smoking);
-  //   console.log(this.state.party);
-  //
-  // }
+  handleBasicFilterChange=()=>{
+    this.forceUpdate();
+    this.setState({
+      city:document.getElementById('city').innerText,
+      budgetRange:document.getElementById('budgetRange').innerText,
+      movedInMonth:document.getElementById('movedInMonth').innerText,
+      lease_duration:document.getElementById('lease_duration').innerText,
 
+
+    });
+  }
+
+  handleSecFilterChange(){
+    if(!this.state.showRoommates){
+    this.setState({
+    gender:document.getElementById('gender').innerText,
+    parking:document.getElementById('parking').innerText,
+    room_type_required:document.getElementById('room_type_required').innerText,
+    pet:document.getElementById('pet').innerText,
+    sharedBath:document.getElementById('sharedBath').innerText,
+    smoking:document.getElementById('smoking').innerText,
+    party:document.getElementById('party').innerText,
+  });}
+
+    else{this.setState({
+    gender:document.getElementById('gender').innerText,
+    age:document.getElementById('age').innerText,
+    room_type_required:document.getElementById('room_type_required').innerText,
+    pet:document.getElementById('pet').innerText,
+    sharedBath:document.getElementById('sharedBath').innerText,
+    smoking:document.getElementById('smoking').innerText,
+    party:document.getElementById('party').innerText,
+  });
+
+    }
+
+  }
+
+doPrimaryFilter=async()=>{
+    await this.handleBasicFilterChange();
+       this.setState({
+         filteredRooms:[],
+         filteredRoommates:[]
+       });
+       var i;
+       for(i=0;i<this.state.roommatestoDisplay.length;i++){
+           //console.log('hello');
+           var roommate=this.state.roommatestoDisplay[i];
+           // console.log(roommate.lease_duration === this.state.lease_duration);
+       if(roommate.city === this.state.city && roommate.budget===this.state.budgetRange
+            && roommate.moved_in_date=== this.state.movedInMonth && roommate.lease_duration===this.state.lease_duration){
+               this.state.filteredRoommates.push(roommate);
+            }
+       }
+
+       for(i=0;i<this.state.roomstoDisplay.length;i++){
+           var room=this.state.roomstoDisplay[i];
+           console.log(room.move_in_date === this.state.movedInMonth);
+       if(room.city === this.state.city && room.price_range===this.state.budgetRange
+            && room.move_in_date=== this.state.movedInMonth && room.min_lease_duration===this.state.lease_duration){
+               this.state.filteredRooms.push(room);
+            }
+       }
+       this.setState({
+         copyOfRooms:this.state.filteredRooms,
+         copyOfRoommates:this.state.filteredRoommates
+       })
+
+
+
+
+
+
+  }
+
+doSecondaryFilter=async()=>{
+
+    await this.handleSecFilterChange();
+    this.setState({
+      filteredRooms:[],
+      filteredRoommates:[]
+    })
+    var i;
+    for(i=0;i<this.state.copyOfRoommates.length;i++){
+        var roommate=this.state.copyOfRoommates[i];
+    if(roommate.gender === this.state.gender || roommate.age===this.state.age
+         || roommate.room_type_required === this.state.room_type_required || roommate.pet_friendly ===this.state.pet
+         || roommate.ok_with_shaing_bathroom === this.state.sharedBath || roommate.smoking_friendly === this.state.smoking
+         || roommate.party_friendly === this.state.party || this.state.gender ==="" || this.state.age === ""
+         || this.state.room_type_required === "" || this.state.pet === "" ||  this.state.sharedBath === "" ||
+         this.state.smoking === "" || this.state.party === ""
+        ){
+            this.state.filteredRoommates.push(roommate);
+         }
+    }
+
+    for(i=0;i<this.state.copyOfRooms.length;i++){
+        var room=this.state.copyOfRooms[i];
+        if(room.gender_prefered === this.state.gender || room.parking ===this.state.parking
+             || room.room_type=== this.state.room_type_required || room.pet ===this.state.pet
+             || room.bathroom === this.state.sharedBath || room.smoking === this.state.smoking
+             || room.party === this.state.party || this.state.gender === "" || this.state.parking === "" ||
+             this.state.room_type_required === "" || this.state.pet === "" || this.state.sharedBath === "" ||
+             this.state.smoking === "" || this.state.party === ""
+           ) {
+            this.state.filteredRooms.push(room);
+         }
+    }
+    this.forceUpdate();
+
+  }
 
   onSubmit = () => {
     // event.preventDefault();
@@ -265,9 +389,28 @@ class pubMainPage extends Component {
       { key: '$2300-2500', text: '$2300-2500', value: '$2300-2500' },
     ]
 
-    const booleanOptions = [
-      { key: 'Yes', text: 'Yes', value: 'Yes' },
-      { key: 'No', text: 'No', value: 'No' },
+
+    const ageOptions=[
+       {key:'0-18 years old',text:'0-18 years old',value:'0-18 years old'},
+       {key:'18-30 years old',text:'18-30 years old',value:'18-30 years old'},
+       {key:'30-40 years old',text:'30-40 years old',value:'30-40 years old'},
+       {key:'40-50 years old',text:'40-50 years old',value:'40-50 years old'},
+       {key:'50-60 years old',text:'50-60 years old',value:'50-60 years old'},
+
+
+
+
+    ]
+
+    const booleanOptions=[
+      {key:'Yes',text:'Yes',value:'Yes'},
+      {key:'No',text:'No',value:'No'},
+    ]
+
+    const roomTypeOptions=[
+      {key:'Single Room',text:'Single Room',value:'Single Room'},
+      {key:'Double Room',text:'Double Room',value:'Double Room'},
+      {key:'Multiperson Room',text:'Multiperson Room',value:'Multiperson Room'}
     ]
 
 
@@ -292,13 +435,22 @@ class pubMainPage extends Component {
                 options={cityOptions}
                 required
               />
-
+                  
               <Form.Select
                 selection
                 defaultValue={"$500-700"}
                 id="budgetRange"
                 label='Rent Budget'
                 options={budgetOptions}
+                required
+              />
+
+              <Form.Select
+                selection
+                defaultValue="<12months"
+                id="lease_duration"
+                label='Lease Term'
+                options={lease_durationOptions}
                 required
               />
 
@@ -320,6 +472,7 @@ class pubMainPage extends Component {
         <Menu stackable secondary> 
           <Form style={{ marginTop: '1em', marginLeft: "12.5em", marginRight: "12.5em" }}>
             <Form.Group widths='equal'>
+
               <Form.Select
                 clearable
                 label='Gender'
@@ -329,14 +482,34 @@ class pubMainPage extends Component {
                 options={genderOption}
                 onChange={null} />
 
-              <Form.Select
+             { !this.state.showRoommates ?
+               <Form.Select
                 clearable
-                label='Parking'
+                label='Parking Required'
                 placeholder='Select'
                 id="parking"
                 fluid
                 selection
                 options={booleanOptions} />
+              :
+               <Form.Select
+                  clearable
+                  label='Age Range'
+                  placeholder='Select'
+                  id="age"
+                  fluid
+                  selection
+                  options={ageOptions} />
+              }
+                  
+              <Form.Select
+                clearable
+                label='Room Type'
+                placeholder='Select'
+                id="room_type_required"
+                fluid
+                selection
+                options={roomTypeOptions} />
 
               <Form.Select
                 clearable
@@ -371,25 +544,12 @@ class pubMainPage extends Component {
                 fluid
                 selection
                 options={booleanOptions} />
-            </Form.Group>
 
-            <Button disabled={!this.props.isAuth}
-              onClick={this.doSecondaryFilter}
-              color='twitter'
-              content='Update Results' />
-          </Form>
-        </Menu>
-
-        <Grid>
-          
-        </Grid>
-          <Card.Group itemsPerRow={4} style={{ marginLeft: "7.25em" }}>
-            {this.state.showRoommates ?
-
-              this.state.roommatestoDisplay.map((roommate) => {
-                return (
+           <Card.Group itemsPerRow={4} style={{marginLeft:"7.25em"}}>
+             { this.state.showRoommates ?
+              this.state.filteredRoommates.map((roommate)=>{
+                return(
                   <Card style={{ width: '15em', marginTop: '2em', marginLeft: '5em' }}>
-                    
                     <Image
                       src='https://image.flaticon.com/icons/svg/168/168720.svg' wrapped ui={false}
                       as='a'
@@ -408,41 +568,46 @@ class pubMainPage extends Component {
                         {roommate.city}/Budget: ${roommate.budget || "N/A"}
                       </a>
                     </Card.Content>
-
                   </Card>
                 )
-              })
-              :
+            })
+        :
 
-              this.state.roomstoDisplay.map((room) => {
-                return (
+        this.state.filteredRooms.map((room)=>{
+          return(
 
-                  <Card style={{ width: '15em', marginTop: '2em', marginLeft: '5em' }}>
-                    <Image
-                      src={'https://image.flaticon.com/icons/svg/1684/1684133.svg'} wrapped ui={false}
-                      as='a'
-                      onClick={null} //redirect
-                    />
-                    <Card.Content>
-                      <Card.Meta>
-                        <span className='status'>{room.room_type}</span>
-                      </Card.Meta>
-                    </Card.Content>
-                    <Card.Content extra>
-                      <a>
-                        <Icon name='home' />
-                        {room.city}/Budget: ${room.price}
-                      </a>
-                    </Card.Content>
-                  </Card>
+              <Card style={{ width: '15em' , marginTop:'2em' , marginLeft:'5em'}}>
+              <Image
+                src={HomeLogo} wrapped ui={false}
+                as='a'
+                onClick={this.showModal1('blurring')}
+                />
+                <Card.Content>
+                  <Card.Meta>
+                    <span className='status'>{room.room_type}</span>
+                  </Card.Meta>
+                </Card.Content>
+                <Card.Content extra>
+                  <a>
+                    <Icon name='home' />
+                    {room.city}/Budget: ${room.price}
+                    </a>
+                </Card.Content>
+              </Card>
 
-                )
-              })
+         )
+        })
 
 
 
-            }
+        }
 
+            </Form.Group>
+            <Button disabled={!this.props.isAuth}
+              onClick={this.doSecondaryFilter}
+              color='twitter'
+              content='Update Results' />
+          </Form>
           </Card.Group>
 
 

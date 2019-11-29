@@ -27,13 +27,13 @@ class RoomProfile extends Component{
       price:0,
       price_range:'$500-700',
       move_in_date:oneMonthFromNow,
-      min_lease_duration:"",
+      min_lease_duration:'<12months',
 
       utility_include:'',
       cooking:'',
       parking:'',
       furniture:'',
-      bathroom:'No',
+      bathroom:'',
       closet:'',
 
       gender_prefered:'',
@@ -120,7 +120,38 @@ handleRoomPreChangeANDSumbitAll=()=>{
       kidsFriendly:document.getElementById('kids').innerText
   });
 
-  //axios submit, toUpperCase()
+  var token=localStorage.getItem('token');
+
+
+var postData={
+  city:this.state.city,//
+  room_type:this.state.room_type,//
+  price:this.state.price,//
+  price_range:this.state.price_range,//
+  move_in_date:this.state.move_in_date,//
+  min_lease_duration:this.state.min_lease_duration,//
+  utility_include:this.state.utility_include,//
+  cooking:this.state.cooking,//
+  parking:this.state.parking,//
+  furniture:this.state.furniture,//
+  bathroom:this.state.bathroom,//
+  gender_prefered:this.state.gender_prefered,//
+  pet:this.state.pet,//
+  party:this.state.party,//
+  smoking:this.state.smoking,//
+  token:localStorage.getItem('token'),
+
+};
+console.log(token);
+
+axios.post('http://localhost:5000/rooms/creatroom',postData,{headers:{'Authorization':localStorage.getItem('token')}})
+.then(function(response){
+     console.log(response);
+
+}).
+catch(function(error){
+  console.log(error);
+});
 
 
 }
@@ -192,8 +223,8 @@ handleRoomPreChangeANDSumbitAll=()=>{
 
        ]
        const leaseTermOptions=[
-         {key:' >=12 months', text:' >=12 months', value: ' >=12 months'},
-         {key:' <12months', text:' <12months', value: '<12months'},
+         {key:'>=12 months', text:'>=12 months', value: '>=12 months'},
+         {key:'<12months', text:'<12months', value: '<12months'},
          {key:'< OR >= 12 months', text:'< OR >= 12 months', value: '< OR >= 12 months'}
        ]
 
@@ -330,7 +361,6 @@ handleRoomPreChangeANDSumbitAll=()=>{
                     <p></p>
 
                     <Form.Select
-                    clearable
                     onClose={()=>{this.forceUpdate();}}
                     id="min_lease_duration"
                     selection

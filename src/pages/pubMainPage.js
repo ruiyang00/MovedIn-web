@@ -103,6 +103,12 @@ const partyOpotion =[
   {key: true, value: true, text:'Party ok'},
 ]
 
+const lease_durationOptions=[
+  {key:'>=12 months', text:'>=12 months', value: '>=12 months'},
+  {key:'<12months', text:'<12months', value: '<12months'},
+  {key:'< OR >= 12 months', text:'< OR >= 12 months', value: '< OR >= 12 months'}
+]
+
 
 
 class pubMainPage extends Component {
@@ -124,15 +130,22 @@ class pubMainPage extends Component {
       city:'',
       budgetRange:'',
       movedInMonth:'',
+      lease_duration:'',
       gender:'',
       parking:'',
       sharedBath:'',
       pet:'',
       smoking:'',
       party:'',
+      room_type_required:'',
+      utility_include:'',
 
       roommatestoDisplay:[],
+      filteredRoommates:[],
+      copyOfRoommates:[],
       roomstoDisplay:[],
+      filteredRooms:[],
+      copyOfRooms:[],
 
       showRooms:false,
       showRoommates:true,
@@ -140,6 +153,7 @@ class pubMainPage extends Component {
     };
     this.onSubmit=this.onSubmit.bind(this);
     this.handleInputChange= this.handleInputChange.bind(this);
+    this.handleBasicFilterChange=this.handleBasicFilterChange.bind(this);
   }
 
 componentDidMount(){
@@ -152,15 +166,38 @@ componentDidMount(){
     axios.post('http://localhost:5000/roommates/getroommates',{city:this.props.location.state.targetCity})
       .then(function(response){
            console.log(response);
-           this.setState({roommatestoDisplay:response.data.allRoommatesWithinLocation})
+           this.setState({
+           filteredRoommates:response.data.allRoommatesWithinLocation,
+         })
 
     }.bind(this));
+    axios.post('http://localhost:5000/roommates/getroommates',{city:''})
+      .then(function(response){
+           console.log(response);
+           this.setState({
+             roommatestoDisplay:response.data.allRoommatesWithinLocation,
+           copyOfRoommates:response.data.allRoommatesWithinLocation,
+         })
+
+    }.bind(this));
+
+
     axios.post('http://localhost:5000/rooms/getrooms',{city:this.props.location.state.targetCity})
     .then(function(response){
          console.log(response);
-         this.setState({roomstoDisplay:response.data.allRoomsWithinLocation})
+         this.setState({
+                        filteredRooms:response.data.allRoomsWithinLocation,
+                       })
 
   }.bind(this));
+  axios.post('http://localhost:5000/rooms/getrooms',{city:''})
+  .then(function(response){
+       console.log(response);
+       this.setState({roomstoDisplay:response.data.allRoomsWithinLocation,
+                      copyOfRooms:response.data.allRoomsWithinLocation
+                     })
+
+}.bind(this));
 
   this.props.history.push({
     pathname:'./mainPage',
@@ -172,30 +209,26 @@ componentDidMount(){
   axios.post('http://localhost:5000/roommates/getroommates',{city:""})
     .then(function(response){
          console.log(response);
-         this.setState({roommatestoDisplay:response.data.allRoommatesWithinLocation})
+         this.setState({roommatestoDisplay:response.data.allRoommatesWithinLocation,
+           filteredRoommates:response.data.allRoommatesWithinLocation,
+           copyOfRoommates:response.data.allRoommatesWithinLocation,
+         })
 
   }.bind(this));
 
   axios.post('http://localhost:5000/rooms/getrooms',{city:''})
   .then(function(response){
        console.log(response);
-       this.setState({roomstoDisplay:response.data.allRoomsWithinLocation})
+       this.setState({roomstoDisplay:response.data.allRoomsWithinLocation,
+          filteredRooms:response.data.allRoomsWithinLocation,
+          copyOfRooms:response.data.allRoomsWithinLocation
+       })
 
 }.bind(this));
 }
 
   }
 
-  // componentDidUpdate=()=>{
-    // window.location.reload(true);
-  //   axios.post('http://localhost:5000/users/homePage',{email:localStorage.getItem('user')})
-  //   .then(function(response){
-  //        console.log(response.data.allusers);
-  //        this.setState({allUsers:response.data.allusers})
-  //
-  // }.bind(this));
-
-  // }
 
   handleInputChange = (event) => {
     const {value,name}=event.target;
@@ -209,47 +242,113 @@ componentDidMount(){
 
   };
 
-  // doPrimaryFilter=()=>{
-  //   this.forceUpdate();
-  //    this.setState({
-  //      target:document.getElementById('target').innerText,
-  //      city:document.getElementById('city').innerText,
-  //      budgetRange:document.getElementById('budgetRange').innerText,
-  //      movedInMonth:document.getElementById('movedInMonth').innerText,
-  //
-  //    });
-  //
-  //    //axios post
-  // }
+  handleBasicFilterChange=()=>{
+    this.forceUpdate();
+    this.setState({
+      city:document.getElementById('city').innerText,
+      budgetRange:document.getElementById('budgetRange').innerText,
+      movedInMonth:document.getElementById('movedInMonth').innerText,
+      lease_duration:document.getElementById('lease_duration').innerText,
 
-  // doSecondaryFilter=()=>{
-  //   this.setState({
-  //     gender:document.getElementById('gender').innerText,
-  //     parking: document.getElementById('parking').innerText,
-  //     sharedBath:document.getElementById('sharedBath').innerText,
-  //     pet:document.getElementById('pet').innerText,
-  //     smoking:document.getElementById('smoking').innerText,
-  //     party:document.getElementById('party').innerText,
-  //
-  //   });
-  //   this.printstuff();
-  //
-  //   //axios post
-  // }
 
-  // printstuff(){
-  //   console.log(this.state.target);
-  //   console.log(this.state.city);
-  //   console.log(this.state.budgetRange);
-  //   console.log(this.state.movedInMonth);
-  //   console.log(this.state.gender);
-  //   console.log(this.state.parking);
-  //   console.log(this.state.sharedBath);
-  //   console.log(this.state.pet);
-  //   console.log(this.state.smoking);
-  //   console.log(this.state.party);
-  //
-  // }
+    });
+  }
+
+  handleSecFilterChange(){
+    if(!this.state.showRoommates){
+    this.setState({
+    gender:document.getElementById('gender').innerText,
+    parking:document.getElementById('parking').innerText,
+    room_type_required:document.getElementById('room_type_required').innerText,
+    pet:document.getElementById('pet').innerText,
+    sharedBath:document.getElementById('sharedBath').innerText,
+    smoking:document.getElementById('smoking').innerText,
+    party:document.getElementById('party').innerText,
+  });}
+
+    else{this.setState({
+    gender:document.getElementById('gender').innerText,
+    age:document.getElementById('age').innerText,
+    room_type_required:document.getElementById('room_type_required').innerText,
+    pet:document.getElementById('pet').innerText,
+    sharedBath:document.getElementById('sharedBath').innerText,
+    smoking:document.getElementById('smoking').innerText,
+    party:document.getElementById('party').innerText,
+  });
+
+    }
+
+  }
+
+doPrimaryFilter=async()=>{
+    await this.handleBasicFilterChange();
+       this.setState({
+         filteredRooms:[],
+         filteredRoommates:[]
+       });
+       var i;
+       for(i=0;i<this.state.roommatestoDisplay.length;i++){
+           //console.log('hello');
+           var roommate=this.state.roommatestoDisplay[i];
+           // console.log(roommate.lease_duration === this.state.lease_duration);
+       if(roommate.city === this.state.city && roommate.budget===this.state.budgetRange
+            && roommate.moved_in_date=== this.state.movedInMonth && roommate.lease_duration===this.state.lease_duration){
+               this.state.filteredRoommates.push(roommate);
+            }
+       }
+
+       for(i=0;i<this.state.roomstoDisplay.length;i++){
+           var room=this.state.roomstoDisplay[i];
+           console.log(room.move_in_date === this.state.movedInMonth);
+       if(room.city === this.state.city && room.price_range===this.state.budgetRange
+            && room.move_in_date=== this.state.movedInMonth && room.min_lease_duration===this.state.lease_duration){
+               this.state.filteredRooms.push(room);
+            }
+       }
+       this.setState({
+         copyOfRooms:this.state.filteredRooms,
+         copyOfRoommates:this.state.filteredRoommates
+       })
+
+
+
+
+
+
+  }
+
+doSecondaryFilter=async()=>{
+
+    await this.handleSecFilterChange();
+    this.setState({
+      filteredRooms:this.state.copyOfRooms,
+      filteredRoommates:this.state.copyOfRoommates
+    })
+    var i;
+    for(i=0;i<this.state.filteredRoommates.length;i++){
+        var roommate=this.state.filteredRoommates[i];
+    if(roommate.gender !== this.state.gender || roommate.age!==this.state.age
+         || roommate.room_type_required!== this.state.room_type_required || roommate.pet_friendly!==this.state.pet
+         || roommate.ok_with_shaing_bathroom !== this.state.sharedBath || roommate.smoking_friendly !== this.state.smoking
+         || roommate.party_friendly !== this.state.party
+       ){
+            this.state.filteredRoommates.splice(i,1);
+         }
+    }
+
+    for(i=0;i<this.state.filteredRooms.length;i++){
+        var room=this.state.filteredRooms[i];
+        if(room.gender_prefered !== this.state.gender || room.parking!==this.state.parking
+             || room.room_type!== this.state.room_type_required || room.pet!==this.state.pet
+             || room.bathroom !== this.state.sharedBath || room.smoking!== this.state.smoking
+             || room.party !== this.state.party
+           ) {
+            this.state.filteredRooms.splice(i,1);
+         }
+    }
+
+  }
+
 
 
   onSubmit=()=>{
@@ -329,10 +428,28 @@ componentDidMount(){
 
     ]
 
+    const ageOptions=[
+       {key:'0-18 years old',text:'0-18 years old',value:'0-18 years old'},
+       {key:'18-30 years old',text:'18-30 years old',value:'18-30 years old'},
+       {key:'30-40 years old',text:'30-40 years old',value:'30-40 years old'},
+       {key:'40-50 years old',text:'40-50 years old',value:'40-50 years old'},
+       {key:'50-60 years old',text:'50-60 years old',value:'50-60 years old'},
+
+
+
+
+    ]
+
     const booleanOptions=[
       {key:'Yes',text:'Yes',value:'Yes'},
       {key:'No',text:'No',value:'No'},
 
+    ]
+
+    const roomTypeOptions=[
+      {key:'Single Room',text:'Single Room',value:'Single Room'},
+      {key:'Double Room',text:'Double Room',value:'Double Room'},
+      {key:'Multiperson Room',text:'Multiperson Room',value:'Multiperson Room'}
     ]
 
 
@@ -378,6 +495,15 @@ componentDidMount(){
                     required
                     />
 
+                <Form.Select
+                    selection
+                    defaultValue="<12months"
+                    id="lease_duration"
+                    label='Lease Term'
+                    options={lease_durationOptions}
+                    required
+                    />
+
 
               <Form.Button primary disabled={!this.props.isAuth} size='medium' style={{marginTop:"1.6em"}} onClick={this.doPrimaryFilter}>
                 Search
@@ -387,21 +513,27 @@ componentDidMount(){
           </Form>
         </Segment>
 
+
         <Menu size='small' borderless style={{ marginTop: "0em", marginBottom:'0em' }}>
           <Menu.Item>
-            <Segment style={{ marginLeft: "11.5em" }}>
+            <Segment style={{ marginLeft: "3em" }}>
               Filter by
             </Segment>
           </Menu.Item>
           <Menu.Item >
-               <label>Gender Preferred</label>
+               <label>Gender Pre</label>
               <Form.Select
                 id="gender"
                 clearable
-                fluid selection
+                fluid
                 options={genderOption}
                 onChange={null} />
           </Menu.Item>
+
+     { !this.state.showRoommates ?
+
+
+
           <Menu.Item>
             <label>Parking Required</label>
             <Form.Select
@@ -409,7 +541,35 @@ componentDidMount(){
               id="parking"
               fluid selection
               options={booleanOptions} />
+             </Menu.Item>
+
+
+
+        :
+
+        <Menu.Item>
+          <label>Age Range</label>
+          <Form.Select
+            selection
+            width={20}
+            clearable
+            id="age"
+            fluid
+            options={ageOptions} />
+           </Menu.Item>
+
+
+      }
+          <Menu.Item>
+          <label>Room Type</label>
+          <Form.Select
+           clearable
+           id="room_type_required"
+           fluid selection
+           options={roomTypeOptions} />
           </Menu.Item>
+
+
           <Menu.Item>
           <label>Shared Bath</label>
               <Form.Select
@@ -446,9 +606,10 @@ componentDidMount(){
                 options={booleanOptions} />
           </Menu.Item>
           <Menu.Item position='right' style={{marginRight:"10em"}}>
-            <Button disabled={!this.props.isAuth} onClick={this.doSecondaryFilter} fluid color='twitter'>Update Results</Button>
+            <Button disabled={!this.props.isAuth} onClick={this.doSecondaryFilter} fluid color='twitter'>Go</Button>
           </Menu.Item>
         </Menu>
+
 
 
 
@@ -457,7 +618,7 @@ componentDidMount(){
            <Card.Group itemsPerRow={4} style={{marginLeft:"6.5em"}}>
              { this.state.showRoommates ?
 
-          this.state.roommatestoDisplay.map((roommate)=>{
+          this.state.filteredRoommates.map((roommate)=>{
             return(
 
             <Card style={{ width: '15em' , marginTop:'2em' , marginLeft:'5em'}}>
@@ -483,7 +644,7 @@ componentDidMount(){
 })
         :
 
-        this.state.roomstoDisplay.map((room)=>{
+        this.state.filteredRooms.map((room)=>{
           return(
 
           <Card style={{ width: '15em' , marginTop:'2em' , marginLeft:'5em'}}>

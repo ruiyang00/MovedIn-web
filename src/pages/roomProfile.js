@@ -27,13 +27,13 @@ class RoomProfile extends Component{
       price:0,
       price_range:'$500-700',
       move_in_date:oneMonthFromNow,
-      min_lease_duration:"",
+      min_lease_duration:' <12months',
 
       utility_include:'',
       cooking:'',
       parking:'',
       furniture:'',
-      bathroom:'No',
+      bathroom:'',
       closet:'',
 
       gender_prefered:'',
@@ -192,8 +192,8 @@ handleRoomPreChangeANDSumbitAll=()=>{
 
        ]
        const leaseTermOptions=[
-         {key:' >=12 months', text:' >=12 months', value: ' >=12 months'},
-         {key:' <12months', text:' <12months', value: '<12months'},
+         {key:'>=12 months', text:'>=12 months', value: '>=12 months'},
+         {key:'<12months', text:'<12months', value: '<12months'},
          {key:'< OR >= 12 months', text:'< OR >= 12 months', value: '< OR >= 12 months'}
        ]
 
@@ -330,7 +330,6 @@ handleRoomPreChangeANDSumbitAll=()=>{
                     <p></p>
 
                     <Form.Select
-                    clearable
                     onClose={()=>{this.forceUpdate();}}
                     id="min_lease_duration"
                     selection

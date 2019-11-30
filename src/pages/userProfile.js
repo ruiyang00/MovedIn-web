@@ -105,10 +105,10 @@ handlePersonalInfoChange=()=>{
   });
 }
 
-handleRoomPreChangeANDSumbitAll=()=>{
+handleRoomPreChangeANDSumbitAll=async()=>{
   this.incrementThree();
 
-  this.setState({
+  await this.setState({
       parking_needed:document.getElementById('parking').innerText,
       ok_with_shaing_bathroom:document.getElementById('ok_with_shaing_bathroom').innerText,
       pet_friendly:document.getElementById('pet_friendly').innerText,

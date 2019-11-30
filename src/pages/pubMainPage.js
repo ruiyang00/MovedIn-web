@@ -307,7 +307,7 @@ doPrimaryFilter=async()=>{
        for(i=0;i<this.state.roommatestoDisplay.length;i++){
            //console.log('hello');
            var roommate=this.state.roommatestoDisplay[i];
-           // console.log(roommate.lease_duration === this.state.lease_duration);
+           //console.log(roommate._id);
        if(roommate.city === this.state.city && roommate.budget===this.state.budgetRange
             && roommate.moved_in_date=== this.state.movedInMonth && roommate.lease_duration===this.state.lease_duration){
                this.state.filteredRoommates.push(roommate);

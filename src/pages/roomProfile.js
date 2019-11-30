@@ -323,7 +323,7 @@ catch(function(error){
                     required>
                     </Form.Input>
                      }
-                     content="You must enter an number >10 here"
+                     content="You must enter an number >10 here, and make sure it's within your PriceRange above to be identified in search"
                      on='focus'
                      position="right center"
 

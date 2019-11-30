@@ -7,14 +7,12 @@ import * as moment from 'moment';
 import {connect} from 'react-redux';
 
 const backgroundStyle = {
-  //width: "100%",
-  height: "180vh",
+  height: "150vh",
   backgroundImage: `url(https://i.ibb.co/72fb7sj/living-room-2569325-1920.jpg)`,
   backgroundRepeat: "null",
   backgroundSize: 'cover',
   overflow: 'hidden',
 };
-
 
 var oneMonthFromNow=moment().add(1, 'months').format('MMMM-YYYY');
 
@@ -538,8 +536,6 @@ catch(function(error){
 
                   </Form.Select>
 
- <p></p>
-
  <Button size="large" color="olive" disabled={partOneNotComplete ||  partTwoNotComplete} fluid animated onClick={this.handlePersonalInfoChange}>
    <Button.Content visible>SAVE</Button.Content>
    <Button.Content hidden>
@@ -711,37 +707,37 @@ catch(function(error){
           <div style={backgroundStyle}>
 
 
-          <Grid>
-
-
-            <p></p><p></p><p></p>
-            <Grid.Row></Grid.Row> <Grid.Row></Grid.Row><Grid.Row></Grid.Row>
-
-      <Grid.Row columns={8}>
-           <Grid.Column width={4}></Grid.Column>
-           <Grid.Column width={8}>
-               <Message attached>
-
-            <Icon name="edit outline" size="big" color="yellow" />
-           <font size="+2.5"><b><i>We Are Trying to Personalize This for YOU</i></b></font>
-           <p>* <b>Full Name, Location & Occupation</b> are REQUIRED to Continue,and we encourage you to fill
-           out as much Info as possible to Optimize your Recommendation results</p>
-          <p>* Please Make sure to SAVE before proceed,otherwise you will lose your data entered*</p>
-
-             <p></p>
-
-           <Tab panes={panes} />
-           <p></p>
-             <Progress size="large" color="green"  percent={this.state.percent} progress />
-           </Message>
-           </Grid.Column>
-
-      </Grid.Row>
+            <Grid>
 
 
 
-        </Grid>
-      </div>
+              <Grid.Row></Grid.Row> <Grid.Row></Grid.Row><Grid.Row></Grid.Row>
+
+              <Grid.Row columns={8}>
+                <Grid.Column width={4}></Grid.Column>
+                <Grid.Column width={8}>
+                  <Message attached>
+
+                    <Icon name="edit outline" size="big" color="yellow" />
+                    <font size="+2.5"><b><i>We Are Trying to Personalize This for YOU</i></b></font>
+                    <p>* <b>Full Name, Location & Occupation</b> are REQUIRED to Continue,and we encourage you to fill
+                             out as much Info as possible to Optimize your Recommendation results</p>
+                    <p>* Please Make sure to SAVE before proceed,otherwise you will lose your data entered*</p>
+
+                    <p></p>
+
+                    <Tab panes={panes} />
+                    <p></p>
+                    <Progress size="large" color="green" percent={this.state.percent} progress />
+                  </Message>
+                </Grid.Column>
+
+              </Grid.Row>
+
+
+
+            </Grid>
+          </div>
 
         );
      }

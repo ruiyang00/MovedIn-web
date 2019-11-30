@@ -112,7 +112,11 @@ export default class roomPosts extends Component{
                                 </div>
                                 <div>
                                 <Icon name='history'/>
-                                <i>Minimum Lease Duration:</i>{" "+room.min_lease_duration || ' N/A'}
+                                <i>Lease Term:</i>{" "+room.min_lease_duration || ' N/A'}
+                                </div>
+                                <div>
+                                <Icon name='building outline'/>
+                                <i>Street:</i>{" "+room.street || ' N/A'}
                                 </div>
                                 </Header>
 
@@ -135,7 +139,7 @@ export default class roomPosts extends Component{
                                 </p>
                                 <p>
                                 <Icon name="transgender" />
-                                <i>Gender Preferred:</i> {room.gender_preferred || "Not Answered"}
+                                <i>Gender Preferred:</i> {room.gender_prefered || "Not Answered"}
                                 </p>
                                 </Header>
 

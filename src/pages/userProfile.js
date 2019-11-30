@@ -152,6 +152,8 @@ axios.post('http://localhost:5000/roommates/creatroommate',postData,{headers:{'A
 catch(function(error){
   console.log(error);
 });
+
+window.location.href = 'http://localhost:3000/userPosts';
  }
 
 
@@ -722,7 +724,7 @@ catch(function(error){
                     <font size="+2.5"><b><i>We Are Trying to Personalize This for YOU</i></b></font>
                     <p>* <b>Full Name, Location & Occupation</b> are REQUIRED to Continue,and we encourage you to fill
                              out as much Info as possible to Optimize your Recommendation results</p>
-                    <p>* Please Make sure to SAVE before proceed,otherwise you will lose your data entered*</p>
+                    <p>* Please Make sure to <b>SAVE</b> before proceed,otherwise you will lose your data entered*</p>
 
                     <p></p>
 

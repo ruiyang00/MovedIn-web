@@ -156,6 +156,7 @@ catch(function(error){
   console.log(error);
 });
 
+window.location.href = 'http://localhost:3000/roomPosts';
 
 }
 
@@ -532,11 +533,10 @@ catch(function(error){
                 onClose={()=>{this.forceUpdate()}}
                 id="gender_prefered"
                 selection
-                search
                 width={10}
                 name="gender_prefered"
                 defaultValue={this.state.gender}
-                options={booleanOptions}
+                options={genderOptions}
                 required
                 >
                  </Form.Select>
@@ -550,7 +550,6 @@ catch(function(error){
                   onClose={()=>{this.forceUpdate()}}
                   id="pet"
                   selection
-                  search
                   defaultValue={this.state.pet}
                   options={booleanOptions}
                   width={10}
@@ -567,7 +566,6 @@ catch(function(error){
                     onClose={()=>{this.forceUpdate()}}
                     id="party"
                     selection
-                    search
                     options={booleanOptions}
                     defaultValue={this.state.party}
                     width={10}
@@ -583,7 +581,6 @@ catch(function(error){
                      onClose={()=>{this.forceUpdate()}}
                      id="kids"
                      selection
-                     search
                      options={booleanOptions}
                      defaultValue={this.state.kidsFriendly}
                      width={10}
@@ -602,7 +599,6 @@ catch(function(error){
                       onClose={()=>{this.forceUpdate()}}
                       id="smoking"
                       selection
-                      search
                       options={booleanOptions}
                       defaultValue={this.state.smoking}
                       width={10}
@@ -674,7 +670,7 @@ catch(function(error){
            <font size="+2.5"><b><i>We Want to Help Your Room Stand Out</i></b></font>
            <p>* <b>Location & Price, Street</b>  are REQUIRED to continue, and we encourage you to fill
            out as much Info as possible to Optimize our Room Recommendation decisions</p>
-          <p>* Please Make sure to SAVE before proceed,otherwise you will lose your data entered*</p>
+          <p>* Please Make sure to <b>SAVE</b> before proceed,otherwise you will lose your data entered*</p>
 
              <p></p>
 

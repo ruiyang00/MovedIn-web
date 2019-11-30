@@ -43,7 +43,7 @@ const cityOptions = [
   { key: 'Los Angeles', text: 'Los Angeles', value: 'Los Angeles' },
   { key: 'Santa Barbara', text: 'Santa Barbara', value: 'Santa Barbara' },
   { key: 'San Deigo', text: 'San Deigo', value: 'San Deigo' },
-  { key: 'San Fransico', text: 'San Fransico', value: 'San Fransico' },
+  { key: 'San Francisco', text: 'San Francisco', value: 'San Francisco' },
   { key: 'San Jose', text: 'San Jose', value: 'San Jose' },
 ]
 
@@ -631,7 +631,7 @@ doSecondaryFilter=async()=>{
                         <Card.Content extra>
                           <a>
                             <Icon name='home' />
-                            {room.city}/Budget: {room.price}
+                            {room.city}/Price: ${room.price}
                           </a>
                         </Card.Content>
                       </Card>

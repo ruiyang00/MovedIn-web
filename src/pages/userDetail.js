@@ -1,21 +1,14 @@
 import React, { Component } from "react";
 import {
     Button,
-    Card,
-    Container,
-    Dropdown,
-    Form,
     Grid,
     Header,
     Icon,
-    Input,
     Image,
     List,
     Menu,
     Message,
     Modal,
-    Pagination,
-    Select,
     Segment,
   } from 'semantic-ui-react'
   import axios from 'axios';

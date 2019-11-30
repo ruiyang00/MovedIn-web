@@ -30,6 +30,7 @@ import LogInModule from './pages/modules/LogInModule';
 import RoomProfile from './pages/roomProfile';
 import pubMainPage from './pages/pubMainPage';
 import UserDetail from './pages/userDetail';
+import RoomDetail from './pages/roomDetail';
 import welcomePage from "./pages/welcomePage";
 import userPosts from './pages/userPosts';
 import roomPosts from './pages/roomPosts';
@@ -273,6 +274,7 @@ class App extends Component {
               <Route path="/userProfile" component={userProfile} />
               <Route path="/roomProfile" component={RoomProfile} />
                <Route path="/userDetail" component={UserDetail} />
+               <Route path="/roomDetail" component={RoomDetail} />
                <Route path="/userPosts" component={userPosts} />
                <Route path="/roomPosts" component={roomPosts} />
             </Switch></div>

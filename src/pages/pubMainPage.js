@@ -90,6 +90,7 @@ class pubMainPage extends Component {
       utility_include:'',
 
       targetUserId:'', //store target user id to see detail user page
+      targetRoomId:'',
       myToken:'',      //store my token to pass into detail user page
 
       roommatestoDisplay:[],
@@ -281,6 +282,24 @@ class pubMainPage extends Component {
     });
   }
 
+  handleRoomDetail(){
+    const {targetRoomId, myToken} = this.state;
+    
+    console.log(targetRoomId);
+    console.log(myToken);
+    
+    this.props.history.push({
+      pathname:'./roomDetail',
+      state:{
+        targetRoomId,
+        myToken,
+      }
+    });
+    this.setState({
+      redirectToRoomDetail: true
+    });
+  }
+
   //Redirect-------------------------------------------------------------------
   setRedirectToUserDetail = () => {
     this.setState({
@@ -291,6 +310,21 @@ class pubMainPage extends Component {
   renderRedirectToUserDetail = () => {
     if(this.state.redirectToUserDetail && this.props.isAuth)
       return <Redirect to='/userDetail' />
+    else{
+        //open sign up modal
+    }
+
+  }
+
+  setRedirectToRoomDetail = () => {
+    this.setState({
+      redirectToRoomDetail: true
+    })
+  }
+
+  renderRedirectToRoomDetail = () => {
+    if(this.state.redirectToRoomDetail && this.props.isAuth)
+      return <Redirect to='/roomDetail' />
     else{
         //open sign up modal
     }
@@ -619,9 +653,13 @@ doSecondaryFilter=async()=>{
 
                       <Card style={{ width: '15em', marginTop: '2em', marginLeft: '5em' }}>
                         <Image
-                          src={HomeLogo} wrapped ui={false}
+                          src={'https://image.flaticon.com/icons/svg/609/609803.svg'} wrapped ui={false}
                           as='a'
-                          onClick={null}
+                          onClick={
+                              () =>{this.state.targetRoomId = room._id;
+                                    this.state.myToken = localStorage.getItem('token');
+                                    this.handleRoomDetail();}
+                          }
                         />
                         <Card.Content>
                           <Card.Meta>

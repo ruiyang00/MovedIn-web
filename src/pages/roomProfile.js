@@ -110,10 +110,10 @@ handleExtraInfoChange=()=>{
   });
 }
 
-handleRoomPreChangeANDSumbitAll=()=>{
+handleRoomPreChangeANDSumbitAll=async()=>{
   this.incrementThree();
 
-  this.setState({
+  await this.setState({
       gender_prefered:document.getElementById('gender_prefered').innerText,
       pet:document.getElementById('pet').innerText,
       smoking:document.getElementById('smoking').innerText,
@@ -294,7 +294,7 @@ catch(function(error){
                  required>
                  </Form.Input>
                   }
-                  content="Need to be less than 15 characters"
+                  content="Need to be less than 20 characters"
                   on='focus'
                   position="right center"
 

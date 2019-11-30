@@ -10,7 +10,7 @@ var oneMonthFromNow=moment().add(1, 'months').format('MMMM-YYYY');
 
 const backgroundStyle = {
   //width: "100%",
-  height: "120vh",
+  height: "140vh",
   backgroundImage: `url(https://i.ibb.co/jw6nvh1/living-room-2732939-1920.jpg)`,
   backgroundRepeat: "null",
   backgroundSize: 'cover',

@@ -5,7 +5,7 @@ import { compose } from 'redux';
 import { reduxForm, Field, formValueSelector } from 'redux-form';
 import { InputField } from 'react-semantic-redux-form';
 import * as actions from '../actions';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter, Redirect } from 'react-router-dom';
 import * as ROUTES from "../logistics/routes";
 import axios from 'axios';
 import * as moment from 'moment';
@@ -89,6 +89,9 @@ class pubMainPage extends Component {
       room_type_required:'',
       utility_include:'',
 
+      targetUserId:'', //store target user id to see detail user page
+      myToken:'',      //store my token to pass into detail user page
+
       roommatestoDisplay:[],
       filteredRoommates:[],
       copyOfRoommates:[],
@@ -98,114 +101,118 @@ class pubMainPage extends Component {
 
       showRooms:false,
       showRoommates:true,
-
     };
-    this.onSubmit=this.onSubmit.bind(this);
+    this.onSubmit=this.onSubmit.bind(this); 
     this.handleInputChange= this.handleInputChange.bind(this);
     this.handleBasicFilterChange=this.handleBasicFilterChange.bind(this);
   }
 
-componentDidMount(){
-  if(this.props.location.state){
-     if(this.props.location.state.targetGroup==="new place to MovedIn")
-    this.setState({
-       showRoommates:false,
+  componentDidMount() {
+    if (this.props.location.state) {
+      if (this.props.location.state.targetGroup === "new place to MovedIn")
+        this.setState({
+          showRoommates: false,
 
-    });
-    axios.get('http://localhost:5000/roommates/getroommates',
-    {
+        });
+      axios.get('http://localhost:5000/roommates/getroommates',
+        {
           headers: {
             'Authorization': this.props.location.state.targetCity
-          }})
-      .then(function(response){
-           console.log(response);
-           this.setState({
-           filteredRoommates:response.data.allRoommatesWithinLocation,
-         })
+          }
+        })
+        .then(function (response) {
+          console.log(response);
+          this.setState({
+            filteredRoommates: response.data.allRoommatesWithinLocation,
+          })
 
-    }.bind(this));
-    axios.get('http://localhost:5000/roommates/getroommates',
-    {
+        }.bind(this));
+      axios.get('http://localhost:5000/roommates/getroommates',
+        {
           headers: {
             'Authorization': ""
-          }})
-      .then(function(response){
-           console.log(response);
-           this.setState({
-             roommatestoDisplay:response.data.allRoommatesWithinLocation,
-           copyOfRoommates:response.data.allRoommatesWithinLocation,
-         })
-
-    }.bind(this));
-
-
-    axios.get('http://localhost:5000/rooms/getrooms',
-
-    {
-            headers: {
-              'Authorization': this.props.location.state.targetCity
-            }
+          }
+        })
+        .then(function (response) {
+          console.log(response);
+          this.setState({
+            roommatestoDisplay: response.data.allRoommatesWithinLocation,
+            copyOfRoommates: response.data.allRoommatesWithinLocation,
           })
-    .then(function(response){
-         console.log(response);
-         this.setState({
-                        filteredRooms:response.data.allRoomsWithinLocation,
-                       })
-
-  }.bind(this));
-  axios.get('http://localhost:5000/rooms/getrooms',
-  {
-            headers: {
-              'Authorization': ""
-            }
-          })
-  .then(function(response){
-       console.log(response);
-       this.setState({roomstoDisplay:response.data.allRoomsWithinLocation,
-                      copyOfRooms:response.data.allRoomsWithinLocation
-                     })
-
-}.bind(this));
-
-  this.props.history.push({
-    pathname:'./mainPage',
-    state:undefined
-  });
-  }
-
-  else{
-  axios.get('http://localhost:5000/roommates/getroommates',
-  {
-            headers: {
-              "Authorization": ""
-            }
-          })
-    .then(function(response){
-         console.log(response);
-         this.setState({roommatestoDisplay:response.data.allRoommatesWithinLocation,
-           filteredRoommates:response.data.allRoommatesWithinLocation,
-           copyOfRoommates:response.data.allRoommatesWithinLocation,
-         })
 
         }.bind(this));
 
 
-  axios.get('http://localhost:5000/rooms/getrooms',
-  {
-            headers: {
-              "Authorization": ""
-            }
+      axios.get('http://localhost:5000/rooms/getrooms',
+
+        {
+          headers: {
+            'Authorization': this.props.location.state.targetCity
+          }
+        })
+        .then(function (response) {
+          console.log(response);
+          this.setState({
+            filteredRooms: response.data.allRoomsWithinLocation,
           })
-  .then(function(response){
-       console.log(response);
-       this.setState({roomstoDisplay:response.data.allRoomsWithinLocation,
-          filteredRooms:response.data.allRoomsWithinLocation,
-          copyOfRooms:response.data.allRoomsWithinLocation
-       })
+
+        }.bind(this));
+      axios.get('http://localhost:5000/rooms/getrooms',
+        {
+          headers: {
+            'Authorization': ""
+          }
+        })
+        .then(function (response) {
+          console.log(response);
+          this.setState({
+            roomstoDisplay: response.data.allRoomsWithinLocation,
+            copyOfRooms: response.data.allRoomsWithinLocation
+          })
+
+        }.bind(this));
+
+      this.props.history.push({
+        pathname: './mainPage',
+        state: undefined
+      });
+    }
+
+    else {
+      axios.get('http://localhost:5000/roommates/getroommates',
+        {
+          headers: {
+            "Authorization": ""
+          }
+        })
+        .then(function (response) {
+          console.log(response);
+          this.setState({
+            roommatestoDisplay: response.data.allRoommatesWithinLocation,
+            filteredRoommates: response.data.allRoommatesWithinLocation,
+            copyOfRoommates: response.data.allRoommatesWithinLocation,
+          })
+
+        }.bind(this));
+
+
+      axios.get('http://localhost:5000/rooms/getrooms',
+        {
+          headers: {
+            "Authorization": ""
+          }
+        })
+        .then(function (response) {
+          console.log(response);
+          this.setState({
+            roomstoDisplay: response.data.allRoomsWithinLocation,
+            filteredRooms: response.data.allRoomsWithinLocation,
+            copyOfRooms: response.data.allRoomsWithinLocation
+          })
         }.bind(this));
     }
 
-  }
+  }//end of componentDidMount
 
   handleInputChange = (event) => {
     const { value, name } = event.target;
@@ -216,7 +223,6 @@ componentDidMount(){
 
   handleDateChange = date => {
     this.setState({ date });
-
   };
 
   handleBasicFilterChange=()=>{
@@ -257,6 +263,40 @@ componentDidMount(){
 
   }
 
+  handleUserDetail(){
+    const {targetUserId, myToken} = this.state;
+
+    console.log(targetUserId);
+    console.log(myToken);
+
+    this.props.history.push({
+      pathname:'./userDetail',
+      state:{
+        targetUserId,
+        myToken,
+      }
+    });
+    this.setState({
+      redirectToUserDetail: true
+    });
+  }
+
+  //Redirect-------------------------------------------------------------------
+  setRedirectToUserDetail = () => {
+    this.setState({
+      redirectToUserDetail: true
+    })
+  }
+
+  renderRedirectToUserDetail = () => {
+    if(this.state.redirectToUserDetail && this.props.isAuth)
+      return <Redirect to='/userDetail' />
+    else{
+        //open sign up modal
+    }
+      
+  }
+
 doPrimaryFilter=async()=>{
     await this.handleBasicFilterChange();
        this.setState({
@@ -286,12 +326,6 @@ doPrimaryFilter=async()=>{
          copyOfRooms:this.state.filteredRooms,
          copyOfRoommates:this.state.filteredRoommates
        })
-
-
-
-
-
-
   }
 
 doSecondaryFilter=async()=>{
@@ -328,7 +362,6 @@ doSecondaryFilter=async()=>{
          }
     }
     this.forceUpdate();
-
   }
 
   onSubmit = () => {
@@ -397,10 +430,6 @@ doSecondaryFilter=async()=>{
        {key:'30-40 years old',text:'30-40 years old',value:'30-40 years old'},
        {key:'40-50 years old',text:'40-50 years old',value:'40-50 years old'},
        {key:'50-60 years old',text:'50-60 years old',value:'50-60 years old'},
-
-
-
-
     ]
 
     const booleanOptions=[
@@ -551,6 +580,7 @@ doSecondaryFilter=async()=>{
         <Divider/>
 
         <Card.Group itemsPerRow={4} style={{marginLeft:"7.25em"}}>
+          {this.renderRedirectToUserDetail()}
                 {this.state.showRoommates ?
                   this.state.filteredRoommates.map((roommate) => {
                     return (
@@ -559,7 +589,12 @@ doSecondaryFilter=async()=>{
                           src='https://image.flaticon.com/icons/svg/168/168720.svg' wrapped ui={false}
                           as='a'
                           onClick={
-                            null
+                            () =>{this.state.targetUserId = roommate._id;
+                                  this.state.myToken = localStorage.getItem('token');
+                                  this.handleUserDetail();     
+                            } 
+                          
+                            //localStorage.getItem('token'), roommate._id
                           } //should get user id, token. redirect to userDetail page
                         />
                         <Card.Content>

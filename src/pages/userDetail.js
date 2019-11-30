@@ -18,6 +18,7 @@ import {
     Select,
     Segment,
   } from 'semantic-ui-react'
+  import axios from 'axios';
 
   const backgroundStyle = {
     height: "100vh",
@@ -27,8 +28,55 @@ import {
     overflow: 'hidden',
   };
 
+  
+
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state={
+          budgetRange:'',
+          city:'',
+          gender:'',
+          age:'',
+
+          room_type_required:'',
+          parking:'',
+          sharedBath:'',
+          pet:'',
+          party:'',
+          smoking:'',
+
+          lease_duration:'',
+          movedInMonth:'',
+
+          targetUserId:'', //store target user id to see detail user page
+          myToken:'',      //store my token to pass into detail user page
+          targetUser: {}  
+        };
+      }
+
+    componentDidMount() {
+        axios.post('http://localhost:5000/roommates/gettheroommate', {
+            roommate_id: this.props.location.state.targetUserId
+          },{
+            headers: {
+                'Authorization': this.props.location.state.myToken
+              },
+          })
+          .then(function (response) {
+            console.log(response);
+           
+            this.setState({
+                targetUser: response.data
+              })
+              //console.log(targetUser);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
+
     render(){
         return(
             <div style={backgroundStyle}>
@@ -79,10 +127,10 @@ class App extends Component {
                     <Grid.Column width={9}>
                         <Segment>
                             <Header as='h2' dividing>
-                                Alice Smith
-                        </Header>
+                               
+                            </Header>
                             <Header.Subheader>
-                                Needs a <strong>$300-500</strong> room in <strong>Los Angles</strong> | Female | 26 years old
+                                Needs a <strong></strong> room in <strong>Los Angles</strong> | Female | 26 years old
                         </Header.Subheader>
                         </Segment>
 

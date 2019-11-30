@@ -156,6 +156,18 @@ class App extends Component {
     })
   }
 
+  setRedirectToRoomPro = () => {
+    this.setState({
+      redirectToRoomPro: true
+    })
+  }
+
+  setRedirectToRoomList = () => {
+    this.setState({
+      redirectToRoomList: true
+    })
+  }
+
   renderRedirectToWel = () => {
     if (this.state.redirectToWel) {
       return <Redirect to='/' />
@@ -185,7 +197,10 @@ class App extends Component {
     )
 
     const userProfileOptions = [
-      { key: 'profile', text: 'View Profile', onClick: this.setRedirectToUserPro},
+      { key: 'user profile', text: 'User Profile', onClick: this.setRedirectToUserPro},
+      { key: 'room profile', text: 'Post a New Room', onClick: null},
+      { key: 'room posts', text: 'My Room List', onClick: null},
+      { key: 'room posts', text: 'My Roommate List', onClick: null},
       { key: 'sign-out', text: 'Sign Out', onClick: this.handleSignout},
     ]
 

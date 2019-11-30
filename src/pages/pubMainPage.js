@@ -605,7 +605,7 @@ doSecondaryFilter=async()=>{
                         <Card.Content extra>
                           <a>
                             <Icon name='user' />
-                            {roommate.city}/Budget: ${roommate.budget || "N/A"}
+                            {roommate.city}/Budget: {roommate.budget || "N/A"}
                           </a>
                         </Card.Content>
                       </Card>
@@ -631,7 +631,7 @@ doSecondaryFilter=async()=>{
                         <Card.Content extra>
                           <a>
                             <Icon name='home' />
-                            {room.city}/Budget: ${room.price}
+                            {room.city}/Budget: {room.price}
                           </a>
                         </Card.Content>
                       </Card>

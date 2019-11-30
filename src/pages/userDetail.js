@@ -21,7 +21,7 @@ import {
   import axios from 'axios';
 
   const backgroundStyle = {
-    height: "100vh",
+    height: "160vh",
     backgroundImage: `url(https://i.ibb.co/dQykXsR/2560x1080-F5-F5-F5.png)`,
     backgroundRepeat: "null",
     backgroundSize: 'cover',
@@ -83,7 +83,7 @@ class App extends Component {
                                 <List.Item>
                                     <List.Icon name='mail' />
                                     <List.Content>
-                                        Alice.S@gmail.com
+                                       {this.state.targetUser.email}
                                     </List.Content>
                                 </List.Item>
                                 <List.Item>
@@ -107,68 +107,115 @@ class App extends Component {
                             </List>
                         </Segment>
                     </Grid.Column>
-                    <Grid.Column width={9}>
-                        <Segment>
-                            <Header as='h2' dividing>
-                                {this.state.targetUser.first_name} {this.state.targetUser.last_name}
-                            </Header>
-                            <Header.Subheader>
-                             Needs a <strong>${this.state.targetUser.budget || ''}</strong> room 
-                             in <strong>{this.state.targetUser.city}</strong> |  
-                                        {this.state.targetUser.gender || ''}  | 
-                                        {this.state.targetUser.age} years old
-                            </Header.Subheader>
-                        </Segment>
 
-                        <Segment.Group>
+                        <Grid.Column width={9}>
                             <Segment>
-                                <Header as='h3'> My Preferences </Header>
+                                <Header as='h2' dividing>
+                                    {this.state.targetUser.first_name} {this.state.targetUser.last_name}
+                                </Header>
+                                <Header.Subheader>
+                                    Needs a <strong>{this.state.targetUser.budget || ''}</strong> room
+                             in <strong>{this.state.targetUser.city}</strong>
+                                </Header.Subheader>
+                                <Header.Subheader>Gender: {this.state.targetUser.gender || ''}</Header.Subheader>
+                                <Header.Subheader>Age Range: {this.state.targetUser.age}</Header.Subheader>
 
-                                <Segment.Group horizontal>
+                            </Segment>
+
+                            <Segment.Group>
+                                <Segment>
+                                    <Header as='h3'> My Preferences </Header>
+
+                                    <Segment.Group horizontal>
+                                        <Segment>
+                                            <Header as='h4'>
+                                                <Icon name='bed' size='large' />
+                                                <Header.Content>Room type: {this.state.targetUser.room_type_required}</Header.Content>
+                                            </Header>
+                                        </Segment>
+                                    </Segment.Group>
                                     <Segment>
                                         <Header as='h4'>
-                                            <Icon name='bed' size='large' />
-        <Header.Content>Room type: {this.state.targetUser.room_type}</Header.Content>
+                                            <Icon name='car' size='large' />
+                                            <Header.Content>Parking Available: {this.state.targetUser.parking_needed} </Header.Content>
                                         </Header>
-                                     </Segment>
-                                </Segment.Group>
+                                    </Segment>
+
+                                    <Segment>
+                                        <Header as='h4'>
+                                            <Icon name='users' size='large' />
+                                            <Header.Content>Shared Bathroom: {this.state.targetUser.ok_with_shaing_bathroom}</Header.Content>
+                                        </Header>
+                                    </Segment>
+
+                                    <Segment>
+                                        <Header as='h4'>
+                                            <Icon name='paw' size='large' />
+                                            <Header.Content>Pets Friendly: {this.state.targetUser.pet_friendly}</Header.Content>
+                                        </Header>
+                                    </Segment>
+
+                                    <Segment>
+                                        <Header as='h4'>
+                                            <Icon name='game' size='large' />
+                                            <Header.Content>Party Friendly: {this.state.targetUser.party_friendly}</Header.Content>
+                                        </Header>
+                                    </Segment>
+
+                                    <Segment>
+                                        <Header as='h4'>
+                                            <Icon name='thumbs up' size='large' />
+                                            <Header.Content>Smoking Friendly: {this.state.targetUser.smoking_friendly}</Header.Content>
+                                        </Header>
+                                    </Segment>
+
+                                    <Segment>
+                                        <Header as='h4'>
+                                            <Icon name='calendar alternate outline' size='large' />
+                                            <Header.Content>Prefered Lease Term: {this.state.targetUser.lease_duration}</Header.Content>
+                                        </Header>
+                                    </Segment>
+
+                                </Segment>
+                            </Segment.Group>
+
+                            <Segment.Group >
+                                <Segment>
+
+                                
+                                <Header as='h3'>About</Header>
+
+                                <Segment>
+                                    <Header as='h4'>
+                                        <Icon name='suitcase' size='large' />
+                                        <Header.Content>Occupation: {this.state.targetUser.occupation}</Header.Content>
+                                    </Header>
+                                </Segment>
+
                                 <Segment>
                                 <Header as='h4'>
-                                    <Icon name='car' size='large' />
-                                    <Header.Content>Parking Available: {this.state.targetUser.parking}</Header.Content>
+                                    <Icon name='graduation cap' size='large' />
+                                    <Header.Content>School: {this.state.targetUser.school || ''}</Header.Content>
                                 </Header>
-                            </Segment>
+                                </Segment>
 
-                            <Segment>
+
+                                <Segment>
                                 <Header as='h4'>
-                                    <Icon name='users' size='large' />
-                                    <Header.Content>Shared Bathroom: {this.state.targetUser.share_bathroom}</Header.Content>
+                                    <Icon name='book' size='large' />
+                                    <Header.Content>Major: {this.state.targetUser.major || ''}</Header.Content>
                                 </Header>
-                            </Segment>
+                                </Segment>
 
-                            <Segment>
+
+                                <Segment>
                                 <Header as='h4'>
-                                    <Icon name='paw' size='large' />
-                                    <Header.Content>Pets Friendly: {this.state.targetUser.pet}</Header.Content>
+                                    <Icon name='history' size='large' />
+                                    <Header.Content>School Grade: {this.state.targetUser.year_in_school || ''}</Header.Content>
                                 </Header>
-                            </Segment>
-
-                            <Segment>
-                                <Header as='h4'>
-                                    <Icon name='game' size='large' />
-                                    <Header.Content>Party Friendly: {this.state.targetUser.party}</Header.Content>
-                                </Header>
-                            </Segment>
-
-                            <Segment>
-                                <Header as='h4'>
-                                    <Icon name='thumbs up' size='large' />
-                                    <Header.Content>Smoking Friendly: {this.state.targetUser.smoking}</Header.Content>
-                                </Header>
-                            </Segment>
-
-                            </Segment>
-                        </Segment.Group>
+                                </Segment>
+                                </Segment>
+                            </Segment.Group>
 
 
                         </Grid.Column>

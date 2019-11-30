@@ -140,6 +140,7 @@ var postData={
   pet_friendly:this.state.pet_friendly,
   smoking_friendly:this.state.smoking_friendly,
   party_friendly:this.state.party_friendly,
+  email:localStorage.getItem('user'),
   token:localStorage.getItem('token'),
 
 };

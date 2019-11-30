@@ -10,7 +10,7 @@ var oneMonthFromNow=moment().add(1, 'months').format('MMMM-YYYY');
 
 const backgroundStyle = {
   //width: "100%",
-  height: "120vh",
+  height: "160vh",
   backgroundImage: `url(https://i.ibb.co/jw6nvh1/living-room-2732939-1920.jpg)`,
   backgroundRepeat: "null",
   backgroundSize: 'cover',
@@ -25,6 +25,7 @@ class RoomProfile extends Component{
       city:'',
       room_type:'Single Room',
       price:0,
+      street:'',
       price_range:'$500-700',
       move_in_date:oneMonthFromNow,
       min_lease_duration:'<12months',
@@ -139,6 +140,8 @@ var postData={
   pet:this.state.pet,//
   party:this.state.party,//
   smoking:this.state.smoking,//
+  email:localStorage.getItem('user'),
+  street:this.state.street,//
   token:localStorage.getItem('token'),
 
 };
@@ -267,6 +270,26 @@ catch(function(error){
                  placeholder="Where is your Property located?"
                  name="city"
                  value={this.state.city}
+                 onChange={this.handleInputChange}
+                 required>
+                 </Form.Input>
+                  }
+                  content="Need to be less than 15 characters"
+                  on='focus'
+                  position="right center"
+
+                 />
+
+                 <Icon name="building outline" size="large"/><font size="+0.5"><i>Street</i></font>
+                  <p></p>
+                <Popup
+                trigger={
+                 <Form.Input
+                 width={10}
+                 type="text"
+                 placeholder="What is the street?"
+                 name="street"
+                 value={this.state.street}
                  onChange={this.handleInputChange}
                  required>
                  </Form.Input>
@@ -614,6 +637,8 @@ catch(function(error){
             const partOneNotComplete =
              this.state.city === "" ||
              this.state.city.length > 15 ||
+             this.state.street === "" ||
+             this.state.street >20 ||
              this.state.price === 0 ||
              this.state.price == "" ||
              this.state.price <= 10 ||
@@ -647,7 +672,7 @@ catch(function(error){
 
             <Icon name="edit outline" size="big" color="yellow" />
            <font size="+2.5"><b><i>We Want to Help Your Room Stand Out</i></b></font>
-           <p>* <b>Location & Price</b>  are REQUIRED to continue, and we encourage you to fill
+           <p>* <b>Location & Price, Street</b>  are REQUIRED to continue, and we encourage you to fill
            out as much Info as possible to Optimize our Room Recommendation decisions</p>
           <p>* Please Make sure to SAVE before proceed,otherwise you will lose your data entered*</p>
 

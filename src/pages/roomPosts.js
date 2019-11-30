@@ -119,11 +119,11 @@ export default class roomPosts extends Component{
                                 <Header as='h4'>
                                 <p>
                                 <Icon name="users" />
-                                <i>Shared Bathroom:</i> {room.bathroom || "Not Answered"},
+                                <i>Shared Bathroom:</i> {room.bathroom || "Not Answered"}
                                 </p>
                                 <p>
                                 <Icon name="tint" />
-                                <i>Cooking Allowed:</i> {room.cooking || "Not Answered"},
+                                <i>Cooking Allowed:</i> {room.cooking || "Not Answered"}
                                 </p>
                                 <p>
                                 <Icon name="plug" />

@@ -132,11 +132,11 @@ export default class userPosts extends Component{
                                 <Header as='h4'>
                                 <p>
                                 <Icon name="money" />
-                                <i>Budget:</i> {roommate.budget || "Not Answered"},
+                                <i>Budget:</i> {roommate.budget || "Not Answered"}
                                 </p>
                                 <p>
                                 <Icon name="calendar" />
-                                <i>Lease Term:</i> {roommate.lease_duration || "Not Answered"},
+                                <i>Lease Term:</i> {roommate.lease_duration || "Not Answered"}
                                 </p>
                                 <p>
                                 <Icon name="bullhorn" />
@@ -153,11 +153,11 @@ export default class userPosts extends Component{
                                 <Header as='h4'>
                                 <p>
                                 <Icon name="users" />
-                                <i>SharedBath:</i> {roommate.ok_with_shaing_bathroom || "Not Answered"},
+                                <i>SharedBath:</i> {roommate.ok_with_shaing_bathroom || "Not Answered"}
                                 </p>
                                 <p>
                                 <Icon name="game" />
-                                <i>Party Friendly:</i> {roommate.party_friendly || "Not Answered"},
+                                <i>Party Friendly:</i> {roommate.party_friendly || "Not Answered"}
                                 </p>
                                 <p>
                                 <Icon name="paw" />

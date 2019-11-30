@@ -102,7 +102,7 @@ class pubMainPage extends Component {
       showRooms:false,
       showRoommates:true,
     };
-    this.onSubmit=this.onSubmit.bind(this); 
+    this.onSubmit=this.onSubmit.bind(this);
     this.handleInputChange= this.handleInputChange.bind(this);
     this.handleBasicFilterChange=this.handleBasicFilterChange.bind(this);
   }
@@ -294,12 +294,12 @@ class pubMainPage extends Component {
     else{
         //open sign up modal
     }
-      
+
   }
 
 doPrimaryFilter=async()=>{
     await this.handleBasicFilterChange();
-       this.setState({
+    await this.setState({
          filteredRooms:[],
          filteredRoommates:[]
        });
@@ -331,7 +331,7 @@ doPrimaryFilter=async()=>{
 doSecondaryFilter=async()=>{
 
     await this.handleSecFilterChange();
-    this.setState({
+    await this.setState({
       filteredRooms:[],
       filteredRoommates:[]
     })
@@ -366,11 +366,11 @@ doSecondaryFilter=async()=>{
 
   onSubmit = () => {
     // event.preventDefault();
-   
+
     console.log(this.state.city);
     //this.props.signIn(formData);
     axios.get('http://localhost:5000/roommates/getroommates', {
-      
+
       city: this.state.city,
       budget: this.setState.budget,
       gender: this.setState.gender,
@@ -447,7 +447,7 @@ doSecondaryFilter=async()=>{
 
     return (
       <div><div style={backgroundStyle}>
-  
+
         <Menu stackable style={{ marginTop: "3em", marginBottom: "0em"}}>
           <Form style={{marginTop:'1em',marginLeft:"12em", marginRight:"12em"}}>
             <Button.Group>
@@ -455,7 +455,7 @@ doSecondaryFilter=async()=>{
               <Button.Or/>
               <Button onClick={() => { this.state.showRoommates = false; this.forceUpdate() }} color="twitter" size="small">Search Rooms</Button>
             </Button.Group>
-            
+
             <Form.Group widths='equal' style={{marginTop:'1em'}}>
               <Form.Select
                 selection
@@ -465,7 +465,7 @@ doSecondaryFilter=async()=>{
                 options={cityOptions}
                 required
               />
-                  
+
               <Form.Select
                 selection
                 defaultValue={"$500-700"}
@@ -496,10 +496,10 @@ doSecondaryFilter=async()=>{
                 Search
               </Form.Button>
             </Form.Group>
-          </Form>   
-          </Menu> 
+          </Form>
+          </Menu>
 
-        <Menu stackable secondary style={{marginLeft:'0em'}}> 
+        <Menu stackable secondary style={{marginLeft:'0em'}}>
           <Form style={{ marginTop: '1em', marginLeft:'12.5em'}}>
               <Header as='h2'>
                 Are you looking for people who is ...
@@ -516,7 +516,7 @@ doSecondaryFilter=async()=>{
              { !this.state.showRoommates ?
                <Form.Select
                 clearable
-                label='Parking Option'            
+                label='Parking Option'
                 id="parking"
                 fluid
                 selection
@@ -530,10 +530,10 @@ doSecondaryFilter=async()=>{
                   selection
                   options={ageOptions} />
               }
-                  
+
               <Form.Select
                 clearable
-                label='Room Type' 
+                label='Room Type'
                 id="room_type_required"
                 fluid
                 selection
@@ -591,9 +591,9 @@ doSecondaryFilter=async()=>{
                           onClick={
                             () =>{this.state.targetUserId = roommate._id;
                                   this.state.myToken = localStorage.getItem('token');
-                                  this.handleUserDetail();     
-                            } 
-                          
+                                  this.handleUserDetail();
+                            }
+
                             //localStorage.getItem('token'), roommate._id
                           } //should get user id, token. redirect to userDetail page
                         />
@@ -611,7 +611,7 @@ doSecondaryFilter=async()=>{
                       </Card>
                     )
                   })
-          
+
                   :
 
                   this.state.filteredRooms.map((room) => {
@@ -655,7 +655,7 @@ doSecondaryFilter=async()=>{
             siblingRange={1}
             totalPages={5}
           />
-        
+
         </div></div>//--------
     );
   }

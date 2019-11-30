@@ -35,21 +35,6 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state={
-          budgetRange:'',
-          city:'',
-          gender:'',
-          age:'',
-
-          room_type_required:'',
-          parking:'',
-          sharedBath:'',
-          pet:'',
-          party:'',
-          smoking:'',
-
-          lease_duration:'',
-          movedInMonth:'',
-
           targetUserId:'', //store target user id to see detail user page
           myToken:'',      //store my token to pass into detail user page
           targetUser: {}
@@ -71,10 +56,7 @@ class App extends Component {
             this.setState({
                 targetUser: response.data.roommate,
               });
-
           }.bind(this));
-
-
     }
 
     render(){
@@ -128,11 +110,14 @@ class App extends Component {
                     <Grid.Column width={9}>
                         <Segment>
                             <Header as='h2' dividing>
-
+                                {this.state.targetUser.first_name} {this.state.targetUser.last_name}
                             </Header>
                             <Header.Subheader>
-                                Needs a <strong></strong> room in <strong>Los Angles</strong> | Female | 26 years old
-                        </Header.Subheader>
+                             Needs a <strong>${this.state.targetUser.budget || ''}</strong> room 
+                             in <strong>{this.state.targetUser.city}</strong> |  
+                                        {this.state.targetUser.gender || ''}  | 
+                                        {this.state.targetUser.age} years old
+                            </Header.Subheader>
                         </Segment>
 
                         <Segment.Group>
@@ -143,42 +128,42 @@ class App extends Component {
                                     <Segment>
                                         <Header as='h4'>
                                             <Icon name='bed' size='large' />
-                                            <Header.Content>Room type: </Header.Content>
+        <Header.Content>Room type: {this.state.targetUser.room_type}</Header.Content>
                                         </Header>
                                      </Segment>
                                 </Segment.Group>
                                 <Segment>
                                 <Header as='h4'>
                                     <Icon name='car' size='large' />
-                                    <Header.Content>Parking Available: </Header.Content>
+                                    <Header.Content>Parking Available: {this.state.targetUser.parking}</Header.Content>
                                 </Header>
                             </Segment>
 
                             <Segment>
                                 <Header as='h4'>
                                     <Icon name='users' size='large' />
-                                    <Header.Content>Shared Bathroom: </Header.Content>
+                                    <Header.Content>Shared Bathroom: {this.state.targetUser.share_bathroom}</Header.Content>
                                 </Header>
                             </Segment>
 
                             <Segment>
                                 <Header as='h4'>
                                     <Icon name='paw' size='large' />
-                                    <Header.Content>Pets Friendly: </Header.Content>
+                                    <Header.Content>Pets Friendly: {this.state.targetUser.pet}</Header.Content>
                                 </Header>
                             </Segment>
 
                             <Segment>
                                 <Header as='h4'>
                                     <Icon name='game' size='large' />
-                                    <Header.Content>Party Friendly: </Header.Content>
+                                    <Header.Content>Party Friendly: {this.state.targetUser.party}</Header.Content>
                                 </Header>
                             </Segment>
 
                             <Segment>
                                 <Header as='h4'>
                                     <Icon name='thumbs up' size='large' />
-                                    <Header.Content>Smoking Friendly: </Header.Content>
+                                    <Header.Content>Smoking Friendly: {this.state.targetUser.smoking}</Header.Content>
                                 </Header>
                             </Segment>
 

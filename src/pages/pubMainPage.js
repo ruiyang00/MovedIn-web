@@ -27,6 +27,7 @@ import {
   Segment,
   ButtonContent,
   Responsive,
+  Divider,
 } from 'semantic-ui-react'
 
 const backgroundStyle = {
@@ -50,7 +51,7 @@ const cityOptions = [
 const genderOption = [
   { key: 'Male', value: 'Male', text: 'Male' },
   { key: 'Female', value: 'Female', text: 'Female' },
-  { key: 'Other', value: 'Other', text: 'Other' },
+  { key: 'Other', value: 'Other', text: 'Others' },
 ]
 
 const lease_durationOptions=[
@@ -469,14 +470,15 @@ doSecondaryFilter=async()=>{
           </Form>   
           </Menu> 
 
-        <Menu stackable secondary> 
-          <Form style={{ marginTop: '1em', marginLeft: "12.5em", marginRight: "12.5em" }}>
-            <Form.Group widths='equal'>
-
+        <Menu stackable secondary style={{marginLeft:'0em'}}> 
+          <Form style={{ marginTop: '1em', marginLeft:'12.5em'}}>
+              <Header as='h2'>
+                Are you looking for people who is ...
+              </Header>
+            <Form.Group>
               <Form.Select
                 clearable
                 label='Gender'
-                placeholder='Select'
                 id="gender"
                 fluid selection
                 options={genderOption}
@@ -485,8 +487,7 @@ doSecondaryFilter=async()=>{
              { !this.state.showRoommates ?
                <Form.Select
                 clearable
-                label='Parking Required'
-                placeholder='Select'
+                label='Parking Option'            
                 id="parking"
                 fluid
                 selection
@@ -495,7 +496,6 @@ doSecondaryFilter=async()=>{
                <Form.Select
                   clearable
                   label='Age Range'
-                  placeholder='Select'
                   id="age"
                   fluid
                   selection
@@ -504,8 +504,7 @@ doSecondaryFilter=async()=>{
                   
               <Form.Select
                 clearable
-                label='Room Type'
-                placeholder='Select'
+                label='Room Type' 
                 id="room_type_required"
                 fluid
                 selection
@@ -513,8 +512,7 @@ doSecondaryFilter=async()=>{
 
               <Form.Select
                 clearable
-                label='Shared Bath'
-                placeholder='Select'
+                label='Shared Bathroom'
                 id="sharedBath"
                 fluid
                 selection
@@ -522,97 +520,98 @@ doSecondaryFilter=async()=>{
 
               <Form.Select
                 clearable
-                label='Pets'
-                placeholder='Select'
+                label='Pets Friendly'
                 id="pet"
                 fluid selection
                 options={booleanOptions} />
 
               <Form.Select
                 clearable
-                label='Smoking'
-                placeholder='Select'
+                label='Smoking Friendly'
                 id="smoking"
                 fluid selection
                 options={booleanOptions} />
 
               <Form.Select
                 clearable
-                label='Party'
-                placeholder='Select'
+                label='Party Friendly'
                 id="party"
                 fluid
                 selection
                 options={booleanOptions} />
 
-           <Card.Group itemsPerRow={4} style={{marginLeft:"7.25em"}}>
-             { this.state.showRoommates ?
-              this.state.filteredRoommates.map((roommate)=>{
-                return(
-                  <Card style={{ width: '15em', marginTop: '2em', marginLeft: '5em' }}>
-                    <Image
-                      src='https://image.flaticon.com/icons/svg/168/168720.svg' wrapped ui={false}
-                      as='a'
-                      onClick={
-                        null
-                      } //should get user id, token. redirect to userDetail page
-                    />
-                    <Card.Content>
-                      <Card.Header>
-                        {roommate.first_name} {roommate.last_name}
-                      </Card.Header>
-                    </Card.Content>
-                    <Card.Content extra>
-                      <a>
-                        <Icon name='user' />
-                        {roommate.city}/Budget: ${roommate.budget || "N/A"}
-                      </a>
-                    </Card.Content>
-                  </Card>
-                )
-            })
-        :
-
-        this.state.filteredRooms.map((room)=>{
-          return(
-
-              <Card style={{ width: '15em' , marginTop:'2em' , marginLeft:'5em'}}>
-              <Image
-                src={HomeLogo} wrapped ui={false}
-                as='a'
-                onClick={this.showModal1('blurring')}
-                />
-                <Card.Content>
-                  <Card.Meta>
-                    <span className='status'>{room.room_type}</span>
-                  </Card.Meta>
-                </Card.Content>
-                <Card.Content extra>
-                  <a>
-                    <Icon name='home' />
-                    {room.city}/Budget: ${room.price}
-                    </a>
-                </Card.Content>
-              </Card>
-
-         )
-        })
-
-
-
-        }
-
             </Form.Group>
             <Button disabled={!this.props.isAuth}
               onClick={this.doSecondaryFilter}
               color='twitter'
-              content='Update Results' />
+              content='Go' />
           </Form>
-          </Card.Group>
+        </Menu>
+
+        <Divider/>
+
+        <Card.Group itemsPerRow={4} style={{marginLeft:"7.25em"}}>
+                {this.state.showRoommates ?
+                  this.state.filteredRoommates.map((roommate) => {
+                    return (
+                      <Card style={{ width: '15em', marginTop: '2em', marginLeft: '5em' }}>
+                        <Image
+                          src='https://image.flaticon.com/icons/svg/168/168720.svg' wrapped ui={false}
+                          as='a'
+                          onClick={
+                            null
+                          } //should get user id, token. redirect to userDetail page
+                        />
+                        <Card.Content>
+                          <Card.Header>
+                            {roommate.first_name} {roommate.last_name}
+                          </Card.Header>
+                        </Card.Content>
+                        <Card.Content extra>
+                          <a>
+                            <Icon name='user' />
+                            {roommate.city}/Budget: ${roommate.budget || "N/A"}
+                          </a>
+                        </Card.Content>
+                      </Card>
+                    )
+                  })
+          
+                  :
+
+                  this.state.filteredRooms.map((room) => {
+                    return (
+
+                      <Card style={{ width: '15em', marginTop: '2em', marginLeft: '5em' }}>
+                        <Image
+                          src={HomeLogo} wrapped ui={false}
+                          as='a'
+                          onClick={null}
+                        />
+                        <Card.Content>
+                          <Card.Meta>
+                            <span className='status'>{room.room_type}</span>
+                          </Card.Meta>
+                        </Card.Content>
+                        <Card.Content extra>
+                          <a>
+                            <Icon name='home' />
+                            {room.city}/Budget: ${room.price}
+                          </a>
+                        </Card.Content>
+                      </Card>
+
+                    )
+                  })
+                }
+                </Card.Group>
+
+                <Divider/>
+
 
 
           <Pagination
-            style={{ marginTop: "2em", marginBottom:"2em" , marginLeft: "43em"}}
+            style={{ marginTop: "1em", marginBottom:"2em" , marginLeft: "43em"}}
             boundaryRange={0}
             defaultActivePage={1}
             ellipsisItem={null}

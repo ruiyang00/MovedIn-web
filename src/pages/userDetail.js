@@ -28,7 +28,7 @@ import {
     overflow: 'hidden',
   };
 
-  
+
 
 
 class App extends Component {
@@ -52,11 +52,12 @@ class App extends Component {
 
           targetUserId:'', //store target user id to see detail user page
           myToken:'',      //store my token to pass into detail user page
-          targetUser: {}  
+          targetUser: {}
         };
       }
 
     componentDidMount() {
+
         axios.post('http://localhost:5000/roommates/gettheroommate', {
             roommate_id: this.props.location.state.targetUserId
           },{
@@ -66,28 +67,28 @@ class App extends Component {
           })
           .then(function (response) {
             console.log(response);
-           
+
             this.setState({
-                targetUser: response.data
-              })
-              //console.log(targetUser);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+                targetUser: response.data.roommate,
+              });
+
+          }.bind(this));
+
+
     }
 
     render(){
         return(
+
             <div style={backgroundStyle}>
                 <div style={{marginLeft:"17em", marginBottom:"40em"}}>
 
-                
+
                 <Grid style={{ marginTop: "5em", marginBottom:"0em"}}>
                     <Grid.Column width={4}>
-                        <Image 
-                            src={'https://image.flaticon.com/icons/svg/168/168729.svg'} 
-                            wrapped ui={false} 
+                        <Image
+                            src={'https://image.flaticon.com/icons/svg/168/168729.svg'}
+                            wrapped ui={false}
                             as='a'
                             onClick={null}
                             />
@@ -127,7 +128,7 @@ class App extends Component {
                     <Grid.Column width={9}>
                         <Segment>
                             <Header as='h2' dividing>
-                               
+
                             </Header>
                             <Header.Subheader>
                                 Needs a <strong></strong> room in <strong>Los Angles</strong> | Female | 26 years old
@@ -137,7 +138,7 @@ class App extends Component {
                         <Segment.Group>
                             <Segment>
                                 <Header as='h3'> My Preferences </Header>
-                                
+
                                 <Segment.Group horizontal>
                                     <Segment>
                                         <Header as='h4'>

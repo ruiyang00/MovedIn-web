@@ -97,7 +97,7 @@ export default class userPosts extends Component {
                           </Grid.Column>
                           <Grid.Column width={6}>
 
-                            <Header as='h3' dividing> {roommate.first_name}, {roommate.last_name} </Header>
+                            <Header as='h3' dividing> {roommate.first_name} {roommate.last_name} </Header>
                             <Header.Subheader>Needs a <strong>{roommate.budget}</strong> room in <strong>{roommate.city}</strong></Header.Subheader>
 
                             <Header.Subheader><strong>Occupation: </strong>{roommate.occupation || ''}</Header.Subheader>

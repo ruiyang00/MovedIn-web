@@ -359,12 +359,10 @@ class pubMainPage extends Component {
     var i;
     for (i = 0; i < this.state.copyOfRoommates.length; i++) {
       var roommate = this.state.copyOfRoommates[i];
-      if (roommate.gender === this.state.gender || roommate.age === this.state.age
-        || roommate.room_type_required === this.state.room_type_required || roommate.pet_friendly === this.state.pet
-        || roommate.ok_with_shaing_bathroom === this.state.sharedBath || roommate.smoking_friendly === this.state.smoking
-        || roommate.party_friendly === this.state.party || this.state.gender === "" || this.state.age === ""
-        || this.state.room_type_required === "" || this.state.pet === "" || this.state.sharedBath === "" ||
-        this.state.smoking === "" || this.state.party === ""
+      if (roommate.gender === this.state.gender && roommate.age === this.state.age
+        && roommate.room_type_required === this.state.room_type_required && roommate.pet_friendly === this.state.pet
+        && roommate.ok_with_shaing_bathroom === this.state.sharedBath && roommate.smoking_friendly === this.state.smoking
+        && roommate.party_friendly === this.state.party
       ) {
         this.state.filteredRoommates.push(roommate);
       }
@@ -372,12 +370,10 @@ class pubMainPage extends Component {
 
     for (i = 0; i < this.state.copyOfRooms.length; i++) {
       var room = this.state.copyOfRooms[i];
-      if (room.gender_prefered === this.state.gender || room.parking === this.state.parking
-        || room.room_type === this.state.room_type_required || room.pet === this.state.pet
-        || room.bathroom === this.state.sharedBath || room.smoking === this.state.smoking
-        || room.party === this.state.party || this.state.gender === "" || this.state.parking === "" ||
-        this.state.room_type_required === "" || this.state.pet === "" || this.state.sharedBath === "" ||
-        this.state.smoking === "" || this.state.party === ""
+      if (room.gender_prefered === this.state.gender && room.parking === this.state.parking
+        && room.room_type === this.state.room_type_required && room.pet === this.state.pet
+        && room.bathroom === this.state.sharedBath && room.smoking === this.state.smoking
+        && room.party === this.state.party
       ) {
         this.state.filteredRooms.push(room);
       }
@@ -678,7 +674,7 @@ class pubMainPage extends Component {
                         </Card.Header>
                         <Card.Meta>Rent: <strong>${room.price}</strong>/mo </Card.Meta>
                         <Card.Meta>Available in: {room.move_in_date} </Card.Meta>
-                       
+
                       </Card.Content>
                       <Card.Content extra>
                           <Icon name='point' />

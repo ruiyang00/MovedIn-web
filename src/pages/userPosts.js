@@ -64,7 +64,7 @@ export default class userPosts extends Component {
               </Link>
             </Button.Group>
 
-            <Link to='./roomProfile'>
+            <Link to='./userProfile'>
               <Button floated='right' color='pink'>Post A New Roommate</Button>
             </Link>
           </Segment>

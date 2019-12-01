@@ -73,29 +73,7 @@ closeLogin = () => this.setState({ loginModalisOpen: false })
 
       <div>
         <Form size='large' as='form' onSubmit={handleSubmit(this.onSubmit)}>
-          <Modal.Header>
-          <Segment size="large" fluid >
-            <FacebookLogin
-                  size='medium'
-                  appId="430563460963841" //need to store it in another file
-                  fields="name,email,picture"
-                  callback={responseFacebook}
-                />
-                <GoogleLogin
-                  clientId="343939675754-s1d2uieeguhlssp11gv4hnuskfeod5o2.apps.googleusercontent.com"
-                  render={renderProps => (
-                    <Button onClick={renderProps.onClick} disabled={renderProps.disabled}>This is my custom Google button</Button>
-                  )}
-                  buttonText="Login"
-                  onSuccess={responseGoogle}
-                  onFailure={responseGoogle}
-                  cookiePolicy={'single_host_origin'}
-                />
-            </Segment>
-          </Modal.Header>
-
-          <Divider horizontal>or</Divider>
-
+        
           <Modal.Content>
             <Field
               component={InputField}

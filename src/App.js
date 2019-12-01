@@ -230,7 +230,7 @@ class App extends Component {
                 style={{ marginRight: "0.5em" }}
                 size='mini'
                 onClick={this.setRedirectToWel} />
-              MovedIn
+                MovedIn
               </Menu.Item>
 
             <Menu.Item position='right'>
@@ -239,7 +239,6 @@ class App extends Component {
             </Menu.Item>
           </Container>
         </Menu>
-
       );
 
     };
@@ -312,12 +311,6 @@ class App extends Component {
 
         <Modal dimmer={dimmer} size={"tiny"} open={this.state.signupModalisOpen} onClose={this.closeSignup}>
           <Segment>
-            <Message>
-              <Container textAlign='center'>
-                Welcome! Sign up with <a>Google</a> or <a>Facebook</a>
-              </Container>
-            </Message>
-            <Divider horizontal>or</Divider>
             <SignUpModule />
             <Message>
               <Container textAlign='center'>

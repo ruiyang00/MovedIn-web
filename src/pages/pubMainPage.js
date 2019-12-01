@@ -5,12 +5,17 @@ import axios from 'axios';
 import {
   Button,
   Card,
+  Container,
   Form,
   Header,
   Icon,
   Image,
   Menu,
+  Message,
+  Modal,
+  Segment,
   Pagination,
+  Popup,
   Divider,
 } from 'semantic-ui-react'
 
@@ -54,10 +59,7 @@ class pubMainPage extends Component {
       budget: '',
       age: '',
       allUsers: [],
-      modal1isOpon: false,
-      modal2isOpon: false,
-      modal3isOpon: false,
-      modal4isOpon: false,
+      modalisOpon: false,
 
       target: '',
       city: '',
@@ -91,6 +93,10 @@ class pubMainPage extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleBasicFilterChange = this.handleBasicFilterChange.bind(this);
   }
+
+  //modal
+  showModal = (dimmer) => () => this.setState({ dimmer, modalisOpon: true })
+  closeModal = () => this.setState({ modalisOpon: false })
 
   componentDidMount() {
     if (this.props.location.state) {
@@ -286,6 +292,8 @@ class pubMainPage extends Component {
     });
   }
 
+
+
   //Redirect-------------------------------------------------------------------
   setRedirectToUserDetail = () => {
     this.setState({
@@ -294,11 +302,8 @@ class pubMainPage extends Component {
   }
 
   renderRedirectToUserDetail = () => {
-    if (this.state.redirectToUserDetail && this.props.isAuth)
+    if (this.props.isAuth && this.state.redirectToUserDetail)
       return <Redirect to='/userDetail' />
-    else {
-      //open sign up modal
-    }
 
   }
 
@@ -309,12 +314,8 @@ class pubMainPage extends Component {
   }
 
   renderRedirectToRoomDetail = () => {
-    if (this.state.redirectToRoomDetail && this.props.isAuth)
+    if (this.props.isAuth && this.state.redirectToRoomDetail)
       return <Redirect to='/roomDetail' />
-    else {
-      //open sign up modal
-    }
-
   }
 
   doPrimaryFilter = async () => {
@@ -405,6 +406,8 @@ class pubMainPage extends Component {
 
   }
 
+
+
   //-------------------------------------------------------------------------------------
   render() {
     var moment = require('moment');
@@ -463,11 +466,10 @@ class pubMainPage extends Component {
       { key: 'Multiperson Room', text: 'Multiperson Room', value: 'Multiperson Room' }
     ]
 
-
+    const { dimmer } = this.state;
 
     return (
       <div><div style={backgroundStyle}>
-
         <Menu stackable style={{ marginTop: "3em", marginBottom: "0em" }}>
           <Form style={{ marginTop: '1em', marginLeft: "12em", marginRight: "12em" }}>
             <Button.Group>
@@ -599,78 +601,175 @@ class pubMainPage extends Component {
 
         <Divider />
 
-        <Card.Group itemsPerRow={4} style={{ marginLeft: "7.25em" }}>
-          {this.renderRedirectToUserDetail()}
-          {this.state.showRoommates ?
-            this.state.filteredRoommates.map((roommate) => {
-              return (
-                <Card style={{ width: '15em', marginTop: '2em', marginLeft: '5em' }}>
-                  <Image
-                    src='https://image.flaticon.com/icons/svg/168/168720.svg' wrapped ui={false}
-                    as='a'
-                    onClick={
-                      () => {
-                        this.state.targetUserId = roommate._id;
-                        this.state.myToken = localStorage.getItem('token');
-                        this.handleUserDetail();
+        <Modal dimmer={dimmer} size={"tiny"} open={this.state.modalisOpon} onClose={this.closeModal}>
+          <Modal.Content image>
+            <Image wrapped size='medium' src='https://image.flaticon.com/icons/svg/145/145664.svg' />
+            <Modal.Description>
+              <Header style={{marginTop:'2em'}}>Join us today for free!</Header>
+              <p>It only takes a few minutes to sign up, then you can discover more matches!</p>
+              <p>Already have an account? Please sign in to view more information.</p>
+            </Modal.Description>
+          </Modal.Content>
+        </Modal>
+
+        {!this.props.isAuth ?
+          <div>
+            <Card.Group onClick={this.showModal()}
+              itemsPerRow={4} style={{ marginLeft: "7.25em" }}>
+              {this.renderRedirectToUserDetail()}
+              {this.state.showRoommates ?
+                this.state.filteredRoommates.map((roommate) => {
+                  return (
+                    <Card style={{ width: '15em', marginTop: '2em', marginLeft: '5em' }}>
+                      <Image
+                        src='https://image.flaticon.com/icons/svg/168/168720.svg' wrapped ui={false}
+                        as='a'
+                        onClick={
+                          () => {
+                            if (this.props.isAuth) {
+                              this.state.targetUserId = roommate._id;
+                              this.state.myToken = localStorage.getItem('token');
+                              this.handleUserDetail();
+                            }
+                          }
+
+                          //localStorage.getItem('token'), roommate._id
+                        } //should get user id, token. redirect to userDetail page
+                      />
+                      <Card.Content>
+                        <Card.Header>
+                          {roommate.first_name} {roommate.last_name}
+                        </Card.Header>
+                      </Card.Content>
+                      <Card.Content extra>
+                        <a>
+                          <Icon name='user' />
+                          {roommate.city}/Budget: {roommate.budget || "N/A"}
+                        </a>
+                      </Card.Content>
+                    </Card>
+
+                  )
+                })
+
+
+                :
+
+                this.state.filteredRooms.map((room) => {
+                  return (
+
+                    <Card style={{ width: '15em', marginTop: '2em', marginLeft: '5em' }}>
+                      <Image
+                        src={'https://image.flaticon.com/icons/svg/609/609803.svg'} wrapped ui={false}
+                        as='a'
+                        onClick={
+                          () => {
+                            if (this.props.isAuth) {
+                              this.state.targetRoomId = room._id;
+                              this.state.myToken = localStorage.getItem('token');
+                              this.handleRoomDetail();
+                            }
+                          }
+                        }
+                      />
+                      <Card.Content>
+                        <Card.Meta>
+                          <span className='status'>{room.room_type}</span>
+                        </Card.Meta>
+                      </Card.Content>
+                      <Card.Content extra>
+                        <a>
+                          <Icon name='home' />
+                          {room.city}/Price: ${room.price}
+                        </a>
+                      </Card.Content>
+                    </Card>
+
+                  )
+                })
+              }
+            </Card.Group>
+          </div>
+          ://this is the middle of isAuth
+          <Card.Group
+            itemsPerRow={4} style={{ marginLeft: "7.25em" }}>
+            {this.renderRedirectToUserDetail()}
+            {this.state.showRoommates ?
+              this.state.filteredRoommates.map((roommate) => {
+                return (
+                  <Card style={{ width: '15em', marginTop: '2em', marginLeft: '5em' }}>
+                    <Image
+                      src='https://image.flaticon.com/icons/svg/168/168720.svg' wrapped ui={false}
+                      as='a'
+                      onClick={
+                        () => {
+                          if (this.props.isAuth) {
+                            this.state.targetUserId = roommate._id;
+                            this.state.myToken = localStorage.getItem('token');
+                            this.handleUserDetail();
+                          }
+                        }
+
+                        //localStorage.getItem('token'), roommate._id
+                      } //should get user id, token. redirect to userDetail page
+                    />
+                    <Card.Content>
+                      <Card.Header>
+                        {roommate.first_name} {roommate.last_name}
+                      </Card.Header>
+                    </Card.Content>
+                    <Card.Content extra>
+                      <a>
+                        <Icon name='user' />
+                        {roommate.city}/Budget: {roommate.budget || "N/A"}
+                      </a>
+                    </Card.Content>
+                  </Card>
+
+                )
+              })
+
+
+              :
+
+              this.state.filteredRooms.map((room) => {
+                return (
+
+                  <Card style={{ width: '15em', marginTop: '2em', marginLeft: '5em' }}>
+                    <Image
+                      src={'https://image.flaticon.com/icons/svg/609/609803.svg'} wrapped ui={false}
+                      as='a'
+                      onClick={
+                        () => {
+                          if (this.props.isAuth) {
+                            this.state.targetRoomId = room._id;
+                            this.state.myToken = localStorage.getItem('token');
+                            this.handleRoomDetail();
+                          }
+                        }
                       }
+                    />
+                    <Card.Content>
+                      <Card.Meta>
+                        <span className='status'>{room.room_type}</span>
+                      </Card.Meta>
+                    </Card.Content>
+                    <Card.Content extra>
+                      <a>
+                        <Icon name='home' />
+                        {room.city}/Price: ${room.price}
+                      </a>
+                    </Card.Content>
+                  </Card>
 
-                      //localStorage.getItem('token'), roommate._id
-                    } //should get user id, token. redirect to userDetail page
-                  />
-                  <Card.Content>
-                    <Card.Header>
-                      {roommate.first_name} {roommate.last_name}
-                    </Card.Header>
-                  </Card.Content>
-                  <Card.Content extra>
-                    <a>
-                      <Icon name='user' />
-                      {roommate.city}/Budget: {roommate.budget || "N/A"}
-                    </a>
-                  </Card.Content>
-                </Card>
-              )
-            })
+                )
+              })
+            }
+          </Card.Group>
 
-            :
-
-            this.state.filteredRooms.map((room) => {
-              return (
-
-                <Card style={{ width: '15em', marginTop: '2em', marginLeft: '5em' }}>
-                  <Image
-                    src={'https://image.flaticon.com/icons/svg/609/609803.svg'} wrapped ui={false}
-                    as='a'
-                    onClick={
-                      () => {
-                        this.state.targetRoomId = room._id;
-                        this.state.myToken = localStorage.getItem('token');
-                        this.handleRoomDetail();
-                      }
-                    }
-                  />
-                  <Card.Content>
-                    <Card.Meta>
-                      <span className='status'>{room.room_type}</span>
-                    </Card.Meta>
-                  </Card.Content>
-                  <Card.Content extra>
-                    <a>
-                      <Icon name='home' />
-                      {room.city}/Price: ${room.price}
-                    </a>
-                  </Card.Content>
-                </Card>
-
-              )
-            })
-          }
-        </Card.Group>
+        }
 
         <Divider />
-
-
 
         <Pagination
           style={{ marginTop: "1em", marginBottom: "2em", marginLeft: "43em" }}
@@ -682,7 +781,6 @@ class pubMainPage extends Component {
           siblingRange={1}
           totalPages={5}
         />
-
       </div></div>//--------
     );
   }

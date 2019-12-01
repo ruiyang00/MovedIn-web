@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Divider, Header, Segment, Button, Grid, Card, Icon, Image, Menu, Message } from 'semantic-ui-react';
+import { Divider, Header, Segment, Button, Grid, Card, Icon, Image } from 'semantic-ui-react';
 import axios from 'axios';
 
 export default class roomPosts extends Component {
@@ -96,23 +96,23 @@ export default class roomPosts extends Component {
                           <Grid.Column width={7}>
                             <Header as='h3'> {room.street}, {room.city} </Header>
 
-                            <Divider/>
+                            <Divider />
 
                             <Segment basic>
-                                <Header as='h3' dividing>
-                                    {room.room_type || " N/A"}
-                                </Header>
+                              <Header as='h3' dividing>
+                                {room.room_type || " N/A"}
+                              </Header>
 
-                                <Header.Subheader><strong>Rent: </strong> ${room.price}/mo</Header.Subheader>
-                                <Header.Subheader><strong>Available in: </strong> {room.move_in_date}</Header.Subheader>
-                                <Header.Subheader><strong>Lease Term: </strong> {room.min_lease_duration}</Header.Subheader>
-                                <Header.Subheader><strong>Private Bathroom: </strong> {room.bathroom || "Not Answered"}</Header.Subheader>
-                                <Header.Subheader><strong>Preferred Gender: </strong>{room.gender_prefered || "Not Answered"}</Header.Subheader>
-                                <Header.Subheader><strong>Utilities Included: </strong>{room.utility_include || "Not Answered"}</Header.Subheader>
-                                <Header.Subheader><strong>Cooking Allowed: </strong>{room.cooking || "Not Answered"}</Header.Subheader>
-                                <Header.Subheader><strong>furniture Included: </strong>{room.furniture || "Not Answered"}</Header.Subheader>
-                                
-                            </Segment> 
+                              <Header.Subheader><strong>Rent: </strong> ${room.price}/mo</Header.Subheader>
+                              <Header.Subheader><strong>Available in: </strong> {room.move_in_date}</Header.Subheader>
+                              <Header.Subheader><strong>Lease Term: </strong> {room.min_lease_duration}</Header.Subheader>
+                              <Header.Subheader><strong>Private Bathroom: </strong> {room.bathroom || "Not Answered"}</Header.Subheader>
+                              <Header.Subheader><strong>Preferred Gender: </strong>{room.gender_prefered || "Not Answered"}</Header.Subheader>
+                              <Header.Subheader><strong>Utilities Included: </strong>{room.utility_include || "Not Answered"}</Header.Subheader>
+                              <Header.Subheader><strong>Cooking Allowed: </strong>{room.cooking || "Not Answered"}</Header.Subheader>
+                              <Header.Subheader><strong>furniture Included: </strong>{room.furniture || "Not Answered"}</Header.Subheader>
+
+                            </Segment>
                           </Grid.Column>
 
 

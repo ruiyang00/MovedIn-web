@@ -1,32 +1,16 @@
 import React, { Component, Fragment } from 'react'
-import HomeLogo from './../images/home #30C5FF.png';
 import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { reduxForm, Field, formValueSelector } from 'redux-form';
-import { InputField } from 'react-semantic-redux-form';
-import * as actions from '../actions';
-import { Link, withRouter, Redirect } from 'react-router-dom';
-import * as ROUTES from "../logistics/routes";
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import * as moment from 'moment';
 import {
   Button,
   Card,
-  Container,
-  Dropdown,
   Form,
-  Grid,
   Header,
   Icon,
-  Input,
   Image,
   Menu,
-  Message,
   Pagination,
-  Select,
-  Segment,
-  ButtonContent,
-  Responsive,
   Divider,
 } from 'semantic-ui-react'
 
@@ -54,58 +38,58 @@ const genderOption = [
   { key: 'Other', value: 'Other', text: 'Others' },
 ]
 
-const lease_durationOptions=[
-  {key:'>=12 months', text:'>=12 months', value: '>=12 months'},
-  {key:'<12months', text:'<12months', value: '<12months'},
-  {key:'< OR >= 12 months', text:'< OR >= 12 months', value: '< OR >= 12 months'}
+const lease_durationOptions = [
+  { key: '>=12 months', text: '>=12 months', value: '>=12 months' },
+  { key: '<12months', text: '<12months', value: '<12months' },
+  { key: '< OR >= 12 months', text: '< OR >= 12 months', value: '< OR >= 12 months' }
 ]
 
 class pubMainPage extends Component {
   constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       date: null,
-      nameToDisplay:'',
-      city:'',
-      budget:'',
-      age:'',
-      allUsers:[],
-      modal1isOpon:false,
-      modal2isOpon:false,
-      modal3isOpon:false,
-      modal4isOpon:false,
+      nameToDisplay: '',
+      city: '',
+      budget: '',
+      age: '',
+      allUsers: [],
+      modal1isOpon: false,
+      modal2isOpon: false,
+      modal3isOpon: false,
+      modal4isOpon: false,
 
-      target:'',
-      city:'',
-      budgetRange:'',
-      movedInMonth:'',
-      lease_duration:'',
-      gender:'',
-      parking:'',
-      sharedBath:'',
-      pet:'',
-      smoking:'',
-      party:'',
-      room_type_required:'',
-      utility_include:'',
+      target: '',
+      city: '',
+      budgetRange: '',
+      movedInMonth: '',
+      lease_duration: '',
+      gender: '',
+      parking: '',
+      sharedBath: '',
+      pet: '',
+      smoking: '',
+      party: '',
+      room_type_required: '',
+      utility_include: '',
 
-      targetUserId:'', //store target user id to see detail user page
-      targetRoomId:'',
-      myToken:'',      //store my token to pass into detail user page
+      targetUserId: '', //store target user id to see detail user page
+      targetRoomId: '',
+      myToken: '',      //store my token to pass into detail user page
 
-      roommatestoDisplay:[],
-      filteredRoommates:[],
-      copyOfRoommates:[],
-      roomstoDisplay:[],
-      filteredRooms:[],
-      copyOfRooms:[],
+      roommatestoDisplay: [],
+      filteredRoommates: [],
+      copyOfRoommates: [],
+      roomstoDisplay: [],
+      filteredRooms: [],
+      copyOfRooms: [],
 
-      showRooms:false,
-      showRoommates:true,
+      showRooms: false,
+      showRoommates: true,
     };
-    this.onSubmit=this.onSubmit.bind(this);
-    this.handleInputChange= this.handleInputChange.bind(this);
-    this.handleBasicFilterChange=this.handleBasicFilterChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleBasicFilterChange = this.handleBasicFilterChange.bind(this);
   }
 
   componentDidMount() {
@@ -226,53 +210,55 @@ class pubMainPage extends Component {
     this.setState({ date });
   };
 
-  handleBasicFilterChange=()=>{
+  handleBasicFilterChange = () => {
     this.forceUpdate();
     this.setState({
-      city:document.getElementById('city').innerText,
-      budgetRange:document.getElementById('budgetRange').innerText,
-      movedInMonth:document.getElementById('movedInMonth').innerText,
-      lease_duration:document.getElementById('lease_duration').innerText,
+      city: document.getElementById('city').innerText,
+      budgetRange: document.getElementById('budgetRange').innerText,
+      movedInMonth: document.getElementById('movedInMonth').innerText,
+      lease_duration: document.getElementById('lease_duration').innerText,
 
 
     });
   }
 
-  handleSecFilterChange(){
-    if(!this.state.showRoommates){
-    this.setState({
-    gender:document.getElementById('gender').innerText,
-    parking:document.getElementById('parking').innerText,
-    room_type_required:document.getElementById('room_type_required').innerText,
-    pet:document.getElementById('pet').innerText,
-    sharedBath:document.getElementById('sharedBath').innerText,
-    smoking:document.getElementById('smoking').innerText,
-    party:document.getElementById('party').innerText,
-  });}
+  handleSecFilterChange() {
+    if (!this.state.showRoommates) {
+      this.setState({
+        gender: document.getElementById('gender').innerText,
+        parking: document.getElementById('parking').innerText,
+        room_type_required: document.getElementById('room_type_required').innerText,
+        pet: document.getElementById('pet').innerText,
+        sharedBath: document.getElementById('sharedBath').innerText,
+        smoking: document.getElementById('smoking').innerText,
+        party: document.getElementById('party').innerText,
+      });
+    }
 
-    else{this.setState({
-    gender:document.getElementById('gender').innerText,
-    age:document.getElementById('age').innerText,
-    room_type_required:document.getElementById('room_type_required').innerText,
-    pet:document.getElementById('pet').innerText,
-    sharedBath:document.getElementById('sharedBath').innerText,
-    smoking:document.getElementById('smoking').innerText,
-    party:document.getElementById('party').innerText,
-  });
+    else {
+      this.setState({
+        gender: document.getElementById('gender').innerText,
+        age: document.getElementById('age').innerText,
+        room_type_required: document.getElementById('room_type_required').innerText,
+        pet: document.getElementById('pet').innerText,
+        sharedBath: document.getElementById('sharedBath').innerText,
+        smoking: document.getElementById('smoking').innerText,
+        party: document.getElementById('party').innerText,
+      });
 
     }
 
   }
 
-  handleUserDetail(){
-    const {targetUserId, myToken} = this.state;
+  handleUserDetail() {
+    const { targetUserId, myToken } = this.state;
 
     console.log(targetUserId);
     console.log(myToken);
 
     this.props.history.push({
-      pathname:'./userDetail',
-      state:{
+      pathname: './userDetail',
+      state: {
         targetUserId,
         myToken,
       }
@@ -282,15 +268,15 @@ class pubMainPage extends Component {
     });
   }
 
-  handleRoomDetail(){
-    const {targetRoomId, myToken} = this.state;
-    
+  handleRoomDetail() {
+    const { targetRoomId, myToken } = this.state;
+
     console.log(targetRoomId);
     console.log(myToken);
-    
+
     this.props.history.push({
-      pathname:'./roomDetail',
-      state:{
+      pathname: './roomDetail',
+      state: {
         targetRoomId,
         myToken,
       }
@@ -308,10 +294,10 @@ class pubMainPage extends Component {
   }
 
   renderRedirectToUserDetail = () => {
-    if(this.state.redirectToUserDetail && this.props.isAuth)
+    if (this.state.redirectToUserDetail && this.props.isAuth)
       return <Redirect to='/userDetail' />
-    else{
-        //open sign up modal
+    else {
+      //open sign up modal
     }
 
   }
@@ -323,77 +309,77 @@ class pubMainPage extends Component {
   }
 
   renderRedirectToRoomDetail = () => {
-    if(this.state.redirectToRoomDetail && this.props.isAuth)
+    if (this.state.redirectToRoomDetail && this.props.isAuth)
       return <Redirect to='/roomDetail' />
-    else{
-        //open sign up modal
+    else {
+      //open sign up modal
     }
 
   }
 
-doPrimaryFilter=async()=>{
+  doPrimaryFilter = async () => {
     await this.handleBasicFilterChange();
     await this.setState({
-         filteredRooms:[],
-         filteredRoommates:[]
-       });
-       var i;
-       for(i=0;i<this.state.roommatestoDisplay.length;i++){
-           //console.log('hello');
-           var roommate=this.state.roommatestoDisplay[i];
-           //console.log(roommate._id);
-       if(roommate.city === this.state.city && roommate.budget===this.state.budgetRange
-            && roommate.moved_in_date=== this.state.movedInMonth && roommate.lease_duration===this.state.lease_duration){
-               this.state.filteredRoommates.push(roommate);
-            }
-       }
+      filteredRooms: [],
+      filteredRoommates: []
+    });
+    var i;
+    for (i = 0; i < this.state.roommatestoDisplay.length; i++) {
+      //console.log('hello');
+      var roommate = this.state.roommatestoDisplay[i];
+      //console.log(roommate._id);
+      if (roommate.city === this.state.city && roommate.budget === this.state.budgetRange
+        && roommate.moved_in_date === this.state.movedInMonth && roommate.lease_duration === this.state.lease_duration) {
+        this.state.filteredRoommates.push(roommate);
+      }
+    }
 
-       for(i=0;i<this.state.roomstoDisplay.length;i++){
-           var room=this.state.roomstoDisplay[i];
-           console.log(room.move_in_date === this.state.movedInMonth);
-       if(room.city === this.state.city && room.price_range===this.state.budgetRange
-            && room.move_in_date=== this.state.movedInMonth && room.min_lease_duration===this.state.lease_duration){
-               this.state.filteredRooms.push(room);
-            }
-       }
-       this.setState({
-         copyOfRooms:this.state.filteredRooms,
-         copyOfRoommates:this.state.filteredRoommates
-       })
+    for (i = 0; i < this.state.roomstoDisplay.length; i++) {
+      var room = this.state.roomstoDisplay[i];
+      console.log(room.move_in_date === this.state.movedInMonth);
+      if (room.city === this.state.city && room.price_range === this.state.budgetRange
+        && room.move_in_date === this.state.movedInMonth && room.min_lease_duration === this.state.lease_duration) {
+        this.state.filteredRooms.push(room);
+      }
+    }
+    this.setState({
+      copyOfRooms: this.state.filteredRooms,
+      copyOfRoommates: this.state.filteredRoommates
+    })
   }
 
-doSecondaryFilter=async()=>{
+  doSecondaryFilter = async () => {
 
     await this.handleSecFilterChange();
     await this.setState({
-      filteredRooms:[],
-      filteredRoommates:[]
+      filteredRooms: [],
+      filteredRoommates: []
     })
     var i;
-    for(i=0;i<this.state.copyOfRoommates.length;i++){
-        var roommate=this.state.copyOfRoommates[i];
-    if(roommate.gender === this.state.gender || roommate.age===this.state.age
-         || roommate.room_type_required === this.state.room_type_required || roommate.pet_friendly ===this.state.pet
-         || roommate.ok_with_shaing_bathroom === this.state.sharedBath || roommate.smoking_friendly === this.state.smoking
-         || roommate.party_friendly === this.state.party || this.state.gender ==="" || this.state.age === ""
-         || this.state.room_type_required === "" || this.state.pet === "" ||  this.state.sharedBath === "" ||
-         this.state.smoking === "" || this.state.party === ""
-        ){
-            this.state.filteredRoommates.push(roommate);
-         }
+    for (i = 0; i < this.state.copyOfRoommates.length; i++) {
+      var roommate = this.state.copyOfRoommates[i];
+      if (roommate.gender === this.state.gender || roommate.age === this.state.age
+        || roommate.room_type_required === this.state.room_type_required || roommate.pet_friendly === this.state.pet
+        || roommate.ok_with_shaing_bathroom === this.state.sharedBath || roommate.smoking_friendly === this.state.smoking
+        || roommate.party_friendly === this.state.party || this.state.gender === "" || this.state.age === ""
+        || this.state.room_type_required === "" || this.state.pet === "" || this.state.sharedBath === "" ||
+        this.state.smoking === "" || this.state.party === ""
+      ) {
+        this.state.filteredRoommates.push(roommate);
+      }
     }
 
-    for(i=0;i<this.state.copyOfRooms.length;i++){
-        var room=this.state.copyOfRooms[i];
-        if(room.gender_prefered === this.state.gender || room.parking ===this.state.parking
-             || room.room_type=== this.state.room_type_required || room.pet ===this.state.pet
-             || room.bathroom === this.state.sharedBath || room.smoking === this.state.smoking
-             || room.party === this.state.party || this.state.gender === "" || this.state.parking === "" ||
-             this.state.room_type_required === "" || this.state.pet === "" || this.state.sharedBath === "" ||
-             this.state.smoking === "" || this.state.party === ""
-           ) {
-            this.state.filteredRooms.push(room);
-         }
+    for (i = 0; i < this.state.copyOfRooms.length; i++) {
+      var room = this.state.copyOfRooms[i];
+      if (room.gender_prefered === this.state.gender || room.parking === this.state.parking
+        || room.room_type === this.state.room_type_required || room.pet === this.state.pet
+        || room.bathroom === this.state.sharedBath || room.smoking === this.state.smoking
+        || room.party === this.state.party || this.state.gender === "" || this.state.parking === "" ||
+        this.state.room_type_required === "" || this.state.pet === "" || this.state.sharedBath === "" ||
+        this.state.smoking === "" || this.state.party === ""
+      ) {
+        this.state.filteredRooms.push(room);
+      }
     }
     this.forceUpdate();
   }
@@ -458,23 +444,23 @@ doSecondaryFilter=async()=>{
     ]
 
 
-    const ageOptions=[
-       {key:'0-18 years old',text:'0-18 years old',value:'0-18 years old'},
-       {key:'18-30 years old',text:'18-30 years old',value:'18-30 years old'},
-       {key:'30-40 years old',text:'30-40 years old',value:'30-40 years old'},
-       {key:'40-50 years old',text:'40-50 years old',value:'40-50 years old'},
-       {key:'50-60 years old',text:'50-60 years old',value:'50-60 years old'},
+    const ageOptions = [
+      { key: '0-18 years old', text: '0-18 years old', value: '0-18 years old' },
+      { key: '18-30 years old', text: '18-30 years old', value: '18-30 years old' },
+      { key: '30-40 years old', text: '30-40 years old', value: '30-40 years old' },
+      { key: '40-50 years old', text: '40-50 years old', value: '40-50 years old' },
+      { key: '50-60 years old', text: '50-60 years old', value: '50-60 years old' },
     ]
 
-    const booleanOptions=[
-      {key:'Yes',text:'Yes',value:'Yes'},
-      {key:'No',text:'No',value:'No'},
+    const booleanOptions = [
+      { key: 'Yes', text: 'Yes', value: 'Yes' },
+      { key: 'No', text: 'No', value: 'No' },
     ]
 
-    const roomTypeOptions=[
-      {key:'Single Room',text:'Single Room',value:'Single Room'},
-      {key:'Double Room',text:'Double Room',value:'Double Room'},
-      {key:'Multiperson Room',text:'Multiperson Room',value:'Multiperson Room'}
+    const roomTypeOptions = [
+      { key: 'Single Room', text: 'Single Room', value: 'Single Room' },
+      { key: 'Double Room', text: 'Double Room', value: 'Double Room' },
+      { key: 'Multiperson Room', text: 'Multiperson Room', value: 'Multiperson Room' }
     ]
 
 
@@ -482,15 +468,15 @@ doSecondaryFilter=async()=>{
     return (
       <div><div style={backgroundStyle}>
 
-        <Menu stackable style={{ marginTop: "3em", marginBottom: "0em"}}>
-          <Form style={{marginTop:'1em',marginLeft:"12em", marginRight:"12em"}}>
+        <Menu stackable style={{ marginTop: "3em", marginBottom: "0em" }}>
+          <Form style={{ marginTop: '1em', marginLeft: "12em", marginRight: "12em" }}>
             <Button.Group>
               <Button onClick={() => { this.state.showRoommates = true; this.forceUpdate() }} color="olive" size="small">Search Roommates</Button>
-              <Button.Or/>
+              <Button.Or />
               <Button onClick={() => { this.state.showRoommates = false; this.forceUpdate() }} color="twitter" size="small">Search Rooms</Button>
             </Button.Group>
 
-            <Form.Group widths='equal' style={{marginTop:'1em'}}>
+            <Form.Group widths='equal' style={{ marginTop: '1em' }}>
               <Form.Select
                 selection
                 defaultValue="San Jose"
@@ -526,17 +512,17 @@ doSecondaryFilter=async()=>{
                 options={whenToMovedInOptions}
                 required
               />
-              <Form.Button primary disabled={!this.props.isAuth} size='medium' style={{ marginTop: "1.6em"}} onClick={this.doPrimaryFilter}>
+              <Form.Button primary disabled={!this.props.isAuth} size='medium' style={{ marginTop: "1.6em" }} onClick={this.doPrimaryFilter}>
                 Search
               </Form.Button>
             </Form.Group>
           </Form>
-          </Menu>
+        </Menu>
 
-        <Menu stackable secondary style={{marginLeft:'0em'}}>
-          <Form style={{ marginTop: '1em', marginLeft:'12.5em'}}>
-              <Header as='h2'>
-                Are you looking for people who is ...
+        <Menu stackable secondary style={{ marginLeft: '0em' }}>
+          <Form style={{ marginTop: '1em', marginLeft: '12.5em' }}>
+            <Header as='h2'>
+              Are you looking for people who is ...
               </Header>
             <Form.Group>
               <Form.Select
@@ -547,16 +533,16 @@ doSecondaryFilter=async()=>{
                 options={genderOption}
                 onChange={null} />
 
-             { !this.state.showRoommates ?
-               <Form.Select
-                clearable
-                label='Parking Option'
-                id="parking"
-                fluid
-                selection
-                options={booleanOptions} />
-              :
-               <Form.Select
+              {!this.state.showRoommates ?
+                <Form.Select
+                  clearable
+                  label='Parking Option'
+                  id="parking"
+                  fluid
+                  selection
+                  options={booleanOptions} />
+                :
+                <Form.Select
                   clearable
                   label='Age Range'
                   id="age"
@@ -611,90 +597,93 @@ doSecondaryFilter=async()=>{
           </Form>
         </Menu>
 
-        <Divider/>
+        <Divider />
 
-        <Card.Group itemsPerRow={4} style={{marginLeft:"7.25em"}}>
+        <Card.Group itemsPerRow={4} style={{ marginLeft: "7.25em" }}>
           {this.renderRedirectToUserDetail()}
-                {this.state.showRoommates ?
-                  this.state.filteredRoommates.map((roommate) => {
-                    return (
-                      <Card style={{ width: '15em', marginTop: '2em', marginLeft: '5em' }}>
-                        <Image
-                          src='https://image.flaticon.com/icons/svg/168/168720.svg' wrapped ui={false}
-                          as='a'
-                          onClick={
-                            () =>{this.state.targetUserId = roommate._id;
-                                  this.state.myToken = localStorage.getItem('token');
-                                  this.handleUserDetail();
-                            }
+          {this.state.showRoommates ?
+            this.state.filteredRoommates.map((roommate) => {
+              return (
+                <Card style={{ width: '15em', marginTop: '2em', marginLeft: '5em' }}>
+                  <Image
+                    src='https://image.flaticon.com/icons/svg/168/168720.svg' wrapped ui={false}
+                    as='a'
+                    onClick={
+                      () => {
+                        this.state.targetUserId = roommate._id;
+                        this.state.myToken = localStorage.getItem('token');
+                        this.handleUserDetail();
+                      }
 
-                            //localStorage.getItem('token'), roommate._id
-                          } //should get user id, token. redirect to userDetail page
-                        />
-                        <Card.Content>
-                          <Card.Header>
-                            {roommate.first_name} {roommate.last_name}
-                          </Card.Header>
-                        </Card.Content>
-                        <Card.Content extra>
-                          <a>
-                            <Icon name='user' />
-                            {roommate.city}/Budget: {roommate.budget || "N/A"}
-                          </a>
-                        </Card.Content>
-                      </Card>
-                    )
-                  })
+                      //localStorage.getItem('token'), roommate._id
+                    } //should get user id, token. redirect to userDetail page
+                  />
+                  <Card.Content>
+                    <Card.Header>
+                      {roommate.first_name} {roommate.last_name}
+                    </Card.Header>
+                  </Card.Content>
+                  <Card.Content extra>
+                    <a>
+                      <Icon name='user' />
+                      {roommate.city}/Budget: {roommate.budget || "N/A"}
+                    </a>
+                  </Card.Content>
+                </Card>
+              )
+            })
 
-                  :
+            :
 
-                  this.state.filteredRooms.map((room) => {
-                    return (
+            this.state.filteredRooms.map((room) => {
+              return (
 
-                      <Card style={{ width: '15em', marginTop: '2em', marginLeft: '5em' }}>
-                        <Image
-                          src={'https://image.flaticon.com/icons/svg/609/609803.svg'} wrapped ui={false}
-                          as='a'
-                          onClick={
-                              () =>{this.state.targetRoomId = room._id;
-                                    this.state.myToken = localStorage.getItem('token');
-                                    this.handleRoomDetail();}
-                          }
-                        />
-                        <Card.Content>
-                          <Card.Meta>
-                            <span className='status'>{room.room_type}</span>
-                          </Card.Meta>
-                        </Card.Content>
-                        <Card.Content extra>
-                          <a>
-                            <Icon name='home' />
-                            {room.city}/Price: ${room.price}
-                          </a>
-                        </Card.Content>
-                      </Card>
+                <Card style={{ width: '15em', marginTop: '2em', marginLeft: '5em' }}>
+                  <Image
+                    src={'https://image.flaticon.com/icons/svg/609/609803.svg'} wrapped ui={false}
+                    as='a'
+                    onClick={
+                      () => {
+                        this.state.targetRoomId = room._id;
+                        this.state.myToken = localStorage.getItem('token');
+                        this.handleRoomDetail();
+                      }
+                    }
+                  />
+                  <Card.Content>
+                    <Card.Meta>
+                      <span className='status'>{room.room_type}</span>
+                    </Card.Meta>
+                  </Card.Content>
+                  <Card.Content extra>
+                    <a>
+                      <Icon name='home' />
+                      {room.city}/Price: ${room.price}
+                    </a>
+                  </Card.Content>
+                </Card>
 
-                    )
-                  })
-                }
-                </Card.Group>
+              )
+            })
+          }
+        </Card.Group>
 
-                <Divider/>
+        <Divider />
 
 
 
-          <Pagination
-            style={{ marginTop: "1em", marginBottom:"2em" , marginLeft: "43em"}}
-            boundaryRange={0}
-            defaultActivePage={1}
-            ellipsisItem={null}
-            firstItem={null}
-            lastItem={null}
-            siblingRange={1}
-            totalPages={5}
-          />
+        <Pagination
+          style={{ marginTop: "1em", marginBottom: "2em", marginLeft: "43em" }}
+          boundaryRange={0}
+          defaultActivePage={1}
+          ellipsisItem={null}
+          firstItem={null}
+          lastItem={null}
+          siblingRange={1}
+          totalPages={5}
+        />
 
-        </div></div>//--------
+      </div></div>//--------
     );
   }
 }

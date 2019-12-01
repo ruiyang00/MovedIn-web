@@ -1,31 +1,18 @@
 import React, { Component } from 'react';
-import { Link,withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {compose} from 'redux';
-import {reduxForm, Field, formValueSelector} from 'redux-form';
+import {reduxForm, Field} from 'redux-form';
 import {InputField} from 'react-semantic-redux-form';
 import * as actions from '../../actions';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
 import {
   Button,
-  Container,
-  Dropdown,
   Divider,
   Form,
-  Grid,
-  Header,
-  Icon,
-  Image,
-  List,
-  Message,
-  Menu,
   Modal,
   Segment,
-  Search
 } from 'semantic-ui-react'
-import * as ROUTES from "../../logistics/routes"
-import Axios from 'axios';
 
  class LogInModule extends Component{
   constructor(props){

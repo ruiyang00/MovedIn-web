@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { Divider, Header, Select, Segment, Dropdown, Modal, Button, Form, Grid, Card, Message, Icon, Popup, Tab, Input, Image } from 'semantic-ui-react';
-import * as ROUTES from "./../logistics/routes";
+import { Link } from 'react-router-dom';
+import { Divider, Header, Segment, Button, Grid, Card, Icon, Image } from 'semantic-ui-react';
 import axios from 'axios';
-import * as moment from 'moment';
-import { connect } from 'react-redux';
-import HomeLogo from './../images/home #30C5FF.png';
 
 export default class userPosts extends Component {
 
@@ -107,7 +103,7 @@ export default class userPosts extends Component {
                             <Header.Subheader><strong>Occupation: </strong>{roommate.occupation || ''}</Header.Subheader>
                             <Header.Subheader><strong>Gender: </strong>   {roommate.gender || ' N/A'}</Header.Subheader>
                             <Header.Subheader><strong>Age: </strong> {roommate.age || ' N/A'}</Header.Subheader>
-                              <Header.Subheader><strong>Prefered Room Type: </strong>{roommate.room_type_required || "Not Answered"}</Header.Subheader>
+                            <Header.Subheader><strong>Prefered Room Type: </strong>{roommate.room_type_required || "Not Answered"}</Header.Subheader>
                             <Header.Subheader><strong>MovedIn date: </strong>{roommate.moved_in_date || "Not Answered"}</Header.Subheader>
                             <Header.Subheader><strong>Lease Term: </strong>{roommate.lease_duration || "Not Answered"}</Header.Subheader>
                             <Header.Subheader><strong>Sharing Bathroom: </strong>{roommate.ok_with_shaing_bathroom || "Not Answered"}</Header.Subheader>
@@ -118,21 +114,14 @@ export default class userPosts extends Component {
 
                           <Grid.Column width={4}>
                             <Grid.Row>
-                            <Button floated='right' color='red' onClick={async () => { await this.setState({ roommateToDelete: roommate._id }); this.deleteRoommate() }}>Delete Post</Button>
+                              <Button floated='right' color='red' onClick={async () => { await this.setState({ roommateToDelete: roommate._id }); this.deleteRoommate() }}>Delete Post</Button>
                             </Grid.Row>
                           </Grid.Column>
                         </Grid.Row>
                       </Grid>
                     </Segment>
-
-
-
-
-
-
                   )
                 })
-
                 :
                 <Grid>
                   <p></p>
@@ -145,10 +134,6 @@ export default class userPosts extends Component {
                         <Header.Content>No Posted Roommates</Header.Content>
                       </Header>
                     </Segment>
-
-
-
-
                   </Grid.Row>
                 </Grid>
               }

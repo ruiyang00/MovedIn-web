@@ -71,7 +71,7 @@ class App extends Component {
                 <Grid style={{ marginTop: "5em", marginBottom:"0em"}}>
                     <Grid.Column width={4}>
                         <Image
-                            src={'https://image.flaticon.com/icons/svg/168/168729.svg'}
+                            src={'https://image.flaticon.com/icons/svg/172/172163.svg'}
                             wrapped ui={false}
                             as='a'
                             onClick={null}
@@ -91,19 +91,19 @@ class App extends Component {
                                 <List.Item>
                                     <List.Icon name='wechat' />
                                     <List.Content>
-                                        Alice834
+                                        WeChat-Number
                                     </List.Content>
                                 </List.Item>
                                 <List.Item>
                                     <List.Icon name='facebook' />
                                     <List.Content>
-                                        <a href=''>https://www.facebook.com/aliceS</a>
+                                        <a href=''>https://www.facebook.com/mylink</a>
                                     </List.Content>
                                 </List.Item>
                                 <List.Item>
                                     <List.Icon name='instagram' />
                                     <List.Content>
-                                        <a href=''>instagram.com/aliceS</a>
+                                        <a href=''>instagram.com/mylink</a>
                                     </List.Content>
                                 </List.Item>
                             </List>

@@ -622,7 +622,7 @@ class pubMainPage extends Component {
                   return (
                     <Card style={{ width: '15em', marginTop: '2em', marginLeft: '5em' }}>
                       <Image
-                        src='https://image.flaticon.com/icons/svg/168/168720.svg' wrapped ui={false}
+                        src='https://image.flaticon.com/icons/svg/172/172163.svg' wrapped ui={false}
                         as='a'
                         onClick={
                           () => {
@@ -638,14 +638,14 @@ class pubMainPage extends Component {
                       />
                       <Card.Content>
                         <Card.Header>
-                          {roommate.first_name} {roommate.last_name}
+                          {roommate.first_name}
                         </Card.Header>
+                        <Card.Meta> Needs a {roommate.budget || 'N/A'}  </Card.Meta>
+                        <Card.Meta> {roommate.room_type_required} </Card.Meta>
                       </Card.Content>
                       <Card.Content extra>
-                        <a>
-                          <Icon name='user' />
-                          {roommate.city}/Budget: {roommate.budget || "N/A"}
-                        </a>
+                          <Icon name='point' />
+                          {roommate.city}
                       </Card.Content>
                     </Card>
 
@@ -673,15 +673,16 @@ class pubMainPage extends Component {
                         }
                       />
                       <Card.Content>
-                        <Card.Meta>
-                          <span className='status'>{room.room_type}</span>
-                        </Card.Meta>
+                        <Card.Header>
+                          {room.room_type}
+                        </Card.Header>
+                        <Card.Meta>Rent: <strong>${room.price}</strong>/mo </Card.Meta>
+                        <Card.Meta>Available in: {room.move_in_date} </Card.Meta>
+                       
                       </Card.Content>
                       <Card.Content extra>
-                        <a>
-                          <Icon name='home' />
-                          {room.city}/Price: ${room.price}
-                        </a>
+                          <Icon name='point' />
+                          {room.city}
                       </Card.Content>
                     </Card>
 
@@ -699,7 +700,7 @@ class pubMainPage extends Component {
                 return (
                   <Card style={{ width: '15em', marginTop: '2em', marginLeft: '5em' }}>
                     <Image
-                      src='https://image.flaticon.com/icons/svg/168/168720.svg' wrapped ui={false}
+                      src='https://image.flaticon.com/icons/svg/172/172163.svg' wrapped ui={false}
                       as='a'
                       onClick={
                         () => {
@@ -717,12 +718,12 @@ class pubMainPage extends Component {
                       <Card.Header>
                         {roommate.first_name} {roommate.last_name}
                       </Card.Header>
+                      <Card.Meta> Needs a {roommate.budget || 'N/A'}  </Card.Meta>
+                      <Card.Meta> {roommate.room_type_required} </Card.Meta>
                     </Card.Content>
                     <Card.Content extra>
-                      <a>
-                        <Icon name='user' />
-                        {roommate.city}/Budget: {roommate.budget || "N/A"}
-                      </a>
+                        <Icon name='point' />
+                        {roommate.city}
                     </Card.Content>
                   </Card>
 
@@ -750,15 +751,15 @@ class pubMainPage extends Component {
                       }
                     />
                     <Card.Content>
-                      <Card.Meta>
-                        <span className='status'>{room.room_type}</span>
-                      </Card.Meta>
+                      <Card.Header>
+                        {room.room_type}
+                        </Card.Header>
+                        <Card.Meta>Rent: <strong>${room.price}</strong>/mo </Card.Meta>
+                        <Card.Meta>Available in: {room.move_in_date} </Card.Meta>
                     </Card.Content>
                     <Card.Content extra>
-                      <a>
-                        <Icon name='home' />
-                        {room.city}/Price: ${room.price}
-                      </a>
+                        <Icon name='point' />
+                        {room.city}
                     </Card.Content>
                   </Card>
 

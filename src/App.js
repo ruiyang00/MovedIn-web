@@ -150,35 +150,58 @@ class App extends Component {
       redirectToWel: true
     })
   }
-
+  renderRedirectToWel = () => {
+      if (this.state.redirectToWel) {
+        return <Redirect to='/' />
+      }
+  }
+    
   setRedirectToUserPro = () => {
     this.setState({
       redirectToUserPro: true
     })
   }
+  renderRedirectToUserPro= () => {
+      if (this.state.redirectToUserPro && this.props.isAuth) {
+        this.state.redirectToUserPro = false;
+        return <Redirect to='/userProfile' />
+      }
+    }
+
 
   setRedirectToRoomPro = () => {
     this.setState({
       redirectToRoomPro: true
     })
   }
-
-  setRedirectToRoomList = () => {
-    this.setState({
-      redirectToRoomList: true
-    })
-  }
-
-  renderRedirectToWel = () => {
-    if (this.state.redirectToWel) {
-      return <Redirect to='/' />
+  renderRedirectToRoomPro= () => {
+    if (this.state.redirectToRoomPro && this.props.isAuth) {
+      this.state.redirectToRoomPro = false;
+      return <Redirect to='/roomProfile' />
     }
   }
 
-  renderRedirectToUserPro= () => {
-    if (this.state.redirectToUserPro && this.props.isAuth) {
-      this.state.redirectToUserPro = false;
-      return <Redirect to='/userProfile' />
+  setRedirectToRoomPosts = () => {
+    this.setState({
+      redirectToRoomPosts: true
+    })
+  }
+  renderRedirectToRoomPosts= () => {
+    if (this.state.redirectToRoomPosts && this.props.isAuth) {
+      this.state.redirectToRoomPosts = false;
+      return <Redirect to='/roomPosts' />
+    }
+  }
+
+  setRedirectToUserPosts = () => {
+    this.setState({
+      redirectToUserPosts: true
+    })
+  }
+  renderRedirectToUserPosts= () => {
+    if (this.state.redirectToUserPosts && this.props.isAuth) {
+      this.state.redirectToUserPosts = false;
+      return <Redirect to='/userPosts' />
     }
   }
 
@@ -199,9 +222,9 @@ class App extends Component {
 
     const userProfileOptions = [
       { key: 'user profile', text: 'User Profile', onClick: this.setRedirectToUserPro},
-      { key: 'room profile', text: 'Post a New Room', onClick: null},
-      { key: 'room posts', text: 'My Room List', onClick: null},
-      { key: 'room posts', text: 'My Roommate List', onClick: null},
+      { key: 'room profile', text: 'Post New Room', onClick: this.setRedirectToRoomPro},
+      { key: 'room posts', text: 'View My Room List', onClick: this.setRedirectToRoomPosts},
+      { key: 'room posts', text: 'View My Roommate List', onClick: this.setRedirectToUserPosts},
       { key: 'sign-out', text: 'Sign Out', onClick: this.handleSignout},
     ]
 
@@ -247,6 +270,9 @@ class App extends Component {
 
           <Menu.Item position='right'>
             {this.renderRedirectToUserPro()}
+            {this.renderRedirectToRoomPro()}
+            {this.renderRedirectToRoomPosts()}
+            {this.renderRedirectToUserPosts()}
             <Dropdown trigger={userProfileTrigger} options={userProfileOptions}/>
           </Menu.Item>
         </Container>

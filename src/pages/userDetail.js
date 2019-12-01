@@ -6,12 +6,10 @@ import {
     Icon,
     Image,
     List,
-    Menu,
-    Message,
-    Modal,
     Segment,
   } from 'semantic-ui-react'
   import axios from 'axios';
+  import { Redirect } from 'react-router-dom';
 
   const backgroundStyle = {
     height: "160vh",
@@ -51,6 +49,17 @@ class App extends Component {
               });
           }.bind(this));
     }
+
+    setRedirectToMain = () => {
+        this.setState({
+          redirectToMain: true
+        })
+      }
+      renderRedirectToMain = () => {
+          if (this.state.redirectToMain) {
+            return <Redirect to='/mainPage' />
+          }
+      }
 
     render(){
         return(
@@ -103,7 +112,7 @@ class App extends Component {
 
                         <Grid.Column width={9}>
                             <Segment>
-                                <Header as='h2' dividing>
+                                <Header as='h3' dividing>
                                     {this.state.targetUser.first_name} {this.state.targetUser.last_name}
                                 </Header>
                                 <Header.Subheader>
@@ -210,7 +219,12 @@ class App extends Component {
                                 </Segment>
                             </Segment.Group>
 
-
+                            {this.renderRedirectToMain()}
+                            <Button floated='right'
+                                    onClick={this.setRedirectToMain}>
+                                <Icon name='arrow left'/>
+                                Back
+                             </Button>
                         </Grid.Column>
                     </Grid>
                 </div>

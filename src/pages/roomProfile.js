@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Link,withRouter } from 'react-router-dom';
-import {Progress,Select,Dropdown, Button, Form,Grid, Card, Message,Icon,Popup,Tab,Input} from 'semantic-ui-react';
-import * as ROUTES from "./../logistics/routes";
+import {Progress, Button, Form,Grid, Message,Icon,Popup,Tab} from 'semantic-ui-react';
 import axios from 'axios';
 import * as moment from 'moment';
 import {connect} from 'react-redux';
@@ -10,8 +8,8 @@ var oneMonthFromNow=moment().add(1, 'months').format('MMMM-YYYY');
 
 const backgroundStyle = {
   //width: "100%",
-  height: "160vh",
-  backgroundImage: `url(https://i.ibb.co/jw6nvh1/living-room-2732939-1920.jpg)`,
+  height: "150vh",
+  backgroundImage: `url(https://i.ibb.co/dQykXsR/2560x1080-F5-F5-F5.png)`,
   backgroundRepeat: "null",
   backgroundSize: 'cover',
   overflow: 'hidden',

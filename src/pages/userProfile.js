@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import { Link,withRouter } from 'react-router-dom';
-import {Progress,Select,Dropdown, Button, Form,Grid, Card, Message,Icon,Popup,Tab,Input} from 'semantic-ui-react';
-import * as ROUTES from "./../logistics/routes";
+import {Progress, Button, Form,Grid, Card, Message,Icon,Popup,Tab} from 'semantic-ui-react';
 import axios from 'axios';
 import * as moment from 'moment';
 import {connect} from 'react-redux';
 
 const backgroundStyle = {
   height: "150vh",
-  backgroundImage: `url(https://i.ibb.co/72fb7sj/living-room-2569325-1920.jpg)`,
+  backgroundImage: `url(https://i.ibb.co/dQykXsR/2560x1080-F5-F5-F5.png)`,
   backgroundRepeat: "null",
   backgroundSize: 'cover',
   overflow: 'hidden',

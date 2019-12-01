@@ -1,24 +1,15 @@
 import React, { Component } from "react";
 import {
     Button,
-    Card,
-    Container,
-    Dropdown,
-    Form,
     Grid,
     Header,
     Icon,
-    Input,
     Image,
     List,
-    Menu,
-    Message,
-    Modal,
-    Pagination,
-    Select,
     Segment,
   } from 'semantic-ui-react'
   import axios from 'axios';
+  import { Redirect } from 'react-router-dom';
 
 const backgroundStyle = {
 height: "160vh",
@@ -55,6 +46,17 @@ class App extends Component {
               });
           }.bind(this));
     }
+
+    setRedirectToMain = () => {
+        this.setState({
+          redirectToMain: true
+        })
+      }
+      renderRedirectToMain = () => {
+          if (this.state.redirectToMain) {
+            return <Redirect to='/mainPage' />
+          }
+      }
 
     render(){
         return(
@@ -106,7 +108,7 @@ class App extends Component {
 
                         <Grid.Column width={9}>
                             <Segment>
-                                <Header as='h2' dividing>
+                                <Header as='h3' dividing>
                                     <strong>Type: </strong> {this.state.targetRoom.room_type || ''}
                                 </Header>
                                 <Header.Subheader>
@@ -195,7 +197,12 @@ class App extends Component {
                                 
                                 </Segment>
                             </Segment.Group>
-
+                            {this.renderRedirectToMain()}
+                            <Button floated='right'
+                                    onClick={this.setRedirectToMain}>
+                                <Icon name='arrow left'/>
+                                Back
+                             </Button>
 
                         </Grid.Column>
                     </Grid>

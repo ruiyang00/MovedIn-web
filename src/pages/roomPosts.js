@@ -1,205 +1,151 @@
 import React, { Component } from 'react';
-import { Link,withRouter } from 'react-router-dom';
-import {Divider,Select,Header,Segment,Dropdown, Modal,Button, Form,Grid, Card, Message,Icon,Popup,Tab,Input,Image} from 'semantic-ui-react';
-import * as ROUTES from "./../logistics/routes";
+import { Link } from 'react-router-dom';
+import { Divider, Header, Segment, Button, Grid, Card, Icon, Image, Menu, Message } from 'semantic-ui-react';
 import axios from 'axios';
-import * as moment from 'moment';
-import {connect} from 'react-redux';
-import HomeLogo from './../images/home #30C5FF.png';
 
-export default class roomPosts extends Component{
+export default class roomPosts extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state={
-      roomPosts:[],
-      roomToDelete:''
-};
+    this.state = {
+      roomPosts: [],
+      roomToDelete: ''
+    };
   }
 
-  componentDidMount(){
+  componentDidMount() {
 
     axios.get('http://localhost:5000/rooms/getroompost',
-    {
-          headers: {
-            'Authorization': localStorage.getItem('token')
-          }})
-      .then(function(response){
-           console.log(response);
-           this.setState({
-           roomPosts:response.data.allRooms,
-         })
-
-    }.bind(this));
-
-
-
-
-    }
-
-
-    deleteRoom(){
-
-      axios.delete('http://localhost:5000/rooms/deletetheroom',
       {
-            headers: {
-              'Authorization': localStorage.getItem('token'),
-              "room_id": this.state.roomToDelete
-            }})
-        .then(function(response){
-             console.log(response);
+        headers: {
+          'Authorization': localStorage.getItem('token')
+        }
+      })
+      .then(function (response) {
+        console.log(response);
+        this.setState({
+          roomPosts: response.data.allRooms,
+        })
 
       }.bind(this));
-      window.location.reload(true);
-
-    }
+  }
 
 
-  render(){
-    return(
+  deleteRoom() {
+
+    axios.delete('http://localhost:5000/rooms/deletetheroom',
+      {
+        headers: {
+          'Authorization': localStorage.getItem('token'),
+          "room_id": this.state.roomToDelete
+        }
+      })
+      .then(function (response) {
+        console.log(response);
+
+      }.bind(this));
+    window.location.reload(true);
+  }
+
+
+  render() {
+    return (
       <div>
-        <Segment secondary style={{ marginTop: "4em", marginBottom:"0em",marginLeft:"0em"}}>
+        <Segment secondary style={{ marginTop: "2em", marginBottom: "0em", marginLeft: "0em" }}>
+
+          <Segment style={{ marginTop: "2em", marginBottom: "0em", marginLeft: "10em", marginRight: "10em" }}>
+            <Button.Group>
+              <Link to='./userPosts'>
+                <Button onClick={() => { this.forceUpdate() }} color="olive" size="small">View My Roommate Posts</Button>
+              </Link>
+              <Button.Or />
+              <Link to='./roomPosts'>
+                <Button onClick={() => { this.forceUpdate() }} color="twitter" size="small">View My Room Posts</Button>
+              </Link>
+            </Button.Group>
+
+            <Link to='./roomProfile'>
+              <Button floated='right' color='pink'>Post A New Room</Button>
+            </Link>
+          </Segment>
 
 
-        <h3>View My</h3>
-        <Button.Group>
-        <Link to='./userPosts'>
-        <Button onClick={()=>{this.forceUpdate()}} color="olive" size="small">Roommate Posts</Button>
-        </Link>
-        <Button.Or />
-        <Link to='./roomPosts'>
-        <Button onClick={()=>{this.forceUpdate()}} color="twitter"size="small">Room Posts</Button>
-        </Link>
-        </Button.Group>
+          <Segment style={{ marginTop: "2em", marginBottom: "2em", marginLeft: "10em", marginRight: "10em" }}>
+            <Header as='h3'>
+              <Icon name='home' />
+              <Header.Content>
+                My Posted Rooms
+              <Header.Subheader>Manage your rooms</Header.Subheader>
+              </Header.Content>
+            </Header>
+            <Divider></Divider>
 
-        <h1>My Room Posts</h1>
+            <Card.Group itemsPerRow={4} style={{ marginTop: '2em', marginBottom: "2em", marginLeft: "6.5em" }}>
+              {this.state.roomPosts ?
+                this.state.roomPosts.map((room) => {
+                  return (
+                    <Segment padded='very'>
+                      <Grid columns={3}>
+                        <Grid.Row>
+                          <Grid.Column width={5}>
+                            <Image
+                              src={'https://image.flaticon.com/icons/svg/609/609803.svg'}
+                              wrapped size='medium'
+                            />
+                          </Grid.Column>
+                          <Grid.Column width={7}>
+                            <Header as='h3'> {room.street}, {room.city} </Header>
 
-        <Link to='./roomProfile'>
-        <Button color='pink'>Post A New Room</Button>
-        </Link>
-        <p></p>
-      <Divider horizontal></Divider>
+                            <Divider/>
 
-      <Card.Group itemsPerRow={4} style={{marginLeft:"6.5em"}}>
-       { this.state.roomPosts ?
-       this.state.roomPosts.map((room)=>{
-           return(
-             <Segment padded ='very'>
-
-                   <Grid columns={3}>
-                   <Grid.Row>
-
-                       <Grid.Column width={5}>
-                       <Image
-                        src={HomeLogo}
-                        wrapped size='medium'
-                               />
-                       </Grid.Column>
-
-                       <Grid.Column width={7}>
-                                <Header as='h2'>
-                                  {room.city}, ${room.price}
+                            <Segment basic>
+                                <Header as='h3' dividing>
+                                    {room.room_type || " N/A"}
                                 </Header>
 
-                                <Header as = 'h3'>
-                                <div>
-                                <Icon name='bullhorn' />
-                                <i>Move_In_Month:</i>{" "+room.move_in_date || " N/A"}
-                                </div>
-                                <div>
-                                <Icon name='bed' />
-                                {room.room_type || " N/A"}
-                                </div>
-                                <div>
-                                <Icon name='history'/>
-                                <i>Lease Term:</i>{" "+room.min_lease_duration || ' N/A'}
-                                </div>
-                                <div>
-                                <Icon name='building outline'/>
-                                <i>Street:</i>{" "+room.street || ' N/A'}
-                                </div>
-                                </Header>
-
-                                <Header as='h4'>
-                                <p>
-                                <Icon name="users" />
-                                <i>Shared Bathroom:</i> {room.bathroom || "Not Answered"}
-                                </p>
-                                <p>
-                                <Icon name="tint" />
-                                <i>Cooking Allowed:</i> {room.cooking || "Not Answered"}
-                                </p>
-                                <p>
-                                <Icon name="plug" />
-                                <i>Utility Included:</i> {room.utility_include || "Not Answered"}
-                                </p>
-                                <p>
-                                <Icon name="thumbs up" />
-                                <i>Furnished:</i> {room.furniture || "Not Answered"}
-                                </p>
-                                <p>
-                                <Icon name="transgender" />
-                                <i>Gender Preferred:</i> {room.gender_prefered || "Not Answered"}
-                                </p>
-                                </Header>
-
-                                <Header as='h4'>
-
-                                </Header>
-
-                              </Grid.Column>
+                                <Header.Subheader><strong>Rent: </strong> ${room.price}/mo</Header.Subheader>
+                                <Header.Subheader><strong>Available in: </strong> {room.move_in_date}</Header.Subheader>
+                                <Header.Subheader><strong>Lease Term: </strong> {room.min_lease_duration}</Header.Subheader>
+                                <Header.Subheader><strong>Private Bathroom: </strong> {room.bathroom || "Not Answered"}</Header.Subheader>
+                                <Header.Subheader><strong>Preferred Gender: </strong>{room.gender_prefered || "Not Answered"}</Header.Subheader>
+                                <Header.Subheader><strong>Utilities Included: </strong>{room.utility_include || "Not Answered"}</Header.Subheader>
+                                <Header.Subheader><strong>Cooking Allowed: </strong>{room.cooking || "Not Answered"}</Header.Subheader>
+                                <Header.Subheader><strong>furniture Included: </strong>{room.furniture || "Not Answered"}</Header.Subheader>
+                                
+                            </Segment> 
+                          </Grid.Column>
 
 
-                              <Grid.Column width={4}>
-                                <Grid.Row>
-        <Button color="red" onClick={async()=>{await this.setState({roomToDelete:room._id});this.deleteRoom()}}>Delete Post</Button>
+                          <Grid.Column width={4}>
+                            <Grid.Row>
+                              <Button floated='right' color="red" onClick={async () => { await this.setState({ roomToDelete: room._id }); this.deleteRoom() }}>Delete Post</Button>
+                            </Grid.Row>
+                          </Grid.Column>
+                        </Grid.Row>
+                      </Grid>
+                    </Segment>
+                  )
+                })
+                :
+                <Grid>
+                  <p></p>
+                  <p></p>
+                  <Grid.Row>
+                    <p></p>
+                    <Segment size="large" placeholder padded="very">
+                      <Header as="h2" icon textAlign="center">
+                        <Icon name="home" circular />
+                        <Header.Content>No Posted Rooms</Header.Content>
+                      </Header>
+                    </Segment>
+                  </Grid.Row>
+                </Grid>
+              }
+            </Card.Group>
 
-                                </Grid.Row>
-                              </Grid.Column>
-
-
-
-
-
-                       </Grid.Row>
-                    </Grid>
-             </Segment>
-
-
-
-
-
-
-
-       )
-     })
-     :
-     <Grid>
-     <p></p>
-     <p></p>
-     <Grid.Row>
-     <p></p>
-     <Segment size="large" placeholder padded="very">
-							<Header as="h2" icon textAlign="center">
-								<Icon name="home" circular />
-								<Header.Content>No Posted Rooms</Header.Content>
-							</Header>
-						</Segment>
-
-
-
-
-     </Grid.Row>
-    </Grid>
-
-   }
-    </Card.Group>
-      </Segment>
+          </Segment>
+        </Segment>
       </div>
     )
-
-
-
-
-}
+  }
 }

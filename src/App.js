@@ -110,7 +110,7 @@ class App extends Component {
 
     this.props.signOut();
 
-    window.location.href = 'http://localhost:3000/';
+    window.location.href = 'http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:3000/';
 
   }
 

@@ -105,7 +105,7 @@ class pubMainPage extends Component {
           showRoommates: false,
 
         });
-      axios.get('http://localhost:5000/roommates/getroommates',
+      axios.get('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/roommates/getroommates',
         {
           headers: {
             'Authorization': this.props.location.state.targetCity
@@ -118,7 +118,7 @@ class pubMainPage extends Component {
           })
 
         }.bind(this));
-      axios.get('http://localhost:5000/roommates/getroommates',
+      axios.get('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/roommates/getroommates',
         {
           headers: {
             'Authorization': ""
@@ -134,7 +134,7 @@ class pubMainPage extends Component {
         }.bind(this));
 
 
-      axios.get('http://localhost:5000/rooms/getrooms',
+      axios.get('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/rooms/getrooms',
 
         {
           headers: {
@@ -148,7 +148,7 @@ class pubMainPage extends Component {
           })
 
         }.bind(this));
-      axios.get('http://localhost:5000/rooms/getrooms',
+      axios.get('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/rooms/getrooms',
         {
           headers: {
             'Authorization': ""
@@ -170,7 +170,7 @@ class pubMainPage extends Component {
     }
 
     else {
-      axios.get('http://localhost:5000/roommates/getroommates',
+      axios.get('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/roommates/getroommates',
         {
           headers: {
             "Authorization": ""
@@ -187,7 +187,7 @@ class pubMainPage extends Component {
         }.bind(this));
 
 
-      axios.get('http://localhost:5000/rooms/getrooms',
+      axios.get('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/rooms/getrooms',
         {
           headers: {
             "Authorization": ""
@@ -386,7 +386,7 @@ class pubMainPage extends Component {
 
     console.log(this.state.city);
     //this.props.signIn(formData);
-    axios.get('http://localhost:5000/roommates/getroommates', {
+    axios.get('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/roommates/getroommates', {
 
       city: this.state.city,
       budget: this.setState.budget,

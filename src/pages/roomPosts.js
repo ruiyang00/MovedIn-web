@@ -15,7 +15,7 @@ export default class roomPosts extends Component {
 
   componentDidMount() {
 
-    axios.get('http://localhost:5000/rooms/getroompost',
+    axios.get('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/rooms/getroompost',
       {
         headers: {
           'Authorization': localStorage.getItem('token')
@@ -33,7 +33,7 @@ export default class roomPosts extends Component {
 
   deleteRoom() {
 
-    axios.delete('http://localhost:5000/rooms/deletetheroom',
+    axios.delete('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/rooms/deletetheroom',
       {
         headers: {
           'Authorization': localStorage.getItem('token'),

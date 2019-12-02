@@ -43,7 +43,7 @@ import {
      console.log(this.state.email);
      console.log(this.state.password);
      await this.props.signIn(formData);
-     window.location.href = 'http://localhost:3000/mainPage';
+     window.location.href = 'http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:3000/mainPage';
      console.log('submitted');
   }
 

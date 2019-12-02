@@ -14,7 +14,7 @@ export default class userPosts extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:5000/roommates/getroommatepost',
+    axios.get('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/roommates/getroommatepost',
       {
         headers: {
           'Authorization': localStorage.getItem('token')
@@ -31,7 +31,7 @@ export default class userPosts extends Component {
 
   deleteRoommate() {
 
-    axios.delete('http://localhost:5000/roommates/deletetheroommate',
+    axios.delete('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/roommates/deletetheroommate',
       {
         headers: {
           'Authorization': localStorage.getItem('token'),

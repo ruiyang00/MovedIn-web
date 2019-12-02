@@ -145,7 +145,7 @@ var postData={
 };
 console.log(token);
 
-axios.post('http://localhost:5000/rooms/creatroom',postData,{headers:{'Authorization':localStorage.getItem('token')}})
+axios.post('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/rooms/creatroom',postData,{headers:{'Authorization':localStorage.getItem('token')}})
 .then(function(response){
      console.log(response);
 
@@ -154,7 +154,7 @@ catch(function(error){
   console.log(error);
 });
 
-window.location.href = 'http://localhost:3000/roomPosts';
+window.location.href = 'http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:3000/roomPosts';
 
 }
 

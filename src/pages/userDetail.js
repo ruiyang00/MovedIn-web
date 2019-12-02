@@ -34,7 +34,7 @@ class App extends Component {
 
     componentDidMount() {
 
-        axios.post('http://localhost:5000/roommates/gettheroommate', {
+        axios.post('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/roommates/gettheroommate', {
             roommate_id: this.props.location.state.targetUserId
           },{
             headers: {

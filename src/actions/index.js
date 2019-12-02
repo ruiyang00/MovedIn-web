@@ -16,7 +16,7 @@ export const signUp = data => {
     try {
       console.log("hello signup");
       var token = null;
-      await axios.post('http://localhost:5000/users/signup', data)
+      await axios.post('http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/users/signup', data)
         .then(function (response) {
           console.log(response);
           if (response.data.token) {
@@ -26,7 +26,7 @@ export const signUp = data => {
 
       if (token) {
         console.log('token found,ready to signin');
-        await axios.post('http://localhost:5000/users/signin', data)
+        await axios.post('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/users/signin', data)
           .then(function (response) {
 
             if (response.data.token) {
@@ -57,7 +57,7 @@ export const signIn = data => {
 
   return async dispatch => {
     try {
-      await axios.post('http://localhost:5000/users/signin', data)
+      await axios.post('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/users/signin', data)
         .then(function (response) {
           console.log(response);
           if (response.data.token) {
@@ -88,7 +88,7 @@ export const facebook = data => {
       var token = null;
       console.log("I'm in facebook try")
 
-      await axios.post('http://localhost:5000/users/oauth/facebook', {
+      await axios.post('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/users/oauth/facebook', {
         access_token: data.accessToken
       })
         .then(function (response) {
@@ -119,7 +119,7 @@ export const facebook = data => {
 export const checkAuth = () => {
   return async dispatch => {
     try {
-      await axios.get('http://localhost:5000/users/secret');
+      await axios.get('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/users/secret');
       dispatch({
         type: AUTH_SIGN_IN
 

@@ -105,7 +105,7 @@ class pubMainPage extends Component {
           showRoommates: false,
 
         });
-      axios.get('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/roommates/getroommates',
+      axios.get('http://ec2-18-191-172-34.us-east-2.compute.amazonaws.com:5000/roommates/getroommates',
         {
           headers: {
             'Authorization': this.props.location.state.targetCity
@@ -118,7 +118,7 @@ class pubMainPage extends Component {
           })
 
         }.bind(this));
-      axios.get('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/roommates/getroommates',
+      axios.get('http://ec2-18-191-172-34.us-east-2.compute.amazonaws.com:5000/roommates/getroommates',
         {
           headers: {
             'Authorization': ""
@@ -134,7 +134,7 @@ class pubMainPage extends Component {
         }.bind(this));
 
 
-      axios.get('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/rooms/getrooms',
+      axios.get('http://ec2-18-191-172-34.us-east-2.compute.amazonaws.com:5000/rooms/getrooms',
 
         {
           headers: {
@@ -148,7 +148,7 @@ class pubMainPage extends Component {
           })
 
         }.bind(this));
-      axios.get('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/rooms/getrooms',
+      axios.get('http://ec2-18-191-172-34.us-east-2.compute.amazonaws.com:5000/rooms/getrooms',
         {
           headers: {
             'Authorization': ""
@@ -170,7 +170,7 @@ class pubMainPage extends Component {
     }
 
     else {
-      axios.get('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/roommates/getroommates',
+      axios.get('http://ec2-18-191-172-34.us-east-2.compute.amazonaws.com:5000/roommates/getroommates',
         {
           headers: {
             "Authorization": ""
@@ -187,7 +187,7 @@ class pubMainPage extends Component {
         }.bind(this));
 
 
-      axios.get('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/rooms/getrooms',
+      axios.get('http://ec2-18-191-172-34.us-east-2.compute.amazonaws.com:5000/rooms/getrooms',
         {
           headers: {
             "Authorization": ""
@@ -386,7 +386,7 @@ class pubMainPage extends Component {
 
     console.log(this.state.city);
     //this.props.signIn(formData);
-    axios.get('http://http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/roommates/getroommates', {
+    axios.get('http://ec2-18-191-172-34.us-east-2.compute.amazonaws.com:5000/roommates/getroommates', {
 
       city: this.state.city,
       budget: this.setState.budget,
@@ -601,7 +601,7 @@ class pubMainPage extends Component {
           <Modal.Content image>
             <Image wrapped size='medium' src='https://image.flaticon.com/icons/svg/145/145664.svg' />
             <Modal.Description>
-              <Header style={{marginTop:'2em'}}>Join us today for free!</Header>
+              <Header style={{ marginTop: '2em' }}>Join us today for free!</Header>
               <p>It only takes a few minutes to sign up, then you can discover more matches!</p>
               <p>Already have an account? Please sign in to view more information.</p>
             </Modal.Description>
@@ -640,8 +640,8 @@ class pubMainPage extends Component {
                         <Card.Meta> {roommate.room_type_required} </Card.Meta>
                       </Card.Content>
                       <Card.Content extra>
-                          <Icon name='point' />
-                          {roommate.city}
+                        <Icon name='point' />
+                        {roommate.city}
                       </Card.Content>
                     </Card>
 
@@ -677,8 +677,8 @@ class pubMainPage extends Component {
 
                       </Card.Content>
                       <Card.Content extra>
-                          <Icon name='point' />
-                          {room.city}
+                        <Icon name='point' />
+                        {room.city}
                       </Card.Content>
                     </Card>
 
@@ -718,8 +718,8 @@ class pubMainPage extends Component {
                       <Card.Meta> {roommate.room_type_required} </Card.Meta>
                     </Card.Content>
                     <Card.Content extra>
-                        <Icon name='point' />
-                        {roommate.city}
+                      <Icon name='point' />
+                      {roommate.city}
                     </Card.Content>
                   </Card>
 
@@ -749,13 +749,13 @@ class pubMainPage extends Component {
                     <Card.Content>
                       <Card.Header>
                         {room.room_type}
-                        </Card.Header>
-                        <Card.Meta>Rent: <strong>${room.price}</strong>/mo </Card.Meta>
-                        <Card.Meta>Available in: {room.move_in_date} </Card.Meta>
+                      </Card.Header>
+                      <Card.Meta>Rent: <strong>${room.price}</strong>/mo </Card.Meta>
+                      <Card.Meta>Available in: {room.move_in_date} </Card.Meta>
                     </Card.Content>
                     <Card.Content extra>
-                        <Icon name='point' />
-                        {room.city}
+                      <Icon name='point' />
+                      {room.city}
                     </Card.Content>
                   </Card>
 

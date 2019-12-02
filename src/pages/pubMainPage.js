@@ -105,8 +105,9 @@ class pubMainPage extends Component {
           showRoommates: false,
 
         });
-      axios.get('http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com/roommates/getroommates',
+      axios.get('http://ec2-18-217-162-8.us-east-2.compute.amazonaws.com/roommates/getroommates',
         {
+          withCredentials: true,
           headers: {
             'Authorization': this.props.location.state.targetCity
           }
@@ -118,8 +119,9 @@ class pubMainPage extends Component {
           })
 
         }.bind(this));
-      axios.get('http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com/roommates/getroommates',
+      axios.get('http://ec2-18-217-162-8.us-east-2.compute.amazonaws.com/roommates/getroommates',
         {
+          withCredentials: true,
           headers: {
             'Authorization': ""
           }
@@ -134,9 +136,10 @@ class pubMainPage extends Component {
         }.bind(this));
 
 
-      axios.get('http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com/rooms/getrooms',
+      axios.get('http://ec2-18-217-162-8.us-east-2.compute.amazonaws.com/rooms/getrooms',
 
         {
+          withCredentials: true,
           headers: {
             'Authorization': this.props.location.state.targetCity
           }
@@ -148,8 +151,9 @@ class pubMainPage extends Component {
           })
 
         }.bind(this));
-      axios.get('http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com/rooms/getrooms',
+      axios.get('http://ec2-18-217-162-8.us-east-2.compute.amazonaws.com/rooms/getrooms',
         {
+          withCredentials: true,
           headers: {
             'Authorization': ""
           }
@@ -170,8 +174,9 @@ class pubMainPage extends Component {
     }
 
     else {
-      axios.get('http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com/roommates/getroommates',
+      axios.get('http://ec2-18-217-162-8.us-east-2.compute.amazonaws.com/roommates/getroommates',
         {
+          withCredentials: true,
           headers: {
             "Authorization": ""
           }
@@ -187,8 +192,9 @@ class pubMainPage extends Component {
         }.bind(this));
 
 
-      axios.get('http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com/rooms/getrooms',
+      axios.get('http://ec2-18-217-162-8.us-east-2.compute.amazonaws.com/rooms/getrooms',
         {
+          withCredentials: true,
           headers: {
             "Authorization": ""
           }
@@ -386,13 +392,14 @@ class pubMainPage extends Component {
 
     console.log(this.state.city);
     //this.props.signIn(formData);
-    axios.get('http://ec2-52-14-225-128.us-east-2.compute.amazonaws.com:5000/roommates/getroommates', {
+    axios.get('http://ec2-18-217-162-8.us-east-2.compute.amazonaws.com/roommates/getroommates',
+      {
 
-      city: this.state.city,
-      budget: this.setState.budget,
-      gender: this.setState.gender,
-      age: this.setState.age,
-    }).
+        city: this.state.city,
+        budget: this.setState.budget,
+        gender: this.setState.gender,
+        age: this.setState.age,
+      }).
       then(function (response) {
         window.alert(response.data);
       });

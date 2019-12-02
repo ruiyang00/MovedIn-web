@@ -50,8 +50,6 @@ async onSubmit(formData){
        await this.props.signUp(formData);
        window.location.href = 'http://localhost:3000/mainPage';
        console.log('submitted');
-
-
   }
 
   render(){

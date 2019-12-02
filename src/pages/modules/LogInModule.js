@@ -31,12 +31,6 @@ import {
     this.setState({isAuthenticated: false, token: '', user: null})
 };
 
-    facebookResponse = (e) => {};
-    googleResponse = (e) => {};
-    onFailure = (error) => {
-      alert(error);
-    }
-
   handleInputChange = (event) => {
     const {value,name}=event.target;
     this.setState({
@@ -44,18 +38,16 @@ import {
     });
   }
 
-
  async onSubmit(formData){
   // event.preventDefault();
      console.log(this.state.email);
      console.log(this.state.password);
      await this.props.signIn(formData);
-     //console.log(formData
      window.location.href = 'http://localhost:3000/mainPage';
      console.log('submitted');
-}
+  }
 
-closeLogin = () => this.setState({ loginModalisOpen: false })
+  closeLogin = () => this.setState({ loginModalisOpen: false })
 
   render(){
     const {handleSubmit} = this.props;
@@ -63,10 +55,14 @@ closeLogin = () => this.setState({ loginModalisOpen: false })
 
     const responseFacebook = (response) => {
       console.log(response);
+      this.props.facebook(response);
+      console.log(this.state.token);
     }
-
+    
     const responseGoogle = (response) => {
       console.log(response);
+      this.state.token = response.Zi.id_token;
+      console.log(this.state.token);
     }
 
     return (
@@ -75,6 +71,25 @@ closeLogin = () => this.setState({ loginModalisOpen: false })
         <Form size='large' as='form' onSubmit={handleSubmit(this.onSubmit)}>
         
           <Modal.Content>
+              <GoogleLogin
+                clientId="343939675754-s1d2uieeguhlssp11gv4hnuskfeod5o2.apps.googleusercontent.com"
+                render={renderProps => (
+                  <button onClick={renderProps.onClick} disabled={renderProps.disabled}>This is my custom Google button</button>
+                )}
+                buttonText="Login"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                cookiePolicy={'single_host_origin'}
+              />
+
+              <FacebookLogin
+                  appId="430563460963841"
+                  autoLoad={false}
+                  fields="name,email,picture"      
+                  callback={responseFacebook} />
+
+            <Divider horizontal>or</Divider>
+     
             <Field
               component={InputField}
               type='text'

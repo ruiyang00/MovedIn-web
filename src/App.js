@@ -80,7 +80,8 @@ class App extends Component {
     if (localStorage.getItem('token')) {
 
       var userInfo = { email: localStorage.getItem('user'), password: localStorage.getItem('password') };
-      this.props.signIn(userInfo);
+      if(localStorage.getItem('user'))
+        this.props.signIn(userInfo);
 
     }
   }
@@ -98,11 +99,17 @@ class App extends Component {
   //Event handle-------------------------------------------------------------------------
   handleSignout() {
     if (localStorage.getItem('user')) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      localStorage.removeItem('password');
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('password');
     }
+
+    //fb auth signout
+    if(localStorage.getItem('token'))
+      localStorage.removeItem('token');
+
     this.props.signOut();
+
     window.location.href = 'http://localhost:3000/';
 
   }

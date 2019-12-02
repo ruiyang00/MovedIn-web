@@ -71,7 +71,7 @@ import {
         <Form size='large' as='form' onSubmit={handleSubmit(this.onSubmit)}>
         
           <Modal.Content>
-              <GoogleLogin
+              {/* <GoogleLogin
                 clientId="343939675754-s1d2uieeguhlssp11gv4hnuskfeod5o2.apps.googleusercontent.com"
                 render={renderProps => (
                   <button onClick={renderProps.onClick} disabled={renderProps.disabled}>This is my custom Google button</button>
@@ -80,15 +80,16 @@ import {
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
                 cookiePolicy={'single_host_origin'}
-              />
-
-              <FacebookLogin
+              /> */}
+            
+              {/* <FacebookLogin
                   appId="430563460963841"
                   autoLoad={false}
                   fields="name,email,picture"      
-                  callback={responseFacebook} />
-
-            <Divider horizontal>or</Divider>
+                  callback={responseFacebook} 
+                  /> */}
+         
+            {/* <Divider horizontal>or</Divider> */}
      
             <Field
               component={InputField}

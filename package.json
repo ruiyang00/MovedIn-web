@@ -13,7 +13,7 @@
     "react-google-login": "^5.0.7",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.1.1",
-    "react-scripts": "3.0.0",
+    "react-scripts": "5.0.1",
     "react-semantic-redux-form": "^1.2.6",
     "react-semantic-ui-datepickers": "^2.0.0",
     "redux": "^4.0.4",
